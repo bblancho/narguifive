@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Récapitulatif de ma commande - Nargui Five {% endblock %}
+
+{% block javascript_header %}
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block body %}
+    <h1> Récapitulatif de la commande </h1>
+    <p> Vérifier vos informations avant de payer ma commande  </p>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <strong> Mon adresse de livraison </strong>  <br/>
+            <div class="form-check mt-4">
+                Lieux : {{ delivry.nom }} <br/>
+                {{ delivry.lastname }} {{ delivry.prenom }}<br/>
+                {{ delivry.phone}} <br/>
+                {{ delivry.adresse }} <br/>
+                {{ delivry.postal}} - {{ delivry.ville}} <br/>
+                {{ delivry.pays }} <br/>
+            </div>
+            <hr>
+
+            <strong> Transporteur </strong> <br/>
+            <div class="form-check">
+                <strong> Nom du transporteur :</strong> {{ transporteur.nom }} <br/>
+                <strong> Frais de livraison :</strong> {{ (transporteur.price/100) | number_format(2, ',', ',') }} € <br/>
+                {{ transporteur.description }}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="text-center"> <b> Ma commande </b>
+            </div>
+            <div class="order-summary">
+                {% set total = null %}
+                {% for key,product in panier %}
+                    <div class="row {% if key > 0 %} mt-2 {% endif %}">
+                        <div class="col-2"><img src="{{ product.produit.image }}" alt="NARGUI FIVE-{{ product.produit.nom }}" height="75px"></div>
+                        <div class="col-7 my-auto">{{ product.produit.nom }} <br>
+                            <small> X {{ product.quantity }}</small>
+                        </div>
+                        <div class="col-3 my-auto  text-right"> {{ (product.produit.price * product.quantity) | number_format(2, ',', ',') }} € </div>
+                    </div>
+                    {% set total = total + product.quantity * product.produit.price %}
+                {% endfor %}
+            </div>
+
+            <hr>
+            <strong> Sous-Total: </strong> {{ total | number_format(2, ',', ',') }} € <br>
+            <strong> Livraison: </strong> {{ transporteur.price/100 }} € 
+            <hr>
+            <strong> Total: </strong> {{ ((transporteur.price/100) + total) | number_format(2, ',', ',') }} € <br>
+            <a id="checkout-button" class="btn btn-success btn-block mt-3"> PAYER | {{ (transporteur.price/100 + total) | number_format(2, ',', ',') }} € </a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    // A reference to Stripe.js initialized with a fake API key.
+        const stripe = Stripe("pk_test_51JuHVaFIjVLoJVyM3oZjMFYbsluOtyq1xGc9jlx0CG1uqsnV7c7osZcGgBPqyyMZxn6YDDHkGkzKyqcxeh2gzrPc00pgWn8DpW");
+
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function() {
+        fetch('/commmande/create-session/{{ reference }}', {
+            method: 'POST',
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(session) {
+            if( session.error == 'order' ){
+                window.location.replace("{{ path('order') }}")
+            } else {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            }
+            
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+
+</script>
+{% endblock %}

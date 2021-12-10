@@ -1,0 +1,109 @@
+<div class="nav-scroller box-shadow">
+    <div class="col-md-6">
+        <p>
+            De 10h à 18h30 - Du lundi au Dimanche - 135 rue de Gabriel Péri - 93200 Saint Denis
+        </p>
+    </div>
+    <div class="col-md-6">
+        <nav class="nav-underline">
+            <a href="{{ path('app_login') }}">
+                Espace Pro
+            </a>
+            |
+            {% if not app.user %}
+            <a href="{{ path('app_login') }}">
+                Connexion
+            </a>
+            |
+            <a href="{{ path('register') }}">Inscription</a>
+            {% else %}
+            <a href="{{ path('account') }}">
+                Mon compte
+                <small>
+                    {{ app.user.nom }}
+                </small>
+            </a>
+            |
+            <a href="{{ path('app_logout') }}">
+                Déconnexion
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+<div class="div-logo">
+    <a class="logo navbar-brand" href="{{ path('home') }}"><img src="{{ asset('assets/images/icones/logo.png') }}"
+            alt="Nargui Five 93"></a>
+</div>
+
+<nav class="nav fixed-top d-flex justify-content-between">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="p-2 text-muted" href="{{ path(" products") }}">Accueil</a>
+    <a class="p-2 text-muted dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Chichas
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ path(" products") }}">
+            Nos Chichas
+        </a>
+        <a class="dropdown-item" href="#">
+            Chichas Classique
+        </a>
+        <a class="dropdown-item" href="#">
+            Chichas en verre
+        </a>
+        <a class="dropdown-item" href="#">
+            Chichas de luxe
+        </a>
+        <a class="dropdown-item" href="#">
+            Chichas portable
+        </a>
+        <a class="dropdown-item" href="#">
+            Chichas traditionnelles
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">
+            Chichas Premier prix
+        </a>
+    </div>
+    <a class="p-2 text-muted" href="#">Charbons</a>
+    <a class="p-2 text-muted" href="#">Goûts chicha</a>
+    <a class="p-2 text-muted dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Accessoires
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ path(" products") }}">
+            Foyers (têtes de chicha)
+        </a>
+        <a class="dropdown-item" href="#">
+            Tuyaux
+        </a>
+    </div>
+    <a class="p-2 text-muted" href="#">C.Electronique/ E-liquide</a>
+    <a class="p-2 text-muted" href="#">CBD</a>
+    <a class="p-2 text-muted" href="#">Nouveautés</a>
+    <a class="p-2 text-muted" href="#">Packs</a>
+    <a class="p-2 text-muted" href="#">Contact</a>
+    <a class="p-2 text-muted dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Services
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ path(" products") }}">
+            Location
+        </a>
+        <a class="dropdown-item" href="#">
+            Comment choisir une chicha ?
+        </a>
+        <a class="dropdown-item" href="#">
+            Qui sommes nous ?
+        </a>
+    </div>
+    <a class="p-2 text-muted" href="{{ path(" cart_index") }}"><img class="cart-icone" src="{{ asset("
+            assets/images/icones/shopping-cart.png") }}" alt="Mon panier Nargui Five"></a>
+</nav>

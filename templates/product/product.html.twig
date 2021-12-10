@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - {{ produit.nom }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="row product-container">
+		<div class="col-md-5">
+			<div class="row">
+				<div class=" lien-mignature" id="img-1"> <img src="{{ produit.image }}" alt="nargui five {{ produit.nom }}"> </div>
+				<div class=" lien-mignature" id="img-2"> <img src="{{ produit.image }}" alt="nargui five {{ produit.nom }}"> </div>
+				<div class=" lien-mignature" id="img-3"> <img src="{{ produit.image }}" alt="nargui five {{ produit.nom }}"> </div>
+				<div class=" lien-mignature" id="img-4"> <img src="{{ produit.image }}" alt="nargui five {{ produit.nom }}"> </div>
+			</div>
+			<div class="row img-produit">
+				<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+			</div>
+		</div>
+
+		<div class="col-md-7 my-auto">
+			<div class="product-item text-center">
+				<h1> {{ produit.nom }} </h1>
+				<h3> Chicha classique </h3>
+				<select class="custom-select">
+					<option selected>Choisissez une couleur</option>
+					<option value="1">Bleu</option>
+					<option value="2">Vert</option>
+					<option value="3">Jaune</option>
+				</select>
+				<div class="product-page-price">{{ (produit.price) | number_format(2, ',', '.') }} € <span class="info-stock"> <i class="fas fa-check"></i> en stock </span> </div>
+				
+				<a class="btn btn-lg btn-block btn-success" href="{{ path("cart_add", {id : produit.id}) }}" role="button"> Ajouter au panier </a>
+				<div>
+					<p class="info-produit"> <span><i class="fas fa-truck"></i> Livraison offerte dès 40€ </span> </p>
+					<p class="info-produit"> <span><i class="far fa-credit-card"></i> Paiement 100% sécurisé </span> </p>
+					<p class="info-produit"> <span><i class="fas fa-store-alt"></i> Retrait en boutique possible </span> </p>
+					<p class="info-produit"> <span><i class="fas fa-hand-point-up"></i> Programme de fidélité </span> </p>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-md-6">
+				<h2> Description du produit</h2>
+				<p>
+					Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. 
+					Sed porttitor lectus nibh. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor accumsan tincidunt. 
+					Vivamus suscipit tortor eget felis porttitor volutpat. Nulla quis lorem ut libero malesuada feugiat.<br/>
+					Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. 
+					Cras ultricies ligula sed magna dictum porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor lectus nibh. 
+					Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur aliquet quam id dui posuere blandit.<br>
+					Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+					Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+				</p>
+			</div>
+			<div class="col-md-6">
+				<h2> Caractéristique du produit</h2>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>TAILLE</td>
+							<td>POIDS</td>
+							<td>VASE</td>
+							<td>FOYER</td>
+							<td>TUYAU</td>
+							<td>VASE</td>
+						</tr>
+						<tr>
+							<td>24 cm</td>
+							<td>15g</td>
+							<td>en acrylique</td>
+							<td>Céramique</td>
+							<td>en acrylique</td>
+							<td>Céramique</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<p>
+				<h2> Conseil d'entretien </h2>
+				Nargui Five est la référence dans la vente de chicha de luxe, retrouvez les
+				marques les plus prestigieuses comme les chichas en verre de laboratoire
+				de la marque américaine FUMO, les chichas en bois précieux WOOKAH,
+				pleins d'exclusivités et toutes les nouveautés du monde de la chicha.
+			</p>
+		</div>
+
+		<div class="row">
+			{% include('product/best_product.html.twig') %}
+		</div>
+	</div>
+{% endblock %}

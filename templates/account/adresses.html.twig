@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nargui Five 93  - Mes Adresses {% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <a href="{{ path('adresse_compte_add') }}" class="btn bg-info btn-sm float-right">Ajouter une adresse</a>
+
+    <h1> Mes adresses </h1>
+
+    <p> <a href="{{ path('account') }}"> Mon compte</a> </p>
+    <p> C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses. </p>
+    <hr>
+
+    {% if adresses|length > 0 %}
+        <div class="row">
+            {% for adresse in adresses %}
+                <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ adresse.nom }}</h5>
+                        <p class="card-text"> 
+                            {{ adresse.adresse }}, <br>
+                            {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
+                        </p>
+                        <a href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Modifier </a> |  <a href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center"> Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a href="#"> Cliquer ici </a>  </p>
+    {% endif %}
+</div>
+
+{% endblock %}

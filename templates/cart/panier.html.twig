@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Mon panier
+{% endblock %}
+
+{% block body %}
+
+{% set nbrProduits = panierData | length %}
+
+	<div class="container">
+		<h1>
+			Mon panier
+		</h1>
+
+		<p>
+			Retrouvez l'ensemble des produits que vous avez rajouté dans votre panier
+		</p>
+	</div>
+
+	<div>
+		{% if nbrProduits > 0 %}
+			<table class="table mt-3">
+				<thead>
+					<tr>
+						<th> Produit </th>
+						<th></th>
+						<th> Prix </th>
+						<th> Quantité </th>
+						<th> Total </th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% set total = null %}
+					{% for item in panierData %}
+						<tr>
+							<td> 
+								<img src="{{ item.produit.image }}" alt="NARGUI FIVE-{{ item.produit.nom }}" height="75px"><br/>
+							</td>
+							<td> {{ item.produit.nom }} </td>
+							<td> {{ item.produit.price | number_format(2, '.', ',') }} € </td>
+							<td> 
+								<a href="{{ path("cart_add", { "id": item.produit.id }) }}"> 
+									<img src="{{ asset('assets/images/icones/signe-plus.png') }}" title="Google" class="signe-plus"  alt="item.produit.nom">
+								</a> 
+									X {{ item.quantity }}  
+								<a href="{{ path('cart_decrease', { "id" :item.produit.id }) }}" > 
+									<img class="signe-moins" src="{{ asset('assets/images/icones/signe-moins.png') }}" title="Freepik" alt="item.produit.nom">
+								</a>
+							</td>
+							<td> {{  (item.quantity * item.produit.price) | number_format(2, ',', ',') }} € </td>
+							<td> <a href="{{ path('cart_delete', {"id" :item.produit.id }) }}" > <img src="{{ asset('assets/images/icones/corbeille.png') }}" title="Freepik" height="25px" alt="item.produit.nom"> </a></td>
+							
+							{% set total = total + item.quantity * item.produit.price %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<hr/>
+
+			<div class="text-right mb-5">
+				<b> 	Mon panier contient : {{ nbrProduits }} produit(s) </b><br>
+				<b> Total de mon panier :  {{ total | number_format(2, ',', ',') }} €</b>
+				<a href="{{ path('order') }}" class="btn btn-success btn-block mt-3"> Valider mon panier </a>
+			</div>
+
+		{% else %}
+			<h2> Votre panier est vide !! </h2>
+		{% endif %}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content=" Nargui Five La boutique qui vous vends des chichas de qualité">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>{% block title %} Nargui Five 93 - Made in France {% endblock %}</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+
+    <!-- Nargui CSS -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    {% block stylesheets %}{% endblock %}
+    {% block javascript_header %}{% endblock %}
+
+    <link rel="icon" href="{{ asset("images/logo_assia.ico") }}" />
+    <meta property="og:title" content="Nargui Five" />
+    <meta property="og:type" content="Site E-commerce" />
+    <meta property="og:url" content="https://narguifive.com" />
+    <meta property="og:image" content="" />
+    <meta name="description" content="Site E-commerce de vente de chicha.." />
+</head>
+
+<body>
+
+    {% include "partials/_nav.html.twig" %}
+
+    <main role="main" class="min-vh-100">
+
+        {% if block('carousel') is defined %}
+            {% include "partials/_carousel.html.twig" %}
+        {% endif %}
+
+        <div class="marketing  {% if block('carousel') is not defined %} mt-5 {% endif%}">
+            {% block body %} {% endblock %}
+        </div><!-- /.container -->
+
+        <!-- FOOTER -->
+        {% include "partials/_footer.html.twig" %}
+
+    </main>
+
+    
+    <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/javascript.js') }}"></script>
+    
+    {% block script %}{% endblock %}
+</body>
+</html>

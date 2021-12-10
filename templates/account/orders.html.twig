@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nargui Five 93  - Mes Commandes {% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1> Mes Commandes </h1>
+    <p> C'est dans cet espace que vous allez pouvoir gérer toutes vos commandes. </p>
+    {% if orders|length > 0 %}
+
+        <table class="table table-hover mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Réfèrence</th>
+                    <th scope="col">Passé le</th>
+                    <th scope="col">Produit(s)</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Statut de la commande</th>
+                    <th class="text-right">Commande</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td> <span class="badge badge-secondary">{{ order.reference }}</span> </td>
+                        <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td>{{ order.orderDetails|length }}</td>
+                        <td>{{ (( (order.getTotal * 100) + order.transporteurPrix) /100)|number_format(2, ',',',') }} €</td>
+                        <td> {{ order.getStatutToString }}</td>
+                        <td class="text-right"> <a href="{{ path('account_order_show',{'reference' : order.reference}) }}" > Voir ma commande </a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <hr>
+        <p class="text-center"> Vous n'avez pas encore passé de commande chez NarguiFive. </p>
+    {% endif %}
+</div>
+
+{% endblock %}

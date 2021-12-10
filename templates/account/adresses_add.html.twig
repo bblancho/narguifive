@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93  - Mes Adresses
+{% endblock %}
+
+{% block body %}
+
+	<h1> Ajouter une adresse </h1>
+	<a href="{{ path("adresse_compte") }}"> Retour </a>
+	<hr>
+
+	{{  form_start(form, {'method': 'POST'})  }}
+
+		<div class="row">
+
+			<div class="my-custom-class-for-errors">
+				{{ form_errors(form) }}
+			</div>
+
+			<div class="col-md-12">
+				<div class="col">
+					{{ form_row(form.nom) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.lastname) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.prenom) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.phone) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.societe) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.adresse) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.ville) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.postal) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.pays) }}
+				</div>
+			</div>
+
+			{{ form_rest(form) }}
+			<button class="btn btn-primary btn-block float-right" type="submit"> Ajouter une adresse </button>
+
+		</div>
+	{{ form_end(form) }}
+
+{% endblock %}

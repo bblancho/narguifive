@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nargui Five 93 - Connexion {% endblock %}
+
+{% block body %}
+    <div class="block-small">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% for message in app.flashes("notice") %}
+                <div class="alert alert-info"> {{ message }} </div>
+            {% endfor %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    Bonjour {{ app.user.nom }}, <a href="{{ path('app_logout') }}"> Se déconnecter </a>
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3 font-weight-normal"> Merci de vous connecter : Testtest2021@ </h1>
+
+            <label for="inputEmail"> Votre email </label>
+            <input type="email" name="email" id="inputEmail" placeholder="Votre email" class="form-control" autocomplete="email" required autofocus>
+
+            <label for="inputPassword"> Votre mot de passe </label>
+            <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                </label>
+            </div>
+
+            <button class="btn btn-lg btn-info btn-block mt-3" type="submit">
+                Se connecter
+            </button>
+            <hr/>
+
+            <p class="text-center mt-3"><a  href="{{ path('reset_password') }}"> Mot de passe oublié ? </a></p>
+            <p class="text-center"> Ou souhaitez-vous créer<a  href="{{ path('register') }}"> Créer un compte ? </a></p>
+
+        </form>
+    </div>
+{% endblock %}
