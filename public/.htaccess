@@ -5,39 +5,6 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
 
-<<<<<<< HEAD
-<VirtualHost *:80>
-    ServerName narguifive.com
-    ServerAlias www.narguifive.com
- 
-    DocumentRoot /var/www/narguifive/public/
-    <Directory /var/www/narguifive/public>
-        AllowOverride None
-        Order Allow,Deny
-        Allow from All
- 
-        <IfModule mod_rewrite.c>
-            Options -MultiViews
-            RewriteEngine On
-            # RewriteCond %{REQUEST_FILENAME} !-f
-            # RewriteRule ^(.*)$ index.php [QSA,L]
-            RewriteCond %{SERVER_NAME} =www.narguifive.com [OR]
-            RewriteCond %{SERVER_NAME} =narguifive.com
-            RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-        </IfModule>
-    </Directory>
-
-    <Directory /var/www/narguifive/public/bundles>
-        <IfModule mod_rewrite.c>
-            RewriteEngine Off
-        </IfModule>
-    </Directory>
-    ErrorLog /var/log/apache2/project_error.log
-    CustomLog /var/log/apache2/project_access.log combined
-</VirtualHost>
-
-=======
->>>>>>> 8e6a1cda81b0de8cccf702a240fe06b279fe9914
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you
 # install assets as symlinks or if you experience problems related to symlinks
