@@ -282,7 +282,11 @@
             "ref": "9d254a22efca7264203eea98b866f16f944b2f09"
         },
         "files": [
+<<<<<<< HEAD
             "public/.htaccess"
+=======
+            "./public/.htaccess"
+>>>>>>> 704c441d519feb5cf441a5a5ede99bde4f2584c5
         ]
     },
     "symfony/asset": {
