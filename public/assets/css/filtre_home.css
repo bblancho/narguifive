@@ -1,0 +1,29 @@
+.produits{
+    height: 200px;
+    border: 1px solid #000;
+    margin-right: 5px;
+    width: 250px;
+    text-align: center;
+    padding-top: 80px;
+
+    color: white;
+}
+
+button{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#tab1show {
+    background-color: aqua;
+
+}
+#tab2show {
+    background-color: red;
+}
+#tab3show {
+    background-color: blue;
+}
+#tab4show {
+    background-color: yellow;
+}
