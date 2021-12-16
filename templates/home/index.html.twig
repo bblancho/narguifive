@@ -20,31 +20,31 @@
 		</span>
 
 		<div class="text-center btn-filtre">
-			<button type="button" class="btn btn-default button" id="news">
+			<button type="button" class="btn btn-default button lien_category" id="news">
 				Nouveautés
 			</button>
-			<button type="button" class="btn btn-default button" id="pack">
+			<button type="button" class="btn btn-default button lien_category" id="pack">
 				Pack
 			</button>
-			<button type="button" class="btn btn-default button" id="promos">
+			<button type="button" class="btn btn-default button lien_category" id="promos">
 				Promos
 			</button>
-			<button type="button" class="btn btn-default button" id="chichas">
+			<button type="button" class="btn btn-default button lien_category" id="chichas">
 				Chichas
 			</button>
-			<button type="button" class="btn btn-default button" id="gouts">
+			<button type="button" class="btn btn-default button lien_category" id="gouts">
 				Goûts
 			</button>
-			<button type="button" class="btn btn-default button" id="accesssoires">
+			<button type="button" class="btn btn-default button lien_category" id="accesssoires">
 				Accessoires
 			</button>
-			<button type="button" class="btn btn-default button" id="electronique">
+			<button type="button" class="btn btn-default button lien_category" id="electronique">
 				C.Electronique
 			</button>
-			<button type="button" class="btn btn-default button" id="liquide">
+			<button type="button" class="btn btn-default button lien_category" id="liquide">
 				E-liquide
 			</button>
-			<button type="button" class="btn btn-default button" id="cbd">
+			<button type="button" class="btn btn-default button lien_category" id="cbd">
 				CBD
 			</button>
 		</div>
@@ -162,6 +162,7 @@
 				</div>
 
 				<hr class="sep">
+
 				<div class="chicha-home">
 					<figure>
 						<a href="">
@@ -256,54 +257,54 @@
 					Nos Valeurs
 				</h2>
 
-				<div class="block-valeur">
-					<div>
+				<div class="row ">
+					<div class="col-md-3 block-valeur">
 						<figure>
-							<a href="">
+							<a href="#">
 								<img src="{{ asset('assets/images/icones/truck.png') }}"/>
 							</a>
 						</figure>
-						<p> 
+						<p>
 							<h3> Livraison gratuite </h3>
 							<span> Dès de 75€</span>
 						</p>
 					</div>
-
-					<div>
+					<div class="col-md-3 block-valeur">
 						<figure>
-							<a href="">
+							<a href="#">
 								<img src="{{ asset('assets/images/icones/security-payment.png') }}"/>
 							</a>
 						</figure>
-						<p> 
+						<p>
 							<h3> paiement Sécurisé</h3>
 							<span> Cartes de crédit disponibles</span>
 						</p>
 					</div>
 
-					<div>
+					<div class="col-md-3 block-valeur">
 						<figure>
-							<a href="">
+							<a href="#">
 								<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>
 							</a>
 						</figure>
-						<p> 
+						<p>
 							<h3> Profitez de nos cadeaux </h3>
 							<span> Obtenez des cadeaux et des rabais </span>
 						</p>
 					</div>
-
-					<div>
+					<div class="col-md-3 block-valeur">
 						<figure>
-							<a href="">
+							<a href="#">
 								<img src="{{ asset('assets/images/icones/idee.png') }}"/>
 							</a>
 						</figure>
-						<p> 
-							<h3> besoin d'un conseil </h3>
+						<p>
+							<h3>
+								besoin d'un conseil
+							</h3>
 							<span> Cartes de crédit disponibles</span>
 						</p>
-					</dv>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -311,12 +312,54 @@
 		<div class="bloc-chicha">
 			<div class="title-block container">
 				<h2 class="text-center title-custom">
-					Nos Marques
+					Nos partenaires
 				</h2>
 
-				<span class="subtitle">
-					Nos marques partenaires
-				</span>
+				<div class="row ">
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/elbadia.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/fumo.png') }}"/>
+							</a>
+						</figure>
+					</div>
+
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/kaloud.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/mig.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/chicha.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/chicha.png') }}"/>
+							</a>
+						</figure>
+					</div>
+				</div>
 			</div>
 		</div>
 
