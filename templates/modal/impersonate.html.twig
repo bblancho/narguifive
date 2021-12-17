@@ -1,0 +1,18 @@
+<div id="modal_change_utilisateur" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Changer d'utilisateur</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" data-action="{{ path('user_json') }}" id="input_user">
+				<select name="select2_impersonate" class="form-control select2-ajax" style="width: 100%" required></select>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">Fermer</button>
+				<button type="button" class="btn btn-primary btn_change_utilisateur">Enregistrer</button>
+			</div>
+		</div>
+	</div>
+</div>
