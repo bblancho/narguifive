@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+	<div class="container-fluid">
+		<a class="navbar-brand mb-md-1" href="{{ path('offre_index') }}">
+			<i class="bi bi-house-fill pe-1"></i>
+			Continuum</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			{% set route_name = app.request.attributes.get('_route') %}
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+				<li class="nav-item">
+					<a class="nav-link {{ route_name == " offre_index" ? 'active' : '' }}" href="{{ path('offre_index') }}">{{ 'offre.libelles' | trans | capitalize }}</a>
+				</li>
+				{% if is_granted('ROLE_ADMIN') == true %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Admin
+						</a>
+						<ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="navbarDropdown">
+							<li>
+								<a class="dropdown-item {{ route_name == " admin_mission_index" ? 'active' : '' }}" aria-current="page" href="{{ path('admin_mission_index') }}">Mission</a>
+							</li>
+							<li>
+								<a class="dropdown-item {{ route_name == " admin_departement_service_societe" ? 'active' : '' }}" aria-current="page" href="{{ path('admin_departement_service_societe') }}">Services destinataires par département et par filiale</a>
+							</li>
+							<li>
+								<a class="dropdown-item {{ route_name == " admin_agence_regional" ? 'active' : '' }}" aria-current="page" href="{{ path('admin_agence_regional') }}">Services régionaux destinataire(s) par département et par filiale</a>
+							</li>
+						</ul>
+					</li>
+				{%  endif %}
+				{% if is_granted("ROLE_SUPER_ADMIN") and activityList is defined and activityList|length > 0 %}
+					<li class="d-flex">
+						<button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modal-log-activity">Activity</button>
+					</li>
+				{% endif %}
+			</ul>
+			<div>
+				<div class="dropdown">
+					<a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; color: white">
+						{{ app.user.prenom }}
+						{{ app.user.nom | upper }}
+					</a>
+					<ul class="dropdown-menu dropdown-menu-primary dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+						{% if is_granted('ROLE_SUPER_ADMIN') or is_granted('IS_IMPERSONATOR') %}
+							<li>
+								<a class="dropdown-item impersonate">Changer d'utilisateur</a>
+							</li>
+						{% endif %}
+						{% if is_granted('IS_IMPERSONATOR') %}
+							<li>
+								<a class="dropdown-item" href="{{ path('offre_index', {'_switch_user': '_exit'}) }}">Quitter usurpation
+								</a>
+							</li>
+						{% endif %}
+						<li>
+							<a class="dropdown-item" href="{{ path('logout') }}">Se déconnecter
+								<i class="bi bi-box-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+{% include "modal/impersonate.html.twig" %}<style>
+	.dropdown-menu-primary {
+		background-color: rgb(13, 110, 253);
+	}
+
+	.dropdown-menu-primary .dropdown-item {
+		background-color: rgb(13, 110, 253);
+		color: rgba(255, 255, 255, 0.55);
+		text-decoration: none;
+	}
+
+	.dropdown-menu-primary .dropdown-item:hover {
+		color: white !important;
+		background-color: rgb(25, 100, 200);
+		cursor: pointer;
+	}
+</style>
