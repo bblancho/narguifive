@@ -4,35 +4,62 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-    <a href="{{ path('adresse_compte_add') }}" class="btn bg-info btn-sm float-right">Ajouter une adresse</a>
+<div class="mon-compte">
+    <div class="container">
+        <a href="{{ path('adresse_compte_add') }}" class="btn bg-primary float-right">Ajouter une adresse</a>
 
-    <h1> Mes adresses </h1>
-
-    <p> <a href="{{ path('account') }}"> Mon compte</a> </p>
-    <p> C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses. </p>
-    <hr>
-
-    {% if adresses|length > 0 %}
+        <h1> Mes adresses </h1>
+        <p>
+            Choisissez vos adresses de facturation et de livraison. Ces dernières seront présélectionnées lors de vos commandes. 
+            Vous pouvez également ajouter d'autres adresses, 
+            ce qui est particulièrement intéressant pour envoyer des cadeaux ou recevoir votre commande au bureau.
+        </p>
+        <br>
+        
         <div class="row">
-            {% for adresse in adresses %}
-                <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ adresse.nom }}</h5>
-                        <p class="card-text"> 
-                            {{ adresse.adresse }}, <br>
-                            {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
-                        </p>
-                        <a href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Modifier </a> |  <a href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
-                    </div>
-                </div>
+            <div class="col-md-4 compte-lien">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="/admin"><i class="lien-icone-compte fas fa-tachometer-alt"> Acceder l'administration du site  </i> </a>    <br/>
+                {% endif %}
+                <a class="" href="{{ path('account') }}"> <i class="lien-icone-compte fas fa-tachometer-alt"> Mon compte  </i> </a>  <br/>
+                <a class="" href="{{ path('account_order') }}"> <i class="lien-icone-compte far fa-calendar-alt"> Acceder à mes Commandes </i> </a>  <br/>
+                <a class="" href="{{ path('account_password') }}"> <i class="lien-icone-compte fas fa-lock"> Modifier mon mote de passe </i> </a>   <br/>
+                <a class="active" href="{{ path('adresse_compte') }}"> <i class="lien-icone-compte fas fa-map-marker-alt"> Gérer mes Adresses </i> </a>  <br/>
+                <a class="" href="/admin"> <i class="lien-icone-compte fas fa-user"> Acceder aux détails de mon compte </i>  </a>  <br/>
+                <a class="" href="{{ path('app_logout') }}"> <i class="lien-icone-compte fas fa-sign-out-alt"> Se déconnecter  </i> </a>  <br/>
             </div>
-            {% endfor %}
+        
+            <div class="col-md-8">
+                {% if adresses|length > 0 %}
+                    <p>
+                        <span class="adresse"> Vos adresses sont listées ci-dessous. <br> </span> 
+
+                        Pensez à les tenir à jour si ces dernières venaient à changer.
+                    </p>
+                    <div class="row">
+                        {% for adresse in adresses %}
+                            
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ adresse.nom }}</h5>
+                                        <p class="card-text"> 
+                                            {{ adresse.adresse }}, <br>
+                                            {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
+                                        </p>
+                                        <a class='btn btn-info' href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Mettre à jour </a>
+                                        <a class='btn btn-danger' href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
+                                    </div>
+                                </div>
+                        
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center"> Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a href="#"> Cliquer ici </a>  </p>
+                {% endif %}
+            </div>
         </div>
-    {% else %}
-        <p class="text-center"> Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a href="#"> Cliquer ici </a>  </p>
-    {% endif %}
+
+    </div>
 </div>
 
 {% endblock %}

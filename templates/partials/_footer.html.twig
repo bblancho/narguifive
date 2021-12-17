@@ -30,8 +30,6 @@
 
 	<hr class="separation">
 
-	<div id="mapid" style="width: 100%; height: 400px;"></div>
-
 	<div class="row">
 		<div class="title-block container">
 			<div class="row ">
@@ -133,13 +131,17 @@
 			</div>
 		</div>
 	</div>
+
+	{# <div id="mapid" style="width: 100%; height: 400px;"></div> #}
 </footer>
 
 {% block script %}
 <script type="text/javascript">
-  var map = L.map('mapid').setView([51.505, -0.06], 20);
+
+  var map = L.map('mapid').setView([48.94088800481563, 2.3565030108934764], 20);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+
 </script>
 {%  endblock %}

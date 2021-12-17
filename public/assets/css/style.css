@@ -83,9 +83,7 @@ nav a:hover{
     background-color: blue;
     color: #fff;
 }
-.pack{
-    
-}
+
 .soldes{
     background-color: red;
     color: #fff;
@@ -93,7 +91,7 @@ nav a:hover{
 
 /************** Body ************/
 .marketing{
-    margin-bottom: 45px ;
+    /* margin-bottom: 45px ; */
     color: #000;
 }
 
@@ -641,6 +639,26 @@ img{
 }
 
 /********* Page mon compte *****/
+
+.mon-compte{
+    background-color: #F6F6F6;
+    padding: 45px 0px;
+}
+
+.mon-compte .container{
+    background-color: #fff;
+    padding: 35px;
+}
+.mon-compte .container h1{
+    border-bottom: 1px solid;
+    margin-bottom: 15px;
+}
+
+.compte-lien a:hover{
+    text-decoration: underline;
+    color: blue;
+
+}
 .account-item{
     background-color: #a4b0be;
     padding: 70px;
@@ -664,6 +682,34 @@ img{
     display: block;
     text-align: center;
     margin: 0 auto;
+}
+
+.compte-lien a{
+    color: #626262;
+    padding: 0px 0px 0px 0px;
+    display: block;
+}
+
+.lien-icone-compte::before{
+    padding-right: 10px;
+}
+
+/**** Mes adresses **/
+span.adresse{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.card{
+    margin-right: 10px;
+}
+
+.bg-primary{
+    color: #fff;
+}
+
+.compte-lien a:active{
+    color: blue !important;
 }
 
 

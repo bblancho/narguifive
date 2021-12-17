@@ -22,7 +22,6 @@
     {% block javascript_header %}{% endblock %}
 
     <link rel="icon" href="{{ asset("images/logo_assia.ico") }}" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     
     <meta property="og:title" content="Nargui Five" />
     <meta property="og:type" content="Site E-commerce" />
@@ -30,6 +29,11 @@
     <meta property="og:image" content="" />
     <meta name="description" content="Site E-commerce de vente de chicha.." />
     
+     <!-- fontawesome icone -->
+    <script src="https://kit.fontawesome.com/3b962b3bc8.js" crossorigin="anonymous"></script>
+    
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
@@ -43,7 +47,7 @@
             {% include "partials/_carousel.html.twig" %}
         {% endif %}
 
-        <div class="marketing  {% if block('carousel') is not defined %} mt-5 {% endif%}">
+        <div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
             {% block body %} {% endblock %}
         </div><!-- /.container -->
 
