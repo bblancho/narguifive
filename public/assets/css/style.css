@@ -1,6 +1,6 @@
 body{
     position: relative;
-    padding: 0px 5px;
+    padding: 0px;
     background-color: #fff;
 }
 
@@ -88,6 +88,37 @@ nav a:hover{
 .soldes{
     background-color: red;
     color: #fff;
+}
+
+/****** new menu *******/
+#info{
+    background-color: #000;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
+    padding-bottom: 20px;
+}
+
+.icone_menu{
+    margin: 0px 5px;
+    border-right: 1px solid #fff;
+    padding-right: 15px;
+}
+
+.icone_menu:nth-child(1){
+    border-right:none
+}
+
+.icon-top a{
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+
+#panier{
+    margin-right: 15px;
 }
 
 /************** Body ************/
