@@ -2,6 +2,7 @@ body{
     position: relative;
     padding: 0px;
     background-color: #fff;
+    overflow-x: hidden;
 }
 
 .separation{
@@ -56,6 +57,7 @@ body{
     flex-wrap: nowrap;
     flex-direction: row-reverse;
     padding-bottom: 20px;
+    border-bottom: 1px solid #fff;
 }
 
 .icone_menu{
@@ -80,10 +82,17 @@ body{
 	transition: .3s ease-in-out;
     padding-bottom: 4px;
 }
+nav, .navbar{
+    background-color: #000 !important;
+}
 
 .icon-top>a:hover, .icon-top>div.dropdown>a.nav-link:hover{
     border-bottom-color:#FDB819 ;
     color: #fff;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: #fff;
+    text-transform: uppercase;
 }
 
 .bi{
@@ -91,6 +100,11 @@ body{
 }
 #panier{
     margin-right: 15px;
+}
+
+ul.navbar-nav{
+    justify-content: space-around;
+    width: 100%;
 }
 
 /************** Body ************/
