@@ -10,7 +10,7 @@
 	<div id="info">
 		<div class="icone_menu" id="panier">
 			<div class="icon-top">
-				<a href="#" title="Contactez-nous">
+				<a href="#"  class="nav-link" title="Panier">
 					<i class="bi bi-cart"></i>
 					<span class="labelTop">Panier</span>
 				</a>
@@ -20,16 +20,14 @@
 		<div class="icone_menu" id="user">
 			<div class="icon-top">
 				<div class="dropdown">
-					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" title="Mon compte" id="dropdown000" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 						<i class="bi bi-person"></i>
 						<span class="labelTop">Mon compte</span>
 					</a>
-					<div class="dropdown-menu">
+					<div class="dropdown-menu" aria-labelledby="dropdown000">
 						{% if not app.user %}
-							<a class="dropdown-item" href="{{ path('app_login') }}">
-								Connexion
-							</a>
-							<a class="dropdown-item" href="{{ path('register') }}">Inscription</a>
+							<a class="dropdown-item" href="{{ path('app_login') }}"> Connexion </a>
+							<a class="dropdown-item" href="{{ path('register') }}">  Inscription </a>
 						{% else %}
 							<a class="dropdown-item" href="{{ path('account') }}">
 								Mon compte
@@ -37,9 +35,7 @@
 									{{ app.user.nom }}
 								</small>
 							</a>
-							<a class="dropdown-item" href="{{ path('app_logout') }}">
-								Déconnexion
-							</a>
+							<a class="dropdown-item" href="{{ path('app_logout') }}"> Déconnexion </a>
 						{% endif %}
 					</div>
 				</div>
@@ -48,9 +44,9 @@
 
 		<div class="icone_menu" id="contact">
 			<div class="icon-top">
-				<a href="#" title="Contactez-nous">
+				<a href="#" class="nav-link" title="Contactez-nous">
 					<i class="bi bi-envelope-open"></i>
-					<span class="labelTop">Contactez-nous</span>
+					<span class="labelTop">Contact</span>
 				</a>
 			</div>
 		</div>

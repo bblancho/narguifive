@@ -31,7 +31,8 @@ body{
     width: 100%;
 }
 .lien_logo img{
-    width: 170px;
+    width: 147.15px;
+    height: 150px;
 }
 
 .cart-icone{
@@ -67,15 +68,27 @@ body{
     border-right:none
 }
 
-.icon-top a{
+.icon-top>a, .icon-top>div.dropdown>a.nav-link {
     color: #fff;
     text-decoration: none;
     display: block;
     font-size: 17px;
     text-transform: uppercase;
     padding: 0px;
+    border-bottom: 1px solid transparent;
+    -webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+    padding-bottom: 4px;
 }
 
+.icon-top>a:hover, .icon-top>div.dropdown>a.nav-link:hover{
+    border-bottom-color:#FDB819 ;
+    color: #fff;
+}
+
+.bi{
+    padding-right: 10px;
+}
 #panier{
     margin-right: 15px;
 }
