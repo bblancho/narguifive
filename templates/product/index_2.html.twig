@@ -1,0 +1,758 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Nos produits
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+	<!-- Three columns of text below the carousel -->
+	<div class="columns-container">
+		<div id="column" class="container">
+			<div class="row">
+				<div class="lab_breadcrumb">
+					<div
+						class="container">
+						<!-- Breadcrumb -->
+						<div class="breadcrumb clearfix">
+							<div class="breadcrumb-i">
+								<a class="home" href="#" title="retour &agrave; Accueil">
+									<i class="icons-home"></i>Accueil</a>
+								<span class="navigation-pipe">&gt;</span>
+								Chicha
+							</div>
+						</div>
+						<!-- /Breadcrumb -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="columns-container">
+		<div id="columns" class="container">
+
+			<div class="row">
+				<div
+					id="left_column" class=" col-xs-12 col-sm-3">
+					<!-- Block categories module -->
+					<div id="categories_block_left" class="block">
+						<div
+							class="title_block h2 active">
+							<!-- Chicha -->
+							Sous-catégories
+						</div>
+						<div class="block_content">
+							<ul class="tree dhtml">
+
+								<li>
+									<a href="#" title="">
+										Chicha classique
+									</a>
+								</li>
+
+
+								<li>
+									<a href="#" title="">
+										Chicha en verre
+									</a>
+								</li>
+
+
+								<li>
+									<a href="#" title="">
+										Chicha haut de gamme
+									</a>
+								</li>
+
+
+								<li class="last">
+									<a href="#" title="">
+										Chicha traditionnelle
+									</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+					<!-- /Block categories module -->
+
+					<div
+						id="layered_block_left" class="block">
+						<!-- <p class="title_block">Catalogue</p> -->
+						<p class="title_block">Filtres</p>
+						<div class="block_content">
+							<form action="#" id="layered_form">
+								<div>
+									<div id="enabled_filters">
+										<span class="layered_subtitle" style="float: none;">
+											Filtres actifs :
+										</span>
+										<ul></ul>
+									</div>
+									<div class="layered_filter">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Disponibilité</span>
+										</div>
+										<ul id="ul_layered_quantity_0" class="col-lg-12 layered_filter_ul">
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_quantity_0" id="layered_quantity_0" value="0"/>
+												<label for="layered_quantity_0">
+													<a href="#">En cours de réapprovisionnement<span>
+															(xx)</span>
+													</a>
+												</label>
+											</li>
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_quantity_1" id="layered_quantity_1" value="1"/>
+												<label for="layered_quantity_1">
+													<a href="#">En Stock<span>
+															(xx)</span>
+													</a>
+												</label>
+											</li>
+										</ul>
+									</div>
+
+									<div class="layered_filter">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Fabricant</span>
+										</div>
+										<ul id="ul_layered_manufacturer_0" class="col-lg-12 layered_filter_ul">
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_manufacturer_118" id="layered_manufacturer_118" value="118"/>
+												<label for="layered_manufacturer_118">
+													<a href="#">Lorem ipsum<span>
+															(x)</span>
+													</a>
+												</label>
+											</li>
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_manufacturer_151" id="layered_manufacturer_151" value="151"/>
+												<label for="layered_manufacturer_151">
+													<a href="#">Lorem ipsum<span>
+															(x)</span>
+													</a>
+												</label>
+											</li>
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_manufacturer_198" id="layered_manufacturer_198" value="198"/>
+												<label for="layered_manufacturer_198">
+													<a href="#">Lorem ipsum<span>
+															(x)</span>
+													</a>
+												</label>
+											</li>
+										</ul>
+									</div>
+									<div class="layered_price" style="display: none;">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Prix</span>
+										</div>
+										<ul id="ul_layered_price_0" class="col-lg-12 layered_filter_ul">
+
+											<div class="layered_slider_container">
+												<div class="layered_slider" id="layered_price_slider" data-type="price" data-format="2" data-unit="€"></div>
+											</div>
+											<span id="layered_price_range"></span>
+										</ul>
+									</div>
+								</div>
+								<input type="hidden" name="id_category_layered" value="97"/>
+							</form>
+						</div>
+						<div id="layered_ajax_loader" style="display: none;">
+							<p>
+								<img src="{{ asset('assets/images/icones/loader.gif') }}" alt=""/>
+								<br/>
+								Chargement...
+							</p>
+						</div>
+					</div>
+
+					<style>
+						* {
+							-webkit-font-smoothing: antialiased;
+						}
+
+						/*# WIDGET LATERAL*/
+						#steavisgarantis {
+							display: block;
+							width: 100%;
+							max-width: 100%;
+							line-height: 0;
+							text-align: center;
+							padding-bottom: 18px
+						}
+
+						#steavisgarantis {
+							display: inline-block;
+							margin: 15px 0;
+							/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefefe+7,fefefe+28,f3f3f3+52 */
+							background: #ffffff;
+							/* Old browsers */
+							-moz-box-shadow: inset 0 0 0 1px #f2f2f2;
+							box-shadow: inset 0 0 0 1px #f2f2f2;
+						}
+
+						.agWidget {
+							color: #111111;
+							font-family: 'Open Sans', sans-serif;
+							font-weight: 400
+						}
+
+						.rad {
+							-moz-border-radius: 8px;
+							-webkit-border-radius: 8px;
+							border-radius: 8px;
+						}
+
+						/*boutons*/
+						.agBt {
+							display: inline-block;
+							background: #1c5399;
+							border: 1px solid #1c5399;
+							color: #ffffff !important;
+							font-size: 10px;
+							line-height: 10px;
+							letter-spacing: 1px;
+							text-transform: uppercase;
+							text-align: center;
+							padding: 4px 10px;
+							width: auto;
+							text-decoration: none !important;
+						}
+
+						.agBt:hover {
+							background: none;
+							color: #1c5399 !important;
+							text-decoration: none !important;
+						}
+
+						.de .agBt:hover {
+							background: none;
+							color: #333333 !important;
+							text-decoration: none !important;
+						}
+
+						.de .agBt {
+							background: #333333;
+							border: 1px solid #333333;
+						}
+
+						.it .agBt:hover {
+							background: none;
+							color: #067a45 !important;
+							text-decoration: none !important;
+						}
+
+						.it .agBt {
+							background: #067a45;
+							border: 1px solid #067a45;
+						}
+
+						.es .agBt:hover {
+							background: none;
+							color: #021F3C !important;
+							text-decoration: none !important;
+						}
+
+						.es .agBt {
+							background: #021F3C;
+							border: 1px solid #021F3C;
+						}
+
+						.agBtBig {
+							font-size: 11px;
+							line-height: 11px;
+							padding: 5px 14px;
+						}
+
+						.rad {
+							-moz-border-radius: 8px;
+							-webkit-border-radius: 8px;
+							border-radius: 8px;
+						}
+
+						.rad4 {
+							-moz-border-radius: 4px;
+							-webkit-border-radius: 4px;
+							border-radius: 4px;
+						}
+
+						/*background*/
+						.bgGrey1 {
+							background: #f9f9f9
+						}
+
+						.bgGrey2 {
+							background: #f3f3f3
+						}
+
+						/*transition*/
+						.agBt {
+							-webkit-transition: background 0.4s ease;
+							-moz-transition: background 0.4s ease;
+							-ms-transition: background 0.4s ease;
+							-o-transition: background 0.4s ease;
+							transition: background 0.4s ease;
+						}
+					</style>
+				</div>
+
+				<div id="center_column" class="center_column col-xs-12 col-sm-9">
+
+					<div class="content_scene_cat">
+
+						<div class="content_scene_cat_bg" style="background-image: {{ asset('assets/images/header/chicha.jpg') }}; min-height:520px;">
+							<div class="cat_desc">
+								<span class="category-name">
+									Chicha
+								</span>
+								<div class="rte">
+									<h1>Matériel pour Chicha</h1>
+									<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam ratione
+										                                        eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis
+										                                        debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+										                                        officiis.</p>
+									<h2>Boutique de Chicha tendance</h2>
+									<p><br/>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam
+										                                        ratione
+										                                        eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis
+										                                        debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+										                                        officiis.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="page-heading product-listing">
+						<span class="cat-name">Chicha&nbsp;</span>
+					</div>
+					<div class="pull-right">
+						<span class="heading-counter">Il y a xxx produits.</span>
+					</div>
+
+					<div class="content_sortPagiBar clearfix">
+						<div class="sortPagiBar clearfix">
+							<ul class="display hidden-xs pull-left">
+								<li id="grid">
+									<a rel="nofollow" href="javascript:void(0)" title="Grille">
+										<i class="icons-grid"></i>
+									</a>
+								</li>
+								<li id="list">
+									<a rel="nofollow" href="javascript:void(0)" title="Liste">
+										<i class="icon icon-align-justify"></i>
+									</a>
+								</li>
+							</ul>
+
+							<!-- /Trier -->
+							<form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha" class="productsSortForm pull-right">
+								<div class="select selector1">
+									<label for="selectProductSort">Tri</label>
+									<select id="selectProductSort" class="selectProductSort form-control">
+										<option value="quantity:desc">--</option>
+										<option value="price:asc">Le moins cher</option>
+										<option value="price:desc">Le plus cher</option>
+										<option value="name:asc">De A &agrave; Z</option>
+										<option value="name:desc">De Z &agrave; A</option>
+										<option value="quantity:desc" selected="selected">En Stock</option>
+										<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
+										<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
+										</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<!-- Products list -->
+					<ul class="lablistproducts product_list grid row">
+
+						<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line
+								                                first-item-of-mobile-line
+								                                ">
+							<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+								<div class="left-block">
+									<div class="product-image-container">
+										<a class="product_image" href="product_page.html" title="LOREM IPSUM DOLOR TITLE">
+											<img class="img-responsive img1" src="images/chicha-celeste-junior-20.jpg" alt="LOREM IPSUM DOLOR TITLE"/>
+
+										</a>
+
+										<div class="actions">
+											<ul class="add-to-links">
+												<li class="lab-Wishlist">
+													<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="#" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
+														<i class="mdi mdi-heart-outline"></i>
+														<span>Ajouter &agrave;
+															                                                            la liste de souhaits</span>
+													</a>
+
+												</li>
+												<li class="lab-quick-view">
+													<a class="" href="product_page.html" data-id-product="812" title="Aper&ccedil;u rapide">
+														<i class="mdi mdi-eye"></i>
+														<span>Aper&ccedil;u rapide</span>
+													</a>
+												</li>
+											</ul>
+
+										</div>
+
+										<span class="availability">
+											<span class=" label-success">
+												Disponible
+												<!-- 																							 -->
+											</span>
+										</span>
+
+									</div>
+
+								</div>
+								<div class="right-block">
+									<div class="product-name" itemprop="name">
+										<a href="product_page.html" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
+											Lorem ipsum dolor sit
+										</a>
+									</div>
+
+									<p class="product-desc" itemprop="description">
+										Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
+										                                        ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
+										                                        architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
+										                                        tempora.
+									</p>
+
+									<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+										<span class="price product-price" itemprop="price">
+											1,00 €
+										</span>
+										<meta itemprop="priceCurrency" content="EUR"/>
+
+
+									</div>
+
+									<div class="color-list-container"></div>
+									<div class="flags"></div>
+
+									<div class="lab-cart">
+										<a class="button ajax_add_to_cart_button btn btn-default" href="http://www.royaume-smoke.com/panier?add=1&amp;id_product=812&amp;token=bbfc8aaef5b0d21a9989e541e4bcebf5" data-id-product="812" title="Ajouter au panier">
+											<span>+ Ajouter au panier</span>
+										</a>
+
+									</div>
+								</div>
+
+							</div>
+							<!-- .product-container> -->
+						</li>
+
+						<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 last-item-of-tablet-line
+								                                last-item-of-mobile-line
+								                                ">
+							<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+								<div class="left-block">
+									<div class="product-image-container">
+										<a class="product_image" href="product_page.html" title="LOREM IPSUM DOLOR TITLE">
+											<img class="img-responsive img1" src="images/chicha-celeste-junior-20.jpg" alt="LOREM IPSUM DOLOR TITLE"/>
+
+										</a>
+
+										<div class="actions">
+											<ul class="add-to-links">
+												<li class="lab-Wishlist">
+													<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="#" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
+														<i class="mdi mdi-heart-outline"></i>
+														<span>Ajouter &agrave;
+															                                                            la liste de souhaits</span>
+													</a>
+
+												</li>
+												<li class="lab-quick-view">
+													<a class="" href="product_page.html" data-id-product="812" title="Aper&ccedil;u rapide">
+														<i class="mdi mdi-eye"></i>
+														<span>Aper&ccedil;u rapide</span>
+													</a>
+												</li>
+											</ul>
+
+										</div>
+
+										<span class="availability">
+											<span class=" label-success">
+												Disponible
+												<!-- 																							 -->
+											</span>
+										</span>
+
+									</div>
+
+								</div>
+								<div class="right-block">
+									<div class="product-name" itemprop="name">
+										<a href="product_page.html" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
+											Lorem ipsum dolor sit
+										</a>
+									</div>
+
+									<p class="product-desc" itemprop="description">
+										Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
+										                                        ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
+										                                        architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
+										                                        tempora.
+									</p>
+
+									<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+										<span class="price product-price" itemprop="price">
+											1,00 €
+										</span>
+										<meta itemprop="priceCurrency" content="EUR"/>
+
+
+									</div>
+
+									<div class="color-list-container"></div>
+									<div class="flags"></div>
+
+									<div class="lab-cart">
+										<a class="button ajax_add_to_cart_button btn btn-default" href="http://www.royaume-smoke.com/panier?add=1&amp;id_product=812&amp;token=bbfc8aaef5b0d21a9989e541e4bcebf5" data-id-product="812" title="Ajouter au panier">
+											<span>+ Ajouter au panier</span>
+										</a>
+
+									</div>
+								</div>
+
+							</div>
+							<!-- .product-container> -->
+						</li>
+
+						<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 last-in-line
+								                                    first-item-of-tablet-line			 first-item-of-mobile-line			">
+							<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+								<div class="left-block">
+									<div class="product-image-container">
+										<a class="product_image" href="product_page.html" title="Chicha Molotov X Tsar">
+											<img class="img-responsive img1" src="images/chicha-molotov-x-tsar.jpg" alt="Chicha Molotov X Tsar"/>
+
+										</a>
+										<div class="actions">
+											<ul class="add-to-links">
+												<li class="lab-Wishlist">
+													<a onclick="WishlistCart('wishlist_block_list', 'add', '2453', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="#" data-id-product="2453" title="Ajouter &agrave; la liste de souhaits">
+														<i class="mdi mdi-heart-outline"></i>
+														<span>Ajouter &agrave;
+															                                                            la liste de souhaits</span>
+													</a>
+
+												</li>
+												<li class="lab-quick-view">
+													<a class="" href="product_page.html" data-id-product="2453" title="Aper&ccedil;u rapide">
+														<i class="mdi mdi-eye"></i>
+														<span>Aper&ccedil;u rapide</span>
+													</a>
+												</li>
+											</ul>
+
+										</div>
+
+										<span class="availability">
+											<span class=" label-success">
+												Disponible
+												<!-- 																							 -->
+											</span>
+										</span>
+
+									</div>
+
+								</div>
+								<div class="right-block">
+									<div class="product-name" itemprop="name">
+										<a href="product_page.html" title="Chicha Molotov X Tsar" itemprop="url">
+											Lorem ipsum dolor, sit amet
+										</a>
+									</div>
+
+									<p class="product-desc" itemprop="description">
+										Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
+										                                        ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
+										                                        architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
+										                                        tempora.
+									</p>
+
+									<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+										<span class="price product-price" itemprop="price">
+											1,00 €
+										</span>
+										<meta itemprop="priceCurrency" content="EUR"/>
+
+
+									</div>
+
+									<div class="color-list-container"></div>
+									<div class="flags"></div>
+
+									<div class="lab-cart">
+										<a
+											class="button ajax_add_to_cart_button btn btn-default" href="http://www.royaume-smoke.com/panier?add=1&amp;id_product=2453&amp;token=bbfc8aaef5b0d21a9989e541e4bcebf5" data-id-product="2453" title="Ajouter au panier">
+											<!-- <i class="icons-handbag"></i> -->
+											<span>+ Ajouter au panier</span>
+										</a>
+
+									</div>
+								</div>
+
+							</div>
+							<!-- .product-container> -->
+						</li>
+
+						<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line	last-item-of-tablet-line
+								                        last-item-of-mobile-line">
+							<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+								<div class="left-block">
+									<div class="product-image-container">
+										<a class="product_image" href="product_page.html" title="CHICHA PORTABLE EL -BADIA P1">
+											<img class="img-responsive img1" src="images/chicha-portable-el-badia-p1.jpg" alt="CHICHA PORTABLE EL -BADIA P1"/>
+
+										</a>
+										<div class="actions">
+											<ul class="add-to-links">
+												<li class="lab-Wishlist">
+													<a onclick="WishlistCart('wishlist_block_list', 'add', '2565', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="#" data-id-product="2565" title="Ajouter &agrave; la liste de souhaits">
+														<i class="mdi mdi-heart-outline"></i>
+														<span>Ajouter &agrave;
+															                                                            la liste de souhaits</span>
+													</a>
+
+												</li>
+												<li class="lab-quick-view">
+													<a class="" href="product_page.html" data-id-product="2565" title="Aper&ccedil;u rapide">
+														<i class="mdi mdi-eye"></i>
+														<span>Aper&ccedil;u rapide</span>
+													</a>
+												</li>
+											</ul>
+
+										</div>
+
+										<span class="availability">
+											<span class=" label-success">
+												Disponible
+												<!-- 																							 -->
+											</span>
+										</span>
+
+									</div>
+
+								</div>
+								<div class="right-block">
+									<div class="product-name" itemprop="name">
+										<a href="product_page.html" title="CHICHA PORTABLE EL -BADIA P1" itemprop="url">
+											LOREM IPSUM DOLOR
+										</a>
+									</div>
+
+									<p class="product-desc" itemprop="description">
+										Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint porro sed eum
+										                                        nisi iste ipsam nostrum quidem quam pariatur, assumenda qui maiores autem
+										                                        eligendi ipsa rerum quisquam unde? Nihil, vitae.
+									</p>
+
+									<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+										<span class="price product-price" itemprop="price">
+											00 €
+										</span>
+										<meta itemprop="priceCurrency" content="EUR"/>
+
+									</div>
+
+									<div class="color-list-container"></div>
+									<div class="flags"></div>
+
+									<div class="lab-cart">
+										<a class="button ajax_add_to_cart_button btn btn-default" href="http://www.royaume-smoke.com/panier?add=1&amp;id_product=2565&amp;token=bbfc8aaef5b0d21a9989e541e4bcebf5" data-id-product="2565" title="Ajouter au panier">
+											<span>+ Ajouter au panier</span>
+										</a>
+
+									</div>
+								</div>
+
+							</div>
+						</li>
+
+					</ul>
+
+					<div class="content_sortPagiBar">
+						<div class="bottom-pagination-content clearfix">
+
+							<div id="pagination_bottom" class="pagination clearfix">
+								<form class="showall" action="#" method="get">
+									<div>
+										<button type="submit" class="btn btn-default button exclusive-medium">
+											<span>Afficher tout</span>
+										</button>
+										<input type="hidden" name="id_category" value="97"/>
+										<input name="n" id="nb_item" class="hidden" value="323"/>
+									</div>
+								</form>
+								<ul class="pagination">
+									<li id="pagination_previous_bottom" class="disabled pagination_previous">
+										<span>
+											<i class="icon-chevron-left"></i>
+											<b>Pr&eacute;c&eacute;dent</b>
+										</span>
+									</li>
+									<li class="active current">
+										<span>
+											<span>1</span>
+										</span>
+									</li>
+									<li>
+										<a href="/97-chicha?p=2">
+											<span>2</span>
+										</a>
+									</li>
+									<li>
+										<a href="/97-chicha?p=3">
+											<span>3</span>
+										</a>
+									</li>
+									<li class="truncate">
+										<span>
+											<span>...</span>
+										</span>
+									</li>
+									<li>
+										<a href="/97-chicha?p=11">
+											<span>11</span>
+										</a>
+									</li>
+									<li id="pagination_next_bottom" class="pagination_next">
+										<a href="/97-chicha?p=2" rel="next">
+											<b>Suivant</b>
+											<i class="icon-chevron-right"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="product-count">
+								R&eacute;sultats 1 - 30 sur 323.
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div>{% endblock %}
