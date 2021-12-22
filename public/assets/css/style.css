@@ -2,6 +2,7 @@ body{
     position: relative;
     padding: 0px;
     background-color: #fff;
+    overflow-x: hidden;
 }
 
 .separation{
@@ -31,48 +32,8 @@ body{
     width: 100%;
 }
 .lien_logo img{
-    width: 170px;
-}
-
-.navbar{
-    height: 70px;
-    padding: 0px;
-    border-bottom: 1px solid;
-}
-
-.navbar-collapse{
-    justify-content: center !important;
-    height: 70px;
-}
-
-.navbar-nav {
-    height: 70px;
-    align-items: center;
-}
-
-.nav-item{
-    height: 70px;
-}
-
-.nav-link{
-    height: 70px;
-    display: block;
-    padding-top: 21px;
-}
-
-nav a {
-    height: 50px;
-    text-transform: uppercase;
-    color: #000;
-    padding: 1% 1%;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-nav a:hover{
-    background-color: #000;
-    color: #fff;
-    text-decoration: none;
+    width: 147.15px;
+    height: 150px;
 }
 
 .cart-icone{
@@ -90,13 +51,13 @@ nav a:hover{
     color: #fff;
 }
 
-/****** new menu *******/
 #info{
     background-color: #000;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row-reverse;
     padding-bottom: 20px;
+    border-bottom: 1px solid #fff;
 }
 
 .icone_menu{
@@ -109,16 +70,43 @@ nav a:hover{
     border-right:none
 }
 
-.icon-top a{
+.icon-top>a, .icon-top>div.dropdown>a.nav-link {
     color: #fff;
     text-decoration: none;
     display: block;
     font-size: 17px;
     text-transform: uppercase;
+    padding: 0px;
+    -webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+    padding-bottom: 4px;
+}
+nav, .navbar{
+    background-color: #000 !important;
 }
 
+.icon-top>a:hover, .icon-top>div.dropdown>a.nav-link:hover{
+    color: #F1A212;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.bi{
+    padding-right: 10px;
+}
+
+.labelTop{
+    display: inline-block;
+}
 #panier{
     margin-right: 15px;
+}
+
+ul.navbar-nav{
+    justify-content: space-around;
+    width: 100%;
 }
 
 /************** Body ************/
@@ -167,6 +155,10 @@ nav a:hover{
     margin-right: 15px; */
 }
 
+.text-center {
+    padding: 10px 60px !important;
+}
+
 .title-block h1.title-custom{
     color: #000;
     display: block;
@@ -175,9 +167,10 @@ nav a:hover{
     letter-spacing: 2px;
     font-weight: 100;
     line-height: 100px;
-    margin: 0;
+    margin: 0px;
     position: relative;
     text-transform: uppercase;
+    padding: 0px;
 }
 
 .title-block h1.title-custom::before{

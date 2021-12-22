@@ -71,7 +71,7 @@ class ProductController extends AbstractController
             $produits_best = $this->repoProduct->findByIsBest(1);
         }
 
-        return $this->render('product/index.html.twig', [
+        return $this->render('product/index_2.html.twig', [
             'produits' => $produits,
             'form' => $form->createView()
         ]);
