@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Product;
 
 use App\Repository\GoutRepository;
 use Doctrine\ORM\Mapping as ORM;

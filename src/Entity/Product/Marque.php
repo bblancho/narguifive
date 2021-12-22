@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Product;
 
 use App\Repository\MarqueRepository;
 use Doctrine\ORM\Mapping as ORM;

@@ -2,7 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Gout;
+
+use App\Entity\Product\Gout;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

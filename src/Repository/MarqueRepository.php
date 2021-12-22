@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Marque;
+use App\Entity\Product\Marque;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
