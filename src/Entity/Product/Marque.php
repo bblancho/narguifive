@@ -10,6 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Marque
 {
+    public const STATUS_ORDER = [
+        1 => 'Non validée',
+        2 => "Payée",
+        3 => "En cours de préparation",
+        4 => 'En cours de livraison',
+        5 => 'Livrée',
+        0 => 'Non valide',
+    ];
+
+    public const STATUS_DEFAULT_STATUS_ORDER = 1 ; // annulée
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
