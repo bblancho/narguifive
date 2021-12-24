@@ -7,6 +7,7 @@ use App\Form\ContactType;
 use App\Form\Utils\SearchType;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +19,15 @@ class HomeController extends AbstractController
 {
     private $manager;
     private $repoProduct;
+    private $category;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct)
+    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category)
     {
-        $this->manager = $manager;
-        $this->repoProduct = $repoProduct;
+        $this->manager = $manager ;
+        $this->repoProduct = $repoProduct ;
+        $this->category = $category ;
     }
-
+  
     /**
      * @Route("/", name="home")
      */
