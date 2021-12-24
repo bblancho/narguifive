@@ -16,6 +16,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Product
 {
+    public const QTE_GRAMME = [
+        1 => 0,
+        2 => 3,
+        3 => 6,
+        4 => 10,
+    ];
+
+    public const DEFAULT_QTE_GRAMME = 1 ; // Aucun
+
     public const VAL_DEFAULT = 0;
     /**
      * @ORM\Id
@@ -84,22 +93,22 @@ class Product
     private $nouveaute  = self::VAL_DEFAULT ;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $taille;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $vase;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , nullable=true)
      */
     private $tuyau;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , nullable=true)
      */
     private $fixation;
 
@@ -127,6 +136,16 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isBest;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="products")
+     */
+    private $marque;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $gramme = self::DEFAULT_QTE_GRAMME ;
 
     public function __construct()
     {
@@ -399,6 +418,35 @@ class Product
         $this->isBest = $isBest;
 
         return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): self
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getGramme(): ?int
+    {
+        return $this->gramme;
+    }
+
+    public function setGramme(?int $gramme): self
+    {
+        $this->gramme = $gramme;
+
+        return $this;
+    }
+
+    public function getGrammeToString(): ?string
+    {
+        return $this->gramme ? self::QTE_GRAMME[$this->gramme] : null ;
     }
     
 }

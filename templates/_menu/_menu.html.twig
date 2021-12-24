@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MenuController!{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mb-2 mb-md-0">
+                    {% for category in categories %}
+                        {% if category.sousCategory is not empty %} {# chicha #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="categorie/{{ category.slug }}" id="{{ category.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ category.nom }}</a>
+                                <div class="dropdown-menu" aria-labelledby="{{ category.id }}"> 
+                                    {% for cat in category.sousCategory %}
+                                        <a  class="dropdown-item" href="souscategorie/{{ cat.slug }}">{{ cat.nom }}</a>
+                                    {% endfor %}
+                                </div>
+                            </li> 
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="categorie/{{ category.slug }}">{{ category.nom }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+{% endblock %}

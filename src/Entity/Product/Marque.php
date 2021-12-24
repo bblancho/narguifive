@@ -3,6 +3,8 @@
 namespace App\Entity\Product;
 
 use App\Repository\MarqueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,16 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Marque
 {
-    public const STATUS_ORDER = [
-        1 => 'Non validée',
-        2 => "Payée",
-        3 => "En cours de préparation",
-        4 => 'En cours de livraison',
-        5 => 'Livrée',
-        0 => 'Non valide',
+    public const TYPE_FABRIQUANT = [
+        1 => 'Aucun',
+        2 => "Chicha",
+        3 => "Goût chicha",
+        4 => 'E-liquide',
     ];
 
-    public const STATUS_DEFAULT_STATUS_ORDER = 1 ; // annulée
+    public const STATUS_DEFAULT_YPE_FABRIQUANT = 1 ; // Aucun
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,7 +35,17 @@ class Marque
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $type;
+    private $type = self::STATUS_DEFAULT_YPE_FABRIQUANT;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="marque")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,6 +72,40 @@ class Marque
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+    public function getTypeToString(): ?string
+    {
+        return $this->type ? self::TYPE_FABRIQUANT[$this->type] : null ;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getMarque() === $this) {
+                $product->setMarque(null);
+            }
+        }
 
         return $this;
     }
