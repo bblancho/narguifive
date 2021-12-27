@@ -60,6 +60,7 @@ class ProductController extends AbstractController
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
             $produits=$this->repoProduct->findBy(array('marque'=>$filter));
+            $total=count($produits);
              // Paginate the results of the query
              $produits = $paginator->paginate(
                 // Doctrine Query, not results
@@ -70,7 +71,7 @@ class ProductController extends AbstractController
                 8
             );
           
-           return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits'))]);
+           return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits')), 'total'=>$total]);
         }
 
 
@@ -95,6 +96,7 @@ class ProductController extends AbstractController
 
         } else {
             $produits = $this->repoProduct->findAll();
+            $total= count($produits);
 
             // Paginate the results of the query
             $produits = $paginator->paginate(
@@ -118,6 +120,7 @@ class ProductController extends AbstractController
             'sousCats' => $sousCats,
             'fabricants'=>$fabricants,
             'from_fabs'=>$from_fabs,
+            'total'=>$total,
             'form' => $form->createView()
         ]);
     }

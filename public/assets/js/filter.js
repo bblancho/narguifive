@@ -1,4 +1,3 @@
-
 window.onload=()=>{
     const filterform = document.querySelector("#layered_form");
     document.querySelectorAll("#layered_form input").forEach(input =>{
@@ -22,6 +21,8 @@ window.onload=()=>{
                 response.json()
             ).then(data => {
                 const content = document.querySelector("#products_filter");
+                const total= document.querySelector("#total");
+                total.innerHTML="Il y a "+ data.total+" produits";
                 content.innerHTML= data.content;
 
             }).catch(e=>alert(e));
