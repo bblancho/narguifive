@@ -56,14 +56,62 @@ class ProductController extends AbstractController
             $from_fabs[$fabricant->getNom()]=$prods;
         }
       
-
+        $sort=$request->get("sort");
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
+
             if ($filter==null){
-                $produits=$this->repoProduct->findAll();
+                if($sort=='name:asc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'asc'));
+                }
+                elseif($sort=='name:desc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'desc'));
+                }
+                elseif($sort=='price:asc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'asc'));
+                }
+                elseif($sort=='price:desc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'desc'));
+                }
+                elseif($sort=='reference:asc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'asc'));
+                }
+                elseif($sort=='reference:desc'){
+                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'desc'));
+                }
+                elseif($sort=='quantity:desc'){
+                    $produits=$this->repoProduct->findBy(array());
+                }else{
+                    $produits=$this->repoProduct->findBy(array());
+                }
             }else{
-                $produits=$this->repoProduct->findBy(array('marque'=>$filter));
+
+                if($sort=='name:asc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'asc'));
+                }
+                elseif($sort=='name:desc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'desc'));
+                }
+                elseif($sort=='price:asc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'asc'));
+                }
+                elseif($sort=='price:desc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'desc'));
+                }
+                elseif($sort=='reference:asc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'asc'));
+                }
+                elseif($sort=='reference:desc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'desc'));
+                }
+                elseif($sort=='quantity:desc'){
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter));
+                }else{
+                    $produits=$this->repoProduct->findBy(array('marque'=>$filter));
+                }
+                
             }
+           
 
             $fabs=$this->repoMarque->findBy(array('id'=>$filter));
             $actifs=array();

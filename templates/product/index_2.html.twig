@@ -74,10 +74,7 @@
 											Filtres actifs :
 										</span>
 										<ul id="filtre_actif">
-											<li>
-												<a href="#" data-rel="layered_manufacturer_151" title="Annuler"><i class="icon-remove"></i></a>	
-													Fabricant : Aladin	
-											</li>
+										
 										
 										</ul>
 									</div>
@@ -334,7 +331,7 @@
 							<form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha" class="productsSortForm pull-right">
 								<div class="select selector1">
 									<label for="selectProductSort">Tri</label>
-									<select id="selectProductSort" class="selectProductSort form-control">
+									<select id="selectProductSort" class="selectProductSort form-control" onchange="tri(this)">
 										<option value="quantity:desc">--</option>
 										<option value="price:asc">Le moins cher</option>
 										<option value="price:desc">Le plus cher</option>
