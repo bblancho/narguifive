@@ -1,0 +1,385 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Nos produits
+{% endblock %}
+
+{% block carousel %}{%  endblock %}
+
+{% block body %}
+	<!-- Three columns of text below the carousel -->
+
+    <div class="columns-container">
+        <div id="column" class="container">
+            <div class="row">
+                <div class="lab_breadcrumb">
+                    <div class="container">
+                        <!-- Breadcrumb -->
+                        <div class="breadcrumb clearfix">
+                            <div class="breadcrumb-i">
+                                <a class="home" href="#" title="retour &agrave; Accueil"><i class="icons-home"></i>Accueil</a>
+                            </div>
+                        </div>
+                        <!-- /Breadcrumb -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="container">
+		<div class="title-block">
+			<h1 class="text-center title-custom">
+				Notre sélection
+			</h1>
+		</div>
+
+		<span class="subtitle">
+			Découvrez nos derniers produits
+		</span>
+
+		<div class="text-center btn-filtre">
+			<button type="button" class="btn btn-default button lien_category" id="news">
+				Nouveautés
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="pack">
+				Pack
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="promos">
+				Promos
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="chichas">
+				Chichas
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="gouts">
+				Goûts
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="accesssoires">
+				Accessoires
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="electronique">
+				C.Electronique
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="liquide">
+				E-liquide
+			</button>
+			<button type="button" class="btn btn-default button lien_category" id="cbd">
+				CBD
+			</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="container">
+			<div class="row product-container">
+				{% for produit in produits %}
+					<div class="col-md-4">
+						<div class="product-item text-center">
+							<a class="link-img" href="{{ path("product_show", {slug: produit.slug} ) }}">
+								<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+							</a>
+							<h5>
+								{{ produit.nom }}
+							</h5>
+							<span class="product-price">
+								NARGUI FIVE
+							</span>
+							<span>
+								Catégorie:
+								{{ produit.category.nom }}
+							</span>
+							<span>
+								Sous-catégorie:
+								{{ produit.sousCategory.nom }}
+							</span>
+							<span class="product-price">{{ (produit.price) | number_format(2, ',', '.') }}
+								€
+							</span>
+							<span class="nbr-product">
+								en stock
+							</span>
+							<a class="btn btn-lg btn-block btn-outline-primary link-img" href="{{ path("cart_add", {id : produit.id}) }}" role="button">
+								Ajouter au panier
+							</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(produits) }}
+			</div>
+		</div>
+
+		<div class="bloc-chicha">
+			<div class="title-block container">
+				<h2 class="text-center title-custom">
+					Nos produits
+				</h2>
+			</div>
+
+			<div class="hover01 column">
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/chicha-6.jpg') }}"/>
+						</a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							Nos chichas de luxe
+						</h3>
+						<a class="btn " href="">
+							Découvrez
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/chicha-4.jpg') }}"/>
+						</a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							Charbons chichas
+						</h3>
+						<a class="btn  " href="">
+							Découvrez
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/gout.jpg') }}"/></a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							Plus de Goûts chichas
+						</h3>
+						<a class="btn " href="">
+							Découvrire
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/tuyaux.jpg') }}"/></a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							TUYAUX
+						</h3>
+						<a class="btn " href="">
+							Découvrire
+						</a>
+					</div>
+				</div>
+
+				<hr class="sep">
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/electronique.png') }}"/>
+						</a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							C.Electronique
+						</h3>
+						<a class="btn " href="">
+							Découvrez
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/e-liquide.png') }}"/>
+						</a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							E-Liquide
+						</h3>
+						<a class="btn  " href="">
+							Découvrez
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/cbd-2.png') }}"/></a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							CBD
+						</h3>
+						<a class="btn " href="">
+							Découvrire
+						</a>
+					</div>
+				</div>
+
+				<div class="chicha-home">
+					<figure>
+						<a href="">
+							<img src="{{ asset('assets/images/chicha-home/accessoire.png') }}"/></a>
+					</figure>
+					<div class="description-block">
+						<h3>
+							Accessoires
+						</h3>
+						<a class="btn " href="">
+							Découvrire
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-home">
+			<h2 class="text-center">
+				NarguiFive : LA BOUTIQUE CHICHA DE RÉFÉRENCE
+			</h2>
+			<p class="container">
+				Fait d’expertise, de sérieux et d’inventivité, le style Darnashop s’est imposé dans l’univers du narguilé comme un incontournable.
+				Plus qu’un magasin de vente de chicha, Darnashop c’est une sélection unique de modèles, de foyers, de tuyaux, de charbons et d’accessoires pour chicha.
+				Kaloud, Quasar, Dschinni, ODUMAN,Aladin, AMY, Tom Cococha, Devil Smoke, et bien d‘autres… Les plus grandes marques du monde 
+				de la chicha ont choisi Darnashop comme distributeur officiel. De la chicha portable à la chicha design pour décorer votre salon, 
+				de la chicha pas chère à la chicha de luxe, toutes les marques qui comptent dans la famille du narguilé se donnenr rendez-vous chez Darnashop! 
+				Il en résulte un catalogue exceptionnel qui n‘a qu‘une n’a qu’une seule ambition : Trouver le modèle qui vous correspond.
+			</p><br>
+
+			<h2 class="text-center">
+				LE NUMÉRO 1 DU GOÛT POUR CHICHA EN FRANCE
+			</h2>
+			<p>
+				Pionnier de la culture de la chicha en France, c‘est grâce à Darnashop que de nombreux goût chicha sans tabac sont désormais en vente libre en France, 
+				et que vous pouvez acheter sur notre site de nombreuses pâtes à chichas, pierres aromatisées pour narguilé, 
+				de la crème pour chicha et de nombreux parfums. Achetez votre gout chicha moins cher en optant pour du gout sans nicotine, 
+				nous avons forcément la saveur qui vous plaira parmi nos centaines de références en stock, et nous vous livrons en 24H!
+			</p>
+		</div>
+
+		<div class="bloc-chicha">
+			<div class="title-block container">
+				<h2 class="text-center title-custom">
+					Nos Valeurs
+				</h2>
+
+				<div class="row ">
+					<div class="col-md-3 block-valeur">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/icones/truck.png') }}"/>
+							</a>
+						</figure>
+						<p>
+							<h3> Livraison gratuite </h3>
+							<span> Dès de 75€</span>
+						</p>
+					</div>
+					<div class="col-md-3 block-valeur">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/icones/security-payment.png') }}"/>
+							</a>
+						</figure>
+						<p>
+							<h3> paiement Sécurisé</h3>
+							<span> Cartes de crédit disponibles</span>
+						</p>
+					</div>
+
+					<div class="col-md-3 block-valeur">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>
+							</a>
+						</figure>
+						<p>
+							<h3> Nos cadeaux </h3>
+							<span> Obtenez des cadeaux et des rabais </span>
+						</p>
+					</div>
+					<div class="col-md-3 block-valeur">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/icones/idee.png') }}"/>
+							</a>
+						</figure>
+						<p>
+							<h3>
+								besoin d'un conseil
+							</h3>
+							<span> Cartes de crédit disponibles</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="partenaire">
+			<div class="title-block container">
+				<h2 class="text-center title-custom">
+					Nos partenaires
+				</h2>
+
+				<div class="row ">
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/elbadia.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/fumo.png') }}"/>
+							</a>
+						</figure>
+					</div>
+
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/kaloud.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires ">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/mig.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/chicha.png') }}"/>
+							</a>
+						</figure>
+					</div>
+					<div class="block-partenaires">
+						<figure>
+							<a href="#">
+								<img src="{{ asset('assets/images/partenaires/steamulation.png') }}"/>
+							</a>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+<div id="modal-log-activity" class="modal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Activités</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{% if is_granted("ROLE_SUPER_ADMIN") and activityList is defined and activityList|length > 0 %}
+
+					<div class="list-group">
+						{% for activity in activityList %}
+							<div class="list-group-item {{ loop.index0 is odd ? 'list-group-item-primary' : 'list-group-item-light' }}">
+								<small>{{ activity.date|format('dd/mm/yyyy hh:ii') }}
+									-
+									<b>{{ activity.str_date }}</b>
+								</small>
+								<p>{{ activity.fullname }}
+									{{ activity.action }}
+									l'entité
+									{{ activity.entity }}
+									({{ activity.id }})</p>
+								{% if activity.diff|length > 0 %}
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Champ modifié</th>
+												<th>Ancienne valeur</th>
+												<th>Valeur modifié</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for key, val in activity.diff %}
+												{% set oldValue = val[0] %}
+												{% set newValue = val[1] %}
+
+												{% if oldValue is null %}
+													{% set oldValue = "null" %}
+												{% elseif oldValue is iterable %}
+													{% set oldValue = "[" ~ oldValue|join(', ') ~"]" %}
+												{% endif %}
+
+												{% if newValue is null %}
+													{% set newValue = "null" %}
+												{% elseif newValue is iterable %}
+													{% set newValue = "[" ~ newValue|join(', ') ~"]" %}
+												{% endif %}
+
+												<tr>
+													<td>{{ key }}</td>
+													<td>{{ oldValue }}</td>
+													<td>{{ newValue }}</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+
+				{% else %}
+					Aucune activité de disponible
+				{% endif %}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>

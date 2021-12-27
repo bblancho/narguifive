@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nargui Five 93  - Mes Commandes {% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    
+    
+
+    
+</div>
+
+<div class="mon-compte">
+    <div class="container">
+        <p>
+            <h1> Détails de la commande - <small> Référence {{ order.reference }} </small> </h1>
+            <a href="{{ path('account_order') }}"> Retour </a> 
+            <hr>
+
+            <strong> Statut de la commande :</strong>  {{ order.getStatutToString }}  <br>
+            <strong> Commande passé le :</strong> {{ order.createdAt|date('d/m/Y') }}  <br>
+            <strong> Réfèrence de ma commande :</strong> <small> {{ order.reference }} </small>  <br>
+            <strong> Transporteur choisi :</strong> {{ order.transpoteurNom }} <br>
+            <hr>
+        </p>
+        <div class="row">
+            <div class="col-md-4 compte-lien">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="/admin"><i class="lien-icone-compte fas fa-tachometer-alt"> Acceder l'administration du site  </i> </a>    <br/>
+                {% endif %}
+                <a class="" href="{{ path('account') }}"> <i class="lien-icone-compte fas fa-tachometer-alt"> Mon compte  </i> </a>  <br/>
+                <a class="" href="{{ path('account_order') }}"> <i class="lien-icone-compte far fa-calendar-alt"> Acceder à mes Commandes </i> </a>  <br/>
+                <a class="" href="{{ path('account_password') }}"> <i class="lien-icone-compte fas fa-lock"> Modifier mon mote de passe </i> </a>   <br/>
+                <a class="active" href="{{ path('adresse_compte') }}"> <i class="lien-icone-compte fas fa-map-marker-alt"> Gérer mes Adresses </i> </a>  <br/>
+                <a class="" href="/admin"> <i class="lien-icone-compte fas fa-user"> Acceder aux détails de mon compte </i>  </a>  <br/>
+                <a class="" href="{{ path('app_logout') }}"> <i class="lien-icone-compte fas fa-sign-out-alt"> Se déconnecter  </i> </a>  <br/>
+            </div>
+        
+            <div class="col-md-8">
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Produit</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Prix unitaire</th>
+                            <th scope="col">Statut de la commande</th>
+                            <th scope="col"  class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for item in order.orderDetails %}
+                            <tr>
+                                <td> {{ item.product }} </td>
+                                <td> x{{ item.qantity }}</td>
+                                <td>{{ item.price|number_format(2, ',',',') }} € </td>
+                                <td> {{ order.getStatutToString }}  </td>
+                                <td  class="text-right">{{ item.total|number_format(2, ',',',') }} € </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="text-right">
+                    <strong> Sous-total :</strong> {{ (order.getTotal)|number_format(2, ',',',') }} €<br>
+                    <strong> Livraison :</strong> {{ (order.transporteurPrix/100)|number_format(2, ',',',') }} € <br>
+                    <strong> Total :</strong> {{ (( (order.getTotal * 100) + order.transporteurPrix) /100)|number_format(2, ',',',') }} €
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

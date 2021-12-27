@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Nos produits
+{% endblock %}
+
+{% block body %}
+	<!-- Three columns of text below the carousel -->
+	<div class="container">
+
+		<div class="row">
+			<div class="col-sm-3">
+				<h3> Filtre </h3>
+				{{ form_start(form) }}
+				{{ form_rest(form) }}
+					<button class="form-control btn-block btn-primary" type="submit"> Rechercher </button>
+				{{ form_end(form) }}
+			</div>
+
+			<div class=" col-sm-9">
+				<div class="row">
+					<h1>
+						Nos chichas: {{ produits.getTotalItemCount }} produits
+					</h1><hr/>
+					<p>
+						Nargui Five est la référence dans la vente de chicha de luxe, retrouvez les
+									marques les plus prestigieuses comme les chichas en verre de laboratoire
+									de la marque américaine FUMO, les chichas en bois précieux WOOKAH,
+									pleins d'exclusivités et toutes les nouveautés du monde de la chicha.
+					</p>
+				</div>
+				<div class="row product-container">
+					{% for produit in produits %}
+						<div class="col-md-3">
+							<div class="product-item text-center">
+								<a class="link-img" href="{{ path("product_show", {slug: produit.slug} ) }}"> 
+									<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+								</a>
+								<h5> {{ produit.nom }} </h5>
+								<span class="product-price"> NARGUI FIVE </span>
+								<span> Catégorie:  {{ produit.category.nom }} </span>
+								<span> Sous-catégorie:  {{ produit.sousCategory.nom }} </span>
+								<span class="product-price">{{ (produit.price) | number_format(2, ',', '.') }} € </span>
+								<span class="nbr-product"> en stock </span>
+								<a class="btn btn-lg btn-block btn-outline-primary link-img" href="{{ path("cart_add", {id : produit.id}) }}" role="button"> Ajouter au panier </a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="navigation">
+            {{ knp_pagination_render(produits) }}
+        </div>
+	</div>
+
+{% endblock %}

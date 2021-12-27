@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Nous contacter
+{% endblock %}
+
+{% block body %}
+	{% for message in app.flashes("notice") %}
+		<div class="alert alert-info"> {{ message }} </div>
+	{% endfor %}
+
+	<div class="row">
+		<div class="col-8">
+		<h2> Nous contacter </h2>
+	<p>
+		N'hésitez pas à prendre contact avec notre équipe, nous vous répondrons dans les meilleurs délais.
+	</p>
+			{{ form_start(form) }}
+			{{ form_rest(form) }}
+				<button class="btn btn-success btn-block" type="submit"> ENVOYER </button>
+			{{ form_end(form) }}
+		</div>
+
+		<div class="col-4">
+			<h2> Comment nous joindre ? </h2>
+			<hr>
+			<p>
+				<strong> 06.63.36.25.39 </strong><br/>
+				<span> NarguiFive, 135 rue de Gabriel Péri </span><br/>
+				93200 Saint Denis <br/>
+				<a  href="https://www.narguifive.com" target="_blank">narguifive.com</a><br/>
+        	</p>
+		</div>
+	</div>
+{% endblock %}

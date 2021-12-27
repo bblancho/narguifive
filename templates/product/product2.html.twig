@@ -1,0 +1,153 @@
+<!-- Products list -->
+<div id="products_filter">
+    <ul class="lablistproducts product_list grid row" >
+
+          
+
+						{% for produit in produits %}
+							<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line
+									                                first-item-of-mobile-line
+									                                ">
+								<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+									<div class="left-block">
+										<div class="product-image-container">
+											<a class="product_image" href="product_page.html" title="LOREM IPSUM DOLOR TITLE">
+												<img class="img-responsive img1" src="{{produit.image}}" alt="{{produit.nom}}"/>
+
+											</a>
+
+											<div class="actions">
+												<ul class="add-to-links">
+													<li class="lab-Wishlist">
+														<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="#" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
+															<i class="mdi mdi-heart-outline"></i>
+															<span>Ajouter &agrave;
+																                                                            la liste de souhaits</span>
+														</a>
+
+													</li>
+													<li class="lab-quick-view">
+														<a class="" href="product_page.html" data-id-product="812" title="Aper&ccedil;u rapide">
+															<i class="mdi mdi-eye"></i>
+															<span>Aper&ccedil;u rapide</span>
+														</a>
+													</li>
+												</ul>
+
+											</div>
+
+											<span class="availability">
+												<span class=" label-success">
+													Disponible
+													<!-- 																							 -->
+												</span>
+											</span>
+
+										</div>
+
+									</div>
+									<div class="right-block">
+										<div class="product-name" itemprop="name">
+											<a href="product_page.html" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
+												{{produit.nom}}
+											</a>
+										</div>
+
+										<p class="product-desc" itemprop="description">
+											Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
+											                                        ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
+											                                        architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
+											                                        tempora.
+										</p>
+
+										<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+											<span class="price product-price" itemprop="price">
+												{{produit.price}}
+												€</span>
+											<meta itemprop="priceCurrency" content="EUR"/>
+
+
+										</div>
+
+										<div class="color-list-container"></div>
+										<div class="flags"></div>
+
+										<div class="lab-cart">
+											<a class="button ajax_add_to_cart_button btn btn-default" onclick="panier_gestion('{{produit.id}}')" href="#" data-id-product="{{produit.id}}" title="Ajouter au panier">
+												<span>+ Ajouter au panier</span>
+											</a>
+
+										</div>
+									</div>
+
+								</div>
+								<!-- .product-container> -->
+							</li>
+
+						{% endfor %}
+
+
+					</ul>
+
+					<div class="content_sortPagiBar">
+						<div class="bottom-pagination-content clearfix">
+
+							<div id="pagination_bottom" class="pagination clearfix">
+								<form class="showall" action="#" method="get">
+									<div>
+										<button type="submit" class="btn btn-default button exclusive-medium">
+											<span>Afficher tout</span>
+										</button>
+										<input type="hidden" name="id_category" value="97"/>
+										<input name="n" id="nb_item" class="hidden" value="323"/>
+									</div>
+								</form>
+								<ul class="pagination">
+									<li id="pagination_previous_bottom" class="disabled pagination_previous">
+										<span>
+											<i class="icon-chevron-left"></i>
+											<b>Pr&eacute;c&eacute;dent</b>
+										</span>
+									</li>
+									<li class="active current">
+										<span>
+											<span>1</span>
+										</span>
+									</li>
+									<li>
+										<a href="/97-chicha?p=2">
+											<span>2</span>
+										</a>
+									</li>
+									<li>
+										<a href="/97-chicha?p=3">
+											<span>3</span>
+										</a>
+									</li>
+									<li class="truncate">
+										<span>
+											<span>...</span>
+										</span>
+									</li>
+									<li>
+										<a href="/97-chicha?p=11">
+											<span>11</span>
+										</a>
+									</li>
+									<li id="pagination_next_bottom" class="pagination_next">
+										<a href="/97-chicha?p=2" rel="next">
+											<b>Suivant</b>
+											<i class="icon-chevron-right"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="product-count">
+								R&eacute;sultats 1 - 30 sur 323.
+							</div>
+
+						</div>
+					</div>
+</div>
+                    

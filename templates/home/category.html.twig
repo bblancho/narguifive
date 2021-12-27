@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Accueil
+{% endblock %}
+
+
+{% block body %}
+
+{% if categorie is not empty %}
+    {{ dump(categorie) }}
+{% endif %}
+
+{% if sousCategory is not empty %}
+    {{ dump(sousCategory) }}
+{% endif %}
+
+
+{% endblock %}

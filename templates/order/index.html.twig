@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Valider ma commande - Nargui Five {% endblock %}
+
+{% block body %}
+    <h1> Valider ma commande </h1>
+    <p> Choisissez vos préférences avant de passer votre commande sur Nargui Five. </p>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            {% set formHtml %}
+                {{ form_start(form, {'method':'POST', action:path('order_recap')} )  }}
+                {{ form_label(form.adresse, "Choisissrez une adresse de livraison") }}
+                    <a href="{{ path('adresse_compte_add')}}"> Ajouter une nouvelle adresse </a>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            {% endset %}
+
+            {{ formHtml|replace({"[br]" : "<br/>"})|raw }}
+        </div>
+
+        <div class="col-md-6">
+            <div class="text-center"> <b> Récapitulatif de ma commande </b><br> </div>
+            <div class="order-summary">
+                 {% for key,product in panier %}
+                    <div class="row {% if key > 0 %} mt-2 {% endif %}">
+                        <div class="col-2"><img src="{{ product.produit.image }}" alt="NARGUI FIVE-{{ product.produit.nom }}" height="75px"></div>
+                        <div class="col-7 my-auto">{{ product.produit.nom }} <br>
+                            <small> X {{ product.quantity }}</small>
+                        </div>
+                        <div class="col-3 my-auto"> {{ (product.produit.price * product.quantity) | number_format(2, ',', ',') }} € </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

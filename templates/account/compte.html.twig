@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Modifier mon compte - Nargui Five 93 {% endblock %}
+
+{% block body %}
+
+<div class="mon-compte">
+    <div class="container">
+        <h1> Mon compte </h1>
+        
+        <div class="row">
+            <div class="col-md-4 compte-lien">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="/admin"><i class="lien-icone-compte fas fa-tachometer-alt"> Acceder l'administration du site  </i> </a>    <br/>
+                {% endif %}
+                <a class="" href="{{ path('account') }}"> <i class="lien-icone-compte fas fa-tachometer-alt"> Mon compte  </i> </a>  <br/>
+                <a class="" href="{{ path('account_order') }}"> <i class="lien-icone-compte far fa-calendar-alt"> Acceder à mes Commandes </i> </a>  <br/>
+                <a class="" href="{{ path('account_password') }}"> <i class="lien-icone-compte fas fa-lock"> Modifier mon mote de passe </i> </a>   <br/>
+                <a class="active" href="{{ path('adresse_compte') }}"> <i class="lien-icone-compte fas fa-map-marker-alt"> Gérer mes Adresses </i> </a>  <br/>
+                <a class="" href="/admin"> <i class="lien-icone-compte fas fa-user"> Acceder aux détails de mon compte </i>  </a>  <br/>
+                <a class="" href="{{ path('app_logout') }}"> <i class="lien-icone-compte fas fa-sign-out-alt"> Se déconnecter  </i> </a>  <br/>
+            </div>
+        
+            <div class="col-md-8">
+                <p>
+                    Bonjour {{ app.user.nom }} (vous n’êtes pas {{ app.user.nom }} ? <a href="{{ path('app_logout') }}">  Déconnexion </a> ) <br/> <br/>
+                    À partir du tableau de bord de votre compte, vous pouvez visualiser <a href="{{ path('account_order') }}"> vos commandes </a> récentes, 
+                    <a href="{{ path('adresse_compte') }}"> gérer vos adresses de livraison et de facturation  </a> ainsi que <a href="{{ path('account_password') }}"> changer votre mot de passe </a> et les détails de votre compte.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

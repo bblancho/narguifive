@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93  - Mes Adresses
+{% endblock %}
+
+{% block body %}
+
+	
+	
+
+	
+
+	<div class="mon-compte">
+		<div class="container">
+			<h1> Modifier une adresse </h1>
+			<a href="{{ path("adresse_compte") }}"> Retour </a>
+			<hr>
+
+			<div class="row">
+				<div class="col-md-4 compte-lien">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="/admin"><i class="lien-icone-compte fas fa-tachometer-alt"> Acceder l'administration du site  </i> </a>    <br/>
+                {% endif %}
+                <a class="" href="{{ path('account') }}"> <i class="lien-icone-compte fas fa-tachometer-alt"> Mon compte  </i> </a>  <br/>
+                <a class="" href="{{ path('account_order') }}"> <i class="lien-icone-compte far fa-calendar-alt"> Acceder à mes Commandes </i> </a>  <br/>
+                <a class="" href="{{ path('account_password') }}"> <i class="lien-icone-compte fas fa-lock"> Modifier mon mote de passe </i> </a>   <br/>
+                <a class="active" href="{{ path('adresse_compte') }}"> <i class="lien-icone-compte fas fa-map-marker-alt"> Gérer mes Adresses </i> </a>  <br/>
+                <a class="" href="/admin"> <i class="lien-icone-compte fas fa-user"> Acceder aux détails de mon compte </i>  </a>  <br/>
+                <a class="" href="{{ path('app_logout') }}"> <i class="lien-icone-compte fas fa-sign-out-alt"> Se déconnecter  </i> </a>  <br/>
+            </div>
+			
+				<div class="col-md-8">
+					{{  form_start(form, {'method': 'POST'})  }}
+
+		<div class="row">
+
+			<div class="my-custom-class-for-errors">
+				{{ form_errors(form) }}
+			</div>
+
+			<div class="col-md-12">
+				<div class="col">
+					{{ form_row(form.nom) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.lastname) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.prenom) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.phone) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.societe) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.adresse) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.ville) }}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.postal) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col">
+					{{ form_row(form.pays) }}
+				</div>
+			</div>
+
+			{{ form_rest(form) }}
+			<button class="btn btn-info btn-block float-right" type="submit"> Valider </button>
+
+		</div>
+	{{ form_end(form) }}
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
