@@ -307,7 +307,7 @@ class Product
         return $this->taille;
     }
 
-    public function setTaille(float $taille): self
+    public function setTaille(?float $taille): self
     {
         $this->taille = $taille;
 
@@ -319,7 +319,7 @@ class Product
         return $this->vase;
     }
 
-    public function setVase(string $vase): self
+    public function setVase(?string $vase): self
     {
         $this->vase = $vase;
 
@@ -331,7 +331,7 @@ class Product
         return $this->tuyau;
     }
 
-    public function setTuyau(string $tuyau): self
+    public function setTuyau(?string $tuyau): self
     {
         $this->tuyau = $tuyau;
 
@@ -343,7 +343,7 @@ class Product
         return $this->fixation;
     }
 
-    public function setFixation(string $fixation): self
+    public function setFixation(?string $fixation): self
     {
         $this->fixation = $fixation;
 
