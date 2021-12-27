@@ -8,6 +8,10 @@ h1,h2{
     text-transform: uppercase;
 }
 
+.ea-vich-image-actions>div{
+    display:none !important;
+}
+
 .separation{
     width: 100%;
 }

@@ -103,4 +103,12 @@ class Color
 
         return $this;
     }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
 }

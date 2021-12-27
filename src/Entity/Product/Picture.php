@@ -4,20 +4,15 @@ namespace App\Entity\Product;
 
 use App\Repository\Product\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
+ * @Vich\Uploadable
  */
 class Picture
 {
-    public const TYPE_IMAGE = [
-        1 => "Aucun",
-        2 => "Catégorie",
-        3 => "Produit"
-    ];
-
-    public const DEFAULT_TYPE_IMAGE = 1 ; // Aucun
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,7 +23,12 @@ class Picture
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $image_name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image_size;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="pictures")
@@ -37,28 +37,39 @@ class Picture
     private $produit;
 
     /**
-     * @ORM\Column(type="integer")
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="products_images", fileNameProperty="image_name", size="image_size")
+     *
+     * @var File
      */
-    private $type = self::DEFAULT_TYPE_IMAGE;
+    private $imageFile;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, inversedBy="picture", cascade={"persist", "remove"})
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
      */
-    private $category;
+    private $updatedAt;
+
+    public function __construct()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getImageName(): ?string
     {
-        return $this->name;
+        return $this->image_name;
     }
 
-    public function setName(string $name): self
+    public function setImageName(string $image_name): self
     {
-        $this->name = $name;
+        $this->image_name = $image_name;
 
         return $this;
     }
@@ -75,32 +86,44 @@ class Picture
         return $this;
     }
 
-    public function getType(): ?int
+    public function getImageSize(): ?string
     {
-        return $this->type;
+        return $this->image_size;
     }
 
-    public function setType(int $type): self
+    public function setImageSize(?string $image_size): self
     {
-        $this->type = $type;
+        $this->image_size = $image_size;
 
         return $this;
     }
 
-    public function getTypeImageToString(): ?string
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->type ? self::TYPE_IMAGE[$this->type] : null ;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime();
+        }
     }
 
-    public function getCategory(): ?Category
+    public function getImageFile(): ?File
     {
-        return $this->category;
+        return $this->imageFile;
     }
 
-    public function setCategory(?Category $category): self
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        $this->category = $category;
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
+
 }

@@ -9,6 +9,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\ProductRepository;
+
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)

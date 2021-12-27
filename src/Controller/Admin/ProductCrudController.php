@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product\Product;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -12,9 +14,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -47,6 +51,8 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir("public/assets/images/products")
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
+            Field::new('imageFile')->setFormType(VichImageType::class),
+            CollectionField::new('pictures','Les photos')->onlyOnForms(),
             AssociationField::new('color')->autocomplete()->onlyOnForms(),
             IntegerField::new('taille')->onlyOnForms(),
             TextField::new('vase')->onlyOnForms(),

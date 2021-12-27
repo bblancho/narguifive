@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -61,14 +62,15 @@ class Category
 
     /**
      * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     * )
      * @var File|null
      */
     private $imageFile;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Picture::class, mappedBy="category", cascade={"persist", "remove"})
-     */
-    private $picture;
 
     public function __construct()
     {
@@ -228,25 +230,5 @@ class Category
         return $this;
     }
 
-    public function getPicture(): ?Picture
-    {
-        return $this->picture;
-    }
 
-    public function setPicture(?Picture $picture): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($picture === null && $this->picture !== null) {
-            $this->picture->setCategory(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($picture !== null && $picture->getCategory() !== $this) {
-            $picture->setCategory($this);
-        }
-
-        $this->picture = $picture;
-
-        return $this;
-    }
 }

@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.path.products_images: /assets/images/products
-    app.path.header_images: /assets/images/header
+    app.path.header_images:   /assets/images/header
+    app.path.category_images: /assets/images/categories
 
 services:
     # default configuration for services in *this* file

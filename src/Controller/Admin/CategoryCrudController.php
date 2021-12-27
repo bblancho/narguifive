@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product\Category;
 use App\Controller\Admin\Field\VichImageField;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -33,11 +34,13 @@ class CategoryCrudController extends AbstractCrudController
             TextField::new('nom'),
             TextField::new('Titre'),
             SlugField::new('slug')->setTargetFieldName('nom'),
-            ImageField::new("image")
-                ->setBasePath("/assets/images/categories")
-                ->setUploadDir("public/assets/images/categories")
-                ->setRequired(false),
             TextareaField::new('content'),
+            ImageField::new('image', 'photo')
+                ->setBasePath( $this->getParameter('app.path.category_images') )
+                ->setUploadDir( 'public/assets/images/categories' )
+                ->setRequired(false) ,
+            Field::new('imageFile')->setFormType(VichImageType::class),
+            
         ];
     }
 
