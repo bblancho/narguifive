@@ -13,7 +13,7 @@ window.onload=()=>{
             const sort=$('#productsSortForm option:selected').val()
             //console.log(sort);
 
-            Params.append('sort',sort);
+            Params.append('tri',sort);
 
             const url= new URL(window.location.href);
             fetch(url.pathname+"?"+ Params.toString()+"&ajax=1",{

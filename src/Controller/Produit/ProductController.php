@@ -56,63 +56,59 @@ class ProductController extends AbstractController
             $from_fabs[$fabricant->getNom()]=$prods;
         }
       
-        $sort=$request->get("sort");
+        $tri=$request->get("tri");
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
 
             if ($filter==null){
-                if($sort=='name:asc'){
+                if($tri=='name:asc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'asc'));
                 }
-                elseif($sort=='name:desc'){
+                elseif($tri=='name:desc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'desc'));
                 }
-                elseif($sort=='price:asc'){
+                elseif($tri=='price:asc'){
+                    
                     $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'asc'));
+                   
                 }
-                elseif($sort=='price:desc'){
+                elseif($tri=='price:desc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'desc'));
                 }
-                elseif($sort=='reference:asc'){
+                elseif($tri=='reference:asc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'asc'));
                 }
-                elseif($sort=='reference:desc'){
+                elseif($tri=='reference:desc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'desc'));
                 }
-                elseif($sort=='quantity:desc'){
-                    $produits=$this->repoProduct->findBy(array());
-                }else{
+                elseif($tri=='quantity:desc'){
                     $produits=$this->repoProduct->findBy(array());
                 }
             }else{
 
-                if($sort=='name:asc'){
+                if($tri=='name:asc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'asc'));
                 }
-                elseif($sort=='name:desc'){
+                elseif($tri=='name:desc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'desc'));
                 }
-                elseif($sort=='price:asc'){
+                elseif($tri=='price:asc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'asc'));
                 }
-                elseif($sort=='price:desc'){
+                elseif($tri=='price:desc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'desc'));
                 }
-                elseif($sort=='reference:asc'){
+                elseif($tri=='reference:asc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'asc'));
                 }
-                elseif($sort=='reference:desc'){
+                elseif($tri=='reference:desc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'desc'));
                 }
-                elseif($sort=='quantity:desc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter));
-                }else{
+                elseif($tri=='quantity:desc'){
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter));
                 }
                 
             }
-           
-
             $fabs=$this->repoMarque->findBy(array('id'=>$filter));
             $actifs=array();
             $actif=array();
@@ -124,7 +120,7 @@ class ProductController extends AbstractController
             
             $total=count($produits);
              // Paginate the results of the query
-             $produits = $paginator->paginate(
+            $produits = $paginator->paginate(
                 // Doctrine Query, not results
                 $produits,
                 // Define the page parameter
@@ -132,7 +128,6 @@ class ProductController extends AbstractController
                 // Items per page
                 8
             );
-          
            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits')), 'total'=>$total, 'fabs'=>$actifs]);
         }
 

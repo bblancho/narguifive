@@ -14,7 +14,7 @@ function tri(selectObject){
 
         var tri = value;
 
-        par.append('sort', tri);
+        par.append('tri', tri);
 
         var Url = new URL(window.location.href);
         fetch(Url.pathname + "?" + par.toString() + "&ajax=1", {
