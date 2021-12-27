@@ -34,9 +34,12 @@ class ProductCrudController extends AbstractCrudController
     {
         return [
             TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnDetail(),
-            TextareaField::new('content')->onlyOnDetail(),
+            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnForms(),
+            TextareaField::new('content')->onlyOnForms(),
+            AssociationField::new('category') ,
+            AssociationField::new('sousCategory',"Sous catégorie")->onlyOnForms() ,
             BooleanField::new('isBest',"A la une"),
+            BooleanField::new('nouveaute'),
             MoneyField::new('price')->setCurrency('EUR'),
             MoneyField::new('priceHT')->setCurrency('EUR') ,
             ImageField::new('image')
@@ -44,16 +47,14 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir("public/assets/images/products")
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            AssociationField::new('color')->autocomplete()->onlyOnDetail(),
-            IntegerField::new('taille')->onlyOnDetail(),
-            TextField::new('vase')->onlyOnDetail(),
-            TextField::new('tuyau')->onlyOnDetail(),
-            TextField::new('fixation')->onlyOnDetail(),
-            TextField::new('autre')->onlyOnDetail(),
-            BooleanField::new('promotion'),
+            AssociationField::new('color')->autocomplete()->onlyOnForms(),
+            IntegerField::new('taille')->onlyOnForms(),
+            TextField::new('vase')->onlyOnForms(),
+            TextField::new('tuyau')->onlyOnForms(),
+            TextField::new('fixation')->onlyOnForms(),
+            TextField::new('autre')->onlyOnForms(),
+            BooleanField::new('promotion')->onlyOnIndex(),
             BooleanField::new('nouveaute'),
-            AssociationField::new('category') ,
-            AssociationField::new('sousCategory',"Sous catégorie")->onlyOnDetail() ,
             BooleanField::new('publie', "Publié"),
         ];
     }

@@ -4,6 +4,9 @@ body{
     background-color: #fff;
     overflow-x: hidden;
 }
+h1,h2{
+    text-transform: uppercase;
+}
 
 .separation{
     width: 100%;
@@ -665,6 +668,9 @@ img{
 
 /********* Page mon compte *****/
 
+.compte-lien{
+    border-right: 1px solid;
+}
 .mon-compte{
     background-color: #F6F6F6;
     padding: 45px 0px;
@@ -681,8 +687,7 @@ img{
 
 .compte-lien a:hover{
     text-decoration: underline;
-    color: blue;
-
+    color: #F1A212;
 }
 .account-item{
     background-color: #a4b0be;
@@ -710,13 +715,19 @@ img{
 }
 
 .compte-lien a{
-    color: #626262;
+    color: #000;
     padding: 0px 0px 0px 0px;
     display: block;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .lien-icone-compte::before{
     padding-right: 10px;
+}
+
+.lien_compte{
+    color: #F1A212 !important;
 }
 
 /**** Mes adresses **/

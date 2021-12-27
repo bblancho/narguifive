@@ -2,14 +2,17 @@
 
 namespace App\Entity\Product;
 
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Product\SousCategory;
-use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @Vich\Uploadable
  */
 class Category
 {
@@ -52,8 +55,20 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Picture::class, mappedBy="category", cascade={"persist", "remove"})
+     */
+    private $picture;
 
     public function __construct()
     {
@@ -65,7 +80,6 @@ class Category
     {
         return (string) $this->getNom() ;
     }
-
 
     public function getId(): ?int
     {
@@ -188,6 +202,50 @@ class Category
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?Picture $picture): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($picture === null && $this->picture !== null) {
+            $this->picture->setCategory(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($picture !== null && $picture->getCategory() !== $this) {
+            $picture->setCategory($this);
+        }
+
+        $this->picture = $picture;
 
         return $this;
     }

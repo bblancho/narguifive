@@ -147,9 +147,15 @@ class Product
      */
     private $gramme = self::DEFAULT_QTE_GRAMME ;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true)
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->imageProduct = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -447,6 +453,36 @@ class Product
     public function getGrammeToString(): ?string
     {
         return $this->gramme ? self::QTE_GRAMME[$this->gramme] : null ;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getProduit() === $this) {
+                $picture->setProduit(null);
+            }
+        }
+
+        return $this;
     }
     
 }
