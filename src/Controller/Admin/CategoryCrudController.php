@@ -36,13 +36,13 @@ class CategoryCrudController extends AbstractCrudController
         return [
             TextField::new('nom'),
             TextField::new('Titre'),
-            SlugField::new('slug')->setTargetFieldName('nom'),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
             TextareaField::new('content'),
             ImageField::new('image', 'photo')
                 ->setBasePath( $this->getParameter('app.path.category_images') )
                 ->setUploadDir( 'public/assets/images/categories' )
-                ->setRequired(false) ,
-            Field::new('imageFile')->setFormType(VichImageType::class),
+                ->setRequired(false)->onlyOnIndex() ,
+            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
         ];
     }
 

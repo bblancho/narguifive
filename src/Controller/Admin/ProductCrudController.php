@@ -41,18 +41,20 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $image = ImageField::new('image', 'photo')
-                ->setBasePath( $this->getParameter('app.path.products_images') )
-                ->setUploadDir( 'public/assets/images/categories' )
-                ->setRequired(false) ;
+                    ->setBasePath( $this->getParameter('app.path.products_images') )
+                    ->setUploadDir( 'public/assets/images/produits' )
+                    ->setRequired(false) ;
 
-        $imageFile = Field::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms() ;
+        $imageFile = TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms() ;
 
         $fields = [
             TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnForms(),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
             TextareaField::new('content')->onlyOnForms(),
-            AssociationField::new('category') ,
-            AssociationField::new('sousCategory',"Sous catégorie")->onlyOnForms() ,
+            BooleanField::new('en_stock', 'En stock'),
+            IntegerField::new('quantite', 'Quantité'),
+            AssociationField::new('category','Catégorie') ,
+            AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
             BooleanField::new('isBest',"A la une"),
             BooleanField::new('nouveaute'),
             MoneyField::new('price')->setCurrency('EUR'),

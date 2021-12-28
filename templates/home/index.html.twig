@@ -76,7 +76,11 @@
 					<div class="col-md-4">
 						<div class="product-item text-center">
 							<a class="link-img" href="{{ path("product_show", {slug: produit.slug} ) }}">
-								<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+								{% if produit.image is null %}
+									<img src="{{ vich_uploader_asset(produit, 'imageFile') }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+								{% else %}
+									<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+								{% endif %}
 							</a>
 							<h5>
 								{{ produit.nom }}

@@ -161,6 +161,16 @@ class Product
      */
     private $pictures;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $en_stock;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantite;
+
     public function __construct()
     {
         $this->imageProduct = new ArrayCollection();
@@ -496,6 +506,30 @@ class Product
                 $picture->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEnStock(): ?bool
+    {
+        return $this->en_stock;
+    }
+
+    public function setEnStock(bool $en_stock): self
+    {
+        $this->en_stock = $en_stock;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(?int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }
