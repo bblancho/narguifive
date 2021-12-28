@@ -46,6 +46,7 @@ class ProductController extends AbstractController
         $form = $this->createForm(SearchType::class, $search) ;
 
         $form->handleRequest($request) ;
+        $mypage=$request->query->getInt('page', 1);
        
         
         $sousCats = $this->repoSousCat->findBy(array(),array(),$limit=4);
@@ -128,7 +129,7 @@ class ProductController extends AbstractController
                 // Items per page
                 8
             );
-           return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits')), 'total'=>$total, 'fabs'=>$actifs]);
+           return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits')), 'total'=>$total, 'fabs'=>$actifs, 'mypage'=>$mypage]);
         }
 
 

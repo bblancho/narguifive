@@ -38,7 +38,7 @@ window.onload=()=>{
                     var id= data.fabs[i].id;
                     var nom=data.fabs[i].nom;
                     text = text + "<li>" +
-                    "<a  role =\"button\" data-rel=\"layered_manufacturer_"+ id + "\" title=\"Annuler\"><i class=\"icon-remove\" id=\"filtre_actif_"+ id + "\"></i></a>"+	
+                    "<a  role =\"button\" data-rel=\"layered_manufacturer_"+ id + "\" title=\"Annuler\"><i class=\"icon-remove\" id=\"filtre_actif_"+ id + "\" onclick=\"mara(this)\"></i></a>"+	
                         "Fabricant : "+nom+	
                 "</li>";
                 }
@@ -46,26 +46,29 @@ window.onload=()=>{
                 total.innerHTML="Il y a "+ data.total+" produits";
                 content.innerHTML= data.content;
 
+                history.pushState({},null,url.pathname+"?"+ Params.toString());
+
             }).catch(e=>console.log(e));
+
+
+           
+            
 
 
            
         
         });
+
         
-        /*const g =document.querySelectorAll("#filtre_actif a");
-        if (g!= null){
-            document.querySelectorAll("#filtre_actif a").forEach(a =>{
-                a.addEventListener("click",()=>{
-                    console.log(a.dataset.rel);
-                });
         
-            });
-        }*/
+        
 
 
         
     });
+
+
+    
 
 
     

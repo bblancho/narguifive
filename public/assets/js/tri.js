@@ -30,7 +30,9 @@ function tri(selectObject){
 
             total_number.innerHTML = "Il y a " + data.total + " produits";
             contenu.innerHTML = data.content;
+            history.pushState({},null,Url.pathname+"?"+ par.toString());
 
         }).catch(e => console.log(e));
 
 }
+

@@ -106,18 +106,65 @@
 
 					}
 				</script>
-				<!--script>
-					function myremovefunc(id){
-						
-						console.log(id);
-						$(id).prop('checked', false);
-					}
-    
-				</script-->
+			
 
 				<!--script>
 					localStorage.clear();
 				</script-->
+
+				<script>
+				function mara(object){
+				
+					//alert(object.getAttribute('id'));
+
+					var tab= object.getAttribute('id').split("_");
+					var m= "#layered_manufacturer_"+tab[2];
+					$(m).prop( "checked", false );
+
+					const myfilterform = document.querySelector("#layered_form");
+					const formulaire= new FormData(myfilterform);
+					const parametre = new URLSearchParams();
+					formulaire.forEach((key,value) =>{
+					
+						parametre.append(value,key);
+					});
+
+					const sorting=$('#productsSortForm option:selected').val()
+					
+					parametre.append('tri',sorting);
+
+					const lien= new URL(window.location.href);
+					fetch(lien.pathname+"?"+ parametre.toString()+"&ajax=1",{
+						headers:{
+							"X-Requested-With":"XMLHttpRequest"
+						}
+
+					}).then(response=>
+						response.json()
+					).then(data => {
+						const contents = document.querySelector("#products_filter");
+						const totals= document.querySelector("#total");
+						const myfiltre_actif=document.querySelector("#filtre_actif");
+
+						nombre=Object.keys(data.fabs).length;
+						var text="";
+						for (var i=0;i<nombre;i++){
+							var id= data.fabs[i].id;
+							var nom=data.fabs[i].nom;
+							text = text + "<li>" +
+							"<a  role =\"button\" data-rel=\"layered_manufacturer_"+ id + "\" title=\"Annuler\"><i class=\"icon-remove\" id=\"filtre_actif_"+ id + "\" onclick=\"mara(this)\"></i></a>"+	
+								"Fabricant : "+nom+	
+						"</li>";
+						}
+						myfiltre_actif.innerHTML=text;
+						totals.innerHTML="Il y a "+ data.total+" produits";
+						contents.innerHTML= data.content;
+						history.pushState({},null,lien.pathname+"?"+ parametre.toString());
+
+					}).catch(e=>console.log(e));
+				}
+				</script>
+				
 
 				
 				
