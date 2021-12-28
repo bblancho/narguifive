@@ -40,13 +40,12 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $image = ImageField::new('image')
-            ->setBasePath( $this->params->get('app.path.products_images') )
-            ->setUploadDir("public/assets/images/products")
-            ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false) ;
+        $image = ImageField::new('image', 'photo')
+                ->setBasePath( $this->getParameter('app.path.products_images') )
+                ->setUploadDir( 'public/assets/images/categories' )
+                ->setRequired(false) ;
 
-        $imageFile = Field::new('imageFile')->setFormType(VichImageType::class) ;
+        $imageFile = Field::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms() ;
 
         $fields = [
             TextField::new('nom'),
@@ -59,10 +58,12 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('price')->setCurrency('EUR'),
             MoneyField::new('priceHT')->setCurrency('EUR') ,
 
-            CollectionField::new('pictures','Les photos')
-                ->setEntryType(PictureType::class)
-                ->onlyOnForms()
-            ,
+            // CollectionField::new('pictures','Les photos')
+            //     ->setEntryType(PictureType::class)
+            //     ->setFormTypeOption('by_reference', false)
+            //     ->onlyOnForms()
+            // ,
+
             AssociationField::new('color')->autocomplete()->onlyOnForms(),
             IntegerField::new('taille')->onlyOnForms()->setRequired(false),
             TextField::new('vase')->onlyOnForms()->setRequired(false),
@@ -75,11 +76,11 @@ class ProductCrudController extends AbstractCrudController
         ];
 
         
-        if ($pageName == Crud::PAGE_INDEX ||  $pageName == Crud::PAGE_DETAIL) {
+        // if ($pageName == Crud::PAGE_INDEX ||  $pageName == Crud::PAGE_DETAIL) {
             $fields[] = $image ; 
-        } else {
+        // } else {
             $fields[] = $imageFile ; 
-        }
+        // }
 
         return $fields ;
     }
@@ -88,6 +89,7 @@ class ProductCrudController extends AbstractCrudController
     {
        return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::DELETE, Action::EDIT])
         ;
     }
 }

@@ -52,14 +52,19 @@ class Product
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
-     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="products_images", fileNameProperty="image")
-     * @var File
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     * )
+     * @var File|null
      */
     private $imageFile;
 
@@ -208,23 +213,29 @@ class Product
         return $this->image;
     }
 
-    public function setImage( ?string $image ): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function getImageFile()
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function setImageFile( File $image = null): self
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): self
     {
-        $this->imageFile = $image;
+        $this->imageFile = $imageFile;
 
-        if ($image) {
+        if (null !== $imageFile) {
             $this->updated_at = new \DateTime('now');
         }
 
