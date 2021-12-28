@@ -20,10 +20,6 @@ class Picture
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $image_name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -35,6 +31,12 @@ class Picture
      * @ORM\JoinColumn(nullable=true)
      */
     private $produit;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     */
+    private $image_name;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -67,7 +69,7 @@ class Picture
         return $this->image_name;
     }
 
-    public function setImageName(string $image_name): self
+    public function setImageName(?string $image_name): self
     {
         $this->image_name = $image_name;
 

@@ -2,11 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product\Product;
+use App\Form\PictureType;
 
+use App\Entity\Product\Product;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -36,7 +40,15 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
+        $image = ImageField::new('image')
+            ->setBasePath( $this->params->get('app.path.products_images') )
+            ->setUploadDir("public/assets/images/products")
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->setRequired(false) ;
+
+        $imageFile = Field::new('imageFile')->setFormType(VichImageType::class) ;
+
+        $fields = [
             TextField::new('nom'),
             SlugField::new('slug')->setTargetFieldName('nom')->onlyOnForms(),
             TextareaField::new('content')->onlyOnForms(),
@@ -46,13 +58,11 @@ class ProductCrudController extends AbstractCrudController
             BooleanField::new('nouveaute'),
             MoneyField::new('price')->setCurrency('EUR'),
             MoneyField::new('priceHT')->setCurrency('EUR') ,
-            ImageField::new('image')
-                ->setBasePath( $this->params->get('app.path.products_images') )
-                ->setUploadDir("public/assets/images/products")
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
-            Field::new('imageFile')->setFormType(VichImageType::class),
-            CollectionField::new('pictures','Les photos')->onlyOnForms(),
+
+            CollectionField::new('pictures','Les photos')
+                ->setEntryType(PictureType::class)
+                ->onlyOnForms()
+            ,
             AssociationField::new('color')->autocomplete()->onlyOnForms(),
             IntegerField::new('taille')->onlyOnForms()->setRequired(false),
             TextField::new('vase')->onlyOnForms()->setRequired(false),
@@ -63,5 +73,21 @@ class ProductCrudController extends AbstractCrudController
             BooleanField::new('nouveaute'),
             BooleanField::new('publie', "Publié"),
         ];
+
+        
+        if ($pageName == Crud::PAGE_INDEX ||  $pageName == Crud::PAGE_DETAIL) {
+            $fields[] = $image ; 
+        } else {
+            $fields[] = $imageFile ; 
+        }
+
+        return $fields ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+       return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+        ;
     }
 }

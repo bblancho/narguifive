@@ -5,8 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\Product\Category;
 use App\Controller\Admin\Field\VichImageField;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -42,6 +45,13 @@ class CategoryCrudController extends AbstractCrudController
             Field::new('imageFile')->setFormType(VichImageType::class),
             
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+       return $actions
+            ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::DELETE, Action::EDIT])
+        ;
     }
 
 }

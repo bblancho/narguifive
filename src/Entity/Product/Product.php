@@ -151,7 +151,8 @@ class Product
     private $gramme = self::DEFAULT_QTE_GRAMME ;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $pictures;
 
