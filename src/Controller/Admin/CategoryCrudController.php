@@ -43,7 +43,6 @@ class CategoryCrudController extends AbstractCrudController
                 ->setUploadDir( 'public/assets/images/categories' )
                 ->setRequired(false) ,
             Field::new('imageFile')->setFormType(VichImageType::class),
-            
         ];
     }
 

@@ -32,7 +32,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Nargui Five Chicha');
+            ->setTitle('NarguiFive Chicha');
     }
 
     public function configureMenuItems(): iterable
@@ -45,8 +45,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Sous catégories', 'fas fa-list', SousCategory::class);
         yield MenuItem::linkToCrud('Transporteur', 'fas fa-truck', Transporteur::class);
         yield MenuItem::linkToCrud('Header', 'fas fa-desktop', Header::class);
-        
-        
-        // yield MenuItem::linkToCrud('Commandes', 'fas fa-list', Commande::class) ;
+
     }
 }
