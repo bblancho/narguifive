@@ -37,12 +37,10 @@ class HomeController extends AbstractController
 
         // Paginate the results of the query
         $produits = $paginator->paginate(
-            // Doctrine Query, not results
-            $produits,
-            // Define the page parameter
+            $produits, // Doctrine Query, not results
             $request->query->getInt('page', 1), // numéro de la page en cours
-            // Items per page
-            6
+            6 // Items per page
+
         );
 
         $produits_best = $this->repoProduct->findByIsBest(1);

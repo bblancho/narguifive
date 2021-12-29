@@ -94,4 +94,10 @@ class ProductCrudController extends AbstractCrudController
             ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::DELETE, Action::EDIT])
         ;
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['id' => 'ASC']) ;
+    }
 }
