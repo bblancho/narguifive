@@ -32,7 +32,6 @@ h1,h2{
 }
 
 /********** Menu *********/
-<<<<<<< HEAD
 
 
 .panier{
@@ -50,8 +49,6 @@ h1,h2{
     font-family: Roboto,serif;
     font-size: 9px;
 }
-=======
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .blog-header-logo {
     background: #000;
     text-align: center;
@@ -142,7 +139,6 @@ ul.navbar-nav{
     width: 100%;
 }
 
-<<<<<<< HEAD
 
 .sticky {
     position: fixed;
@@ -153,8 +149,6 @@ ul.navbar-nav{
 .sticky + .content {
     padding-top: 400px;
 }
-=======
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 /************** Body ************/
 .marketing{
     /* margin-bottom: 45px ; */
@@ -439,7 +433,6 @@ div.description-block{
 
 /** Block nos valeurs **/
 
-<<<<<<< HEAD
 .block-valeur{
     padding: 0 !important;
     margin: 0 !important;
@@ -450,15 +443,11 @@ div.description-block{
 }
 
 /*.block-valeur figure{
-=======
-.block-valeur figure{
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
     background: none;
     width: 100%;
     height: auto;
 }
 .block-valeur figure img{
-<<<<<<< HEAD
     width: 100%;
     height: 100%;
     object-fit:scale-down;
@@ -471,11 +460,6 @@ div.description-block{
 }
 
 
-=======
-    width: 100px;
-}
-
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .block-valeur h3{
     font-size: 1.2rem;
     text-transform: uppercase;
@@ -739,12 +723,9 @@ img{
 
 /********* Page mon compte *****/
 
-<<<<<<< HEAD
-=======
 .compte-lien{
     border-right: 1px solid;
 }
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .mon-compte{
     background-color: #F6F6F6;
     padding: 45px 0px;
@@ -761,12 +742,7 @@ img{
 
 .compte-lien a:hover{
     text-decoration: underline;
-<<<<<<< HEAD
-    color: blue;
-
-=======
     color: #F1A212;
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 }
 .account-item{
     background-color: #a4b0be;
@@ -794,30 +770,21 @@ img{
 }
 
 .compte-lien a{
-<<<<<<< HEAD
-    color: #626262;
-    padding: 0px 0px 0px 0px;
-    display: block;
-=======
     color: #000;
     padding: 0px 0px 0px 0px;
     display: block;
     font-weight: 600;
     text-transform: uppercase;
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 }
 
 .lien-icone-compte::before{
     padding-right: 10px;
 }
 
-<<<<<<< HEAD
-=======
 .lien_compte{
     color: #F1A212 !important;
 }
 
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 /**** Mes adresses **/
 span.adresse{
     font-weight: bold;
