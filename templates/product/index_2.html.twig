@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-
+{% set queryParams = app.request.query.all %}
+{% set queryString = queryParams|filter((v,k) => k != 'page')|url_encode %}
 {% block title %}
 	Nargui Five 93 - Nos produits
 {% endblock %}
@@ -8,7 +9,11 @@
 	<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
 {% endblock %}
 
+       
+
+
 {% block body %}
+
 
 	<!-- Three columns of text below the carousel -->
 	<div class="columns-container">
@@ -109,8 +114,14 @@
 									
 											<ul id="ul_layered_manufacturer_0" class="col-lg-12 layered_filter_ul">
 												{% for fabricant in fabricants %}
+
+												{% if queryParams is not empty and queryParams.layered_manufacturer is defined %}
+													{% set checked = (fabricant.id in queryParams.layered_manufacturer)? "checked" : "" %}
+												{% else %}
+													{% set checked = "" %}
+												{% endif %}
 													<li class="nomargin hiddable col-lg-12">
-														<input type="checkbox" class="checkbox" name="layered_manufacturer[]" id="layered_manufacturer_{{fabricant.id}}" value="{{fabricant.id}}"/>
+														<input type="checkbox" class="checkbox" name="layered_manufacturer[]" id="layered_manufacturer_{{fabricant.id}}" value="{{fabricant.id}}" {{ checked }}/>
 														<label for="layered_manufacturer_{{fabricant.id}}">
 															<a href="#">{{ fabricant.nom}}<span>
 																	({{ from_fabs[fabricant.nom]|length}})</span>
@@ -119,6 +130,7 @@
                                                         
 													</li>
 												{% endfor %}
+												<input type="hidden" name="page" value={{mypage}}>
 											</ul>
 									
 

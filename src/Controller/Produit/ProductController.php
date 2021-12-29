@@ -40,28 +40,66 @@ class ProductController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
 
-        
+        $limit=12;
+        $mypage=(int)$request->get("page", 1);
+        //dd($mypage);
+
+        $filter=$request->get("layered_manufacturer"); 
+        $tri=$request->get("tri");
         $search = new Search();
 
         $form = $this->createForm(SearchType::class, $search) ;
 
         $form->handleRequest($request) ;
-        $mypage=$request->query->getInt('page', 1);
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            $produits = $this->repoProduct->findBySearch($search);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                10
+            );
+
+        } else {
+            $produits = $this->repoProduct->findAll();
+            $total= count($produits);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                8
+            );
+
+            $produits_best = $this->repoProduct->findByIsBest(1);
+        }
+
        
-        
-        $sousCats = $this->repoSousCat->findBy(array(),array(),$limit=4);
+        $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, $filter, $tri);
+        $total=$this->repoProduct->getTotalProducts($filter);
+        $sousCats = $this->repoSousCat->findBy(array(),array(),4);
         $fabricants=$this->repoMarque->findAll();
         $from_fabs=array();
+
         foreach($fabricants as $fabricant){
             $prods=$this->repoProduct->findBy(array('marque'=>$fabricant));
             $from_fabs[$fabricant->getNom()]=$prods;
         }
       
-        $tri=$request->get("tri");
+        
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
 
-            if ($filter==null){
+            /*if ($filter==null){
                 if($tri=='name:asc'){
                     $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'asc'));
                 }
@@ -109,7 +147,8 @@ class ProductController extends AbstractController
                     $produits=$this->repoProduct->findBy(array('marque'=>$filter));
                 }
                 
-            }
+            }*/
+
             $fabs=$this->repoMarque->findBy(array('id'=>$filter));
             $actifs=array();
             $actif=array();
@@ -119,66 +158,29 @@ class ProductController extends AbstractController
                 array_push($actifs,$actif);
             }
             
-            $total=count($produits);
+            //$total=count($produits);
              // Paginate the results of the query
-            $produits = $paginator->paginate(
+            /* $produits = $paginator->paginate(
                 // Doctrine Query, not results
                 $produits,
                 // Define the page parameter
                 $request->query->getInt('page', 1), // numéro de la page en cours
                 // Items per page
                 8
-            );
-           return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits')), 'total'=>$total, 'fabs'=>$actifs, 'mypage'=>$mypage]);
+            );*/
+            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total]);
         }
 
-
-
-
-
-
-
-        if ( $form->isSubmitted() && $form->isValid() ) {
-
-            $produits = $this->repoProduct->findBySearch($search);
-
-            // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
-                $produits,
-                // Define the page parameter
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                10
-            );
-
-        } else {
-            $produits = $this->repoProduct->findAll();
-            $total= count($produits);
-
-            // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
-                $produits,
-                // Define the page parameter
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                8
-            );
-
-            $produits_best = $this->repoProduct->findByIsBest(1);
-        }
-
-       
       
       
-
         return $this->render('product/index_2.html.twig', [
             'produits' => $produits,
             'sousCats' => $sousCats,
             'fabricants'=>$fabricants,
             'from_fabs'=>$from_fabs,
             'total'=>$total,
+            'limit'=>$limit,
+            'mypage'=>$mypage,
             'form' => $form->createView()
         ]);
     }

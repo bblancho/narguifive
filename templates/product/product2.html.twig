@@ -1,3 +1,5 @@
+
+
 <!-- Products list -->
 <div id="products_filter">
 	
@@ -84,6 +86,9 @@
 		{% endfor %}
 	</ul>
 
+	{% set queryParams = app.request.query.all %}
+	{% set queryString = queryParams|filter((v,k) => k != 'page' and k !='ajax')|url_encode %}
+
 	<div class="content_sortPagiBar">
 						<div class="bottom-pagination-content clearfix">
 
@@ -98,7 +103,50 @@
 									</div>
 								</form>
 								<ul class="pagination">
-									<li id="pagination_previous_bottom" class="disabled pagination_previous">
+
+									<li id="pagination_previous_bottom" class="{{  ( mypage > 1) ? '' : 'disabled' }} pagination_previous">
+										<a href="{{  ( mypage > 1) ? '?page=' ~ ( mypage - 1) : '' }}&{{queryString}}">
+											<i class="icon-chevron-left"></i>
+											<b>Pr&eacute;c&eacute;dent</b>
+										</a>
+									</li>
+									{% set pages = (total / limit)|round(0,'ceil') %}
+									{% for item in 1..((total / limit)|round(0,'ceil') ) %}
+										{% if mypage == item %}
+										<li class="active current">
+												<span>
+													<span>{{ item }}</span>
+												</span>
+										</li>
+										{% else %}
+										<li>
+											<a href="?page={{item}}&{{queryString}}">
+												<span>{{ item }}</span>
+											</a>
+										</li>
+											
+										{% endif %}
+										
+									{% endfor %}
+
+									<li id="pagination_next_bottom" class=" {{  (mypage == pages) ? 'disabled' : '' }} pagination_next">
+										<a href="{{  (mypage < pages) ? '?page=' ~ (mypage + 1) : '' }}&{{queryString}}" rel="next">
+											<b>Suivant</b>
+											<i class="icon-chevron-right"></i>
+										</a>
+									</li>
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									<!--li id="pagination_previous_bottom" class="disabled pagination_previous">
 										<span>
 											<i class="icon-chevron-left"></i>
 											<b>Pr&eacute;c&eacute;dent</b>
@@ -134,17 +182,18 @@
 											<b>Suivant</b>
 											<i class="icon-chevron-right"></i>
 										</a>
-									</li>
+									</li-->
 								</ul>
 							</div>
 							<div class="product-count">
-								R&eacute;sultats 1 - 30 sur 323.
+								R&eacute;sultats {{ mypage }} - {{(total / limit)|round(0,'ceil')}} sur [{{total}}].
 							</div>
 
 						</div>
-	</div>   
+	</div>  
+	
 
-	{#{{ knp_pagination_render(produits) }}#}        
+	{#{{ knp_pagination_render(produits,'',params) }}#}
                    
 </div>
 

@@ -5,8 +5,9 @@ window.onload=()=>{
             
             const Form= new FormData(filterform);
             const Params = new URLSearchParams();
+          
             Form.forEach((key,value) =>{
-               
+               console.log(key,value);
                 Params.append(value,key);
             });
 
@@ -43,7 +44,7 @@ window.onload=()=>{
                 "</li>";
                 }
                 filtre_actif.innerHTML=text;
-                total.innerHTML="Il y a "+ data.total+" produits";
+                total.innerHTML="Il y a "+ data.total+ " produits";
                 content.innerHTML= data.content;
 
                 history.pushState({},null,url.pathname+"?"+ Params.toString());
