@@ -40,11 +40,12 @@ class ProductController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
 
-        $limit=12;
+        $limit=15;
         $mypage=(int)$request->get("page", 1);
         //dd($mypage);
 
         $filter=$request->get("layered_manufacturer"); 
+        $disponibilite=$request->get("layered_quantity"); 
         $tri=$request->get("tri");
         $search = new Search();
 
@@ -84,16 +85,23 @@ class ProductController extends AbstractController
         }
 
        
-        $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, $filter, $tri);
-        $total=$this->repoProduct->getTotalProducts($filter);
+        $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, $filter, $tri, $disponibilite);
+        $total=$this->repoProduct->getTotalProducts($filter,$disponibilite);
         $sousCats = $this->repoSousCat->findBy(array(),array(),4);
         $fabricants=$this->repoMarque->findAll();
         $from_fabs=array();
+
+        //Disponibilité
+        $nbre_dispo=array();
+        $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
+        $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
 
         foreach($fabricants as $fabricant){
             $prods=$this->repoProduct->findBy(array('marque'=>$fabricant));
             $from_fabs[$fabricant->getNom()]=$prods;
         }
+
+      
       
         
         if($request->get("ajax")){
@@ -168,7 +176,7 @@ class ProductController extends AbstractController
                 // Items per page
                 8
             );*/
-            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total]);
+            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
       
@@ -177,6 +185,7 @@ class ProductController extends AbstractController
             'produits' => $produits,
             'sousCats' => $sousCats,
             'fabricants'=>$fabricants,
+            'nbre_dispo'=>$nbre_dispo,
             'from_fabs'=>$from_fabs,
             'total'=>$total,
             'limit'=>$limit,
