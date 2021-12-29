@@ -23,7 +23,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-
 class ProductCrudController extends AbstractCrudController
 {
     private $params;

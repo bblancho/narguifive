@@ -4,6 +4,12 @@ body{
     background-color: #fff;
     overflow-x: hidden;
 }
+
+.separation{
+    width: 100%;
+    position: relative;
+    top: 25px;
+}
 h1,h2{
     text-transform: uppercase;
 }
@@ -26,6 +32,26 @@ h1,h2{
 }
 
 /********** Menu *********/
+<<<<<<< HEAD
+
+
+.panier{
+    background: #F1A212 none repeat scroll 0 0;
+    border-radius: 100%;
+    color: #000000;
+    display: block !important;
+    height: 18px;
+    left: 12px;
+    line-height: 18px;
+    position: absolute;
+    text-align: center;
+    top: -7px;
+    width: 18px;
+    font-family: Roboto,serif;
+    font-size: 9px;
+}
+=======
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .blog-header-logo {
     background: #000;
     text-align: center;
@@ -116,6 +142,19 @@ ul.navbar-nav{
     width: 100%;
 }
 
+<<<<<<< HEAD
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+  
+.sticky + .content {
+    padding-top: 400px;
+}
+=======
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 /************** Body ************/
 .marketing{
     /* margin-bottom: 45px ; */
@@ -400,15 +439,43 @@ div.description-block{
 
 /** Block nos valeurs **/
 
+<<<<<<< HEAD
+.block-valeur{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.dav{
+    padding: 0;
+    margin: 0;
+}
+
+/*.block-valeur figure{
+=======
 .block-valeur figure{
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
     background: none;
     width: 100%;
     height: auto;
 }
 .block-valeur figure img{
+<<<<<<< HEAD
+    width: 100%;
+    height: 100%;
+    object-fit:scale-down;
+}*/
+
+
+.block-valeur img{
+    width: 100%;
+    object-fit:cover;
+}
+
+
+=======
     width: 100px;
 }
 
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .block-valeur h3{
     font-size: 1.2rem;
     text-transform: uppercase;
@@ -672,9 +739,12 @@ img{
 
 /********* Page mon compte *****/
 
+<<<<<<< HEAD
+=======
 .compte-lien{
     border-right: 1px solid;
 }
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 .mon-compte{
     background-color: #F6F6F6;
     padding: 45px 0px;
@@ -691,7 +761,12 @@ img{
 
 .compte-lien a:hover{
     text-decoration: underline;
+<<<<<<< HEAD
+    color: blue;
+
+=======
     color: #F1A212;
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 }
 .account-item{
     background-color: #a4b0be;
@@ -719,21 +794,30 @@ img{
 }
 
 .compte-lien a{
+<<<<<<< HEAD
+    color: #626262;
+    padding: 0px 0px 0px 0px;
+    display: block;
+=======
     color: #000;
     padding: 0px 0px 0px 0px;
     display: block;
     font-weight: 600;
     text-transform: uppercase;
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 }
 
 .lien-icone-compte::before{
     padding-right: 10px;
 }
 
+<<<<<<< HEAD
+=======
 .lien_compte{
     color: #F1A212 !important;
 }
 
+>>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 /**** Mes adresses **/
 span.adresse{
     font-weight: bold;
