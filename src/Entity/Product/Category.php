@@ -2,14 +2,18 @@
 
 namespace App\Entity\Product;
 
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Product\SousCategory;
-use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @Vich\Uploadable
  */
 class Category
 {
@@ -52,8 +56,21 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     * )
+     * @var File|null
+     */
+    private $imageFile;
+
 
     public function __construct()
     {
@@ -65,7 +82,6 @@ class Category
     {
         return (string) $this->getNom() ;
     }
-
 
     public function getId(): ?int
     {
@@ -191,4 +207,28 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+
 }

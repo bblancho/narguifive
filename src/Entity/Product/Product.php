@@ -7,8 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Product\ImageProduct;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Entity\File;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\ProductRepository;
+
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -49,14 +52,19 @@ class Product
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
-     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="products_images", fileNameProperty="image")
-     * @var File
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     * )
+     * @var File|null
      */
     private $imageFile;
 
@@ -147,9 +155,26 @@ class Product
      */
     private $gramme = self::DEFAULT_QTE_GRAMME ;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $pictures;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $en_stock;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantite;
+
     public function __construct()
     {
         $this->imageProduct = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,23 +223,29 @@ class Product
         return $this->image;
     }
 
-    public function setImage( ?string $image ): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function getImageFile()
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function setImageFile( File $image = null): self
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): self
     {
-        $this->imageFile = $image;
+        $this->imageFile = $imageFile;
 
-        if ($image) {
+        if (null !== $imageFile) {
             $this->updated_at = new \DateTime('now');
         }
 
@@ -298,7 +329,7 @@ class Product
         return $this->taille;
     }
 
-    public function setTaille(float $taille): self
+    public function setTaille(?float $taille): self
     {
         $this->taille = $taille;
 
@@ -310,7 +341,7 @@ class Product
         return $this->vase;
     }
 
-    public function setVase(string $vase): self
+    public function setVase(?string $vase): self
     {
         $this->vase = $vase;
 
@@ -322,7 +353,7 @@ class Product
         return $this->tuyau;
     }
 
-    public function setTuyau(string $tuyau): self
+    public function setTuyau(?string $tuyau): self
     {
         $this->tuyau = $tuyau;
 
@@ -334,7 +365,7 @@ class Product
         return $this->fixation;
     }
 
-    public function setFixation(string $fixation): self
+    public function setFixation(?string $fixation): self
     {
         $this->fixation = $fixation;
 
@@ -447,6 +478,60 @@ class Product
     public function getGrammeToString(): ?string
     {
         return $this->gramme ? self::QTE_GRAMME[$this->gramme] : null ;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getProduit() === $this) {
+                $picture->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEnStock(): ?bool
+    {
+        return $this->en_stock;
+    }
+
+    public function setEnStock(bool $en_stock): self
+    {
+        $this->en_stock = $en_stock;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(?int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
     }
     
 }

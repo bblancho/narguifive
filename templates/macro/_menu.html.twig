@@ -1,5 +1,6 @@
 {% macro menu_categories(categories) %}
     {% import _self as macros %}
+    
     {% for category in categories %}
         {% if category.sousCategory is not empty %} {# chicha #}
             <li class="nav-item dropdown">

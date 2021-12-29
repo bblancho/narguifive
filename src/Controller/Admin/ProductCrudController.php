@@ -2,9 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product\Product;
+use App\Form\PictureType;
 
+use App\Entity\Product\Product;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -12,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -32,29 +39,64 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
+        $image = ImageField::new('image', 'photo')
+                    ->setBasePath( $this->getParameter('app.path.products_images') )
+                    ->setUploadDir( 'public/assets/images/produits' )
+                    ->setRequired(false) ;
+
+        $imageFile = TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms() ;
+
+        $fields = [
             TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnDetail(),
-            TextareaField::new('content')->onlyOnDetail(),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            TextareaField::new('content')->onlyOnForms(),
+            BooleanField::new('en_stock', 'En stock'),
+            IntegerField::new('quantite', 'Quantité'),
+            AssociationField::new('category','Catégorie') ,
+            AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
             BooleanField::new('isBest',"A la une"),
+            BooleanField::new('nouveaute'),
             MoneyField::new('price')->setCurrency('EUR'),
             MoneyField::new('priceHT')->setCurrency('EUR') ,
-            ImageField::new('image')
-                ->setBasePath( $this->params->get('app.path.products_images') )
-                ->setUploadDir("public/assets/images/products")
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
-            AssociationField::new('color')->autocomplete()->onlyOnDetail(),
-            IntegerField::new('taille')->onlyOnDetail(),
-            TextField::new('vase')->onlyOnDetail(),
-            TextField::new('tuyau')->onlyOnDetail(),
-            TextField::new('fixation')->onlyOnDetail(),
-            TextField::new('autre')->onlyOnDetail(),
-            BooleanField::new('promotion'),
+
+            // CollectionField::new('pictures','Les photos')
+            //     ->setEntryType(PictureType::class)
+            //     ->setFormTypeOption('by_reference', false)
+            //     ->onlyOnForms()
+            // ,
+
+            AssociationField::new('color')->autocomplete()->onlyOnForms(),
+            IntegerField::new('taille')->onlyOnForms()->setRequired(false),
+            TextField::new('vase')->onlyOnForms()->setRequired(false),
+            TextField::new('tuyau')->onlyOnForms()->setRequired(false),
+            TextField::new('fixation')->onlyOnForms()->setRequired(false),
+            TextField::new('autre')->onlyOnForms()->setRequired(false),
+            BooleanField::new('promotion')->onlyOnIndex(),
             BooleanField::new('nouveaute'),
-            AssociationField::new('category') ,
-            AssociationField::new('sousCategory',"Sous catégorie")->onlyOnDetail() ,
             BooleanField::new('publie', "Publié"),
         ];
+
+        
+        // if ($pageName == Crud::PAGE_INDEX ||  $pageName == Crud::PAGE_DETAIL) {
+            $fields[] = $image ; 
+        // } else {
+            $fields[] = $imageFile ; 
+        // }
+
+        return $fields ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+       return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::DELETE, Action::EDIT])
+        ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['id' => 'ASC']) ;
     }
 }
