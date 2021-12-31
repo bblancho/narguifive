@@ -42,7 +42,7 @@
 								<span> Sous-catégorie:  {{ produit.sousCategory.nom }} </span>
 								<span class="product-price">{{ (produit.price) | number_format(2, ',', '.') }} € </span>
 								<span class="nbr-product"> en stock </span>
-								<a class="btn btn-lg btn-block btn-outline-primary link-img" href="{{ path("cart_add", {id : produit.id}) }}" role="button"> Ajouter au panier </a>
+								<a class="btn btn-lg btn-block btn-outline-primary link-img" href="{{ path("cart_add", {id : produit.id}) }}" onclick="panier_gestion('{{produit.id}}')" role="button"> Ajouter au panier </a>
 							</div>
 						</div>
 					{% endfor %}

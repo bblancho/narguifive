@@ -195,7 +195,7 @@
                 <div id="center_column" class="center_column col-xs-12 col-sm-9">
 
                     <div class="page-heading product-listing"><span class="cat-name">{{ sousCatActuel}}&nbsp;</span></div>
-                    <div class="pull-right"><span class="heading-counter">Il y a {{produitsAll|length }} produits.</span>
+                    <div class="pull-right"><span class="heading-counter">Il y a {{total }} produits.</span>
                     </div>
 
                     <div class="content_sortPagiBar clearfix">
@@ -208,127 +208,34 @@
                             </ul>
 
                             <!-- /Trier -->
-                            <form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha"
-                                class="productsSortForm pull-right">
-                                <div class="select selector1">
-                                    <label for="selectProductSort">Tri</label>
-                                    <select id="selectProductSort" class="selectProductSort form-control">
-                                        <option value="quantity:desc">--</option>
-                                        <option value="price:asc">Le moins cher</option>
-                                        <option value="price:desc">Le plus cher</option>
-                                        <option value="name:asc">De A &agrave; Z</option>
-                                        <option value="name:desc">De Z &agrave; A</option>
-                                        <option value="quantity:desc" selected="selected">En Stock</option>
-                                        <option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
-                                        <option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
-                                        </option>
-                                    </select>
-                                </div>
-                            </form>
+                           <form id="productsSortForm" action="#" class="productsSortForm pull-right">
+								<div class="select selector1">
+									<label for="selectProductSort">Tri</label>
+									<select id="selectProductSort" class="selectProductSort form-control" onchange="tri2(this)">
+										<option value="quantity:desc">--</option>
+										<option value="price:asc">Le moins cher</option>
+										<option value="price:desc">Le plus cher</option>
+										<option value="name:asc">De A &agrave; Z</option>
+										<option value="name:desc">De Z &agrave; A</option>
+										<option value="quantity:desc" selected="selected">En Stock</option>
+										<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
+										<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
+										</option>
+									</select>
+								</div>
+							</form>
                         </div>
                     </div>
 
 
                     <!-- Products list -->
-                    <ul class="lablistproducts product_list grid row">
-                    
-                    {% for produit in produits %}
-                    <li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line
-                                first-item-of-mobile-line
-                                ">
-                            <div class="product-container item" itemscope itemtype="https://schema.org/Product">
-                                <div class="left-block">
-                                    <div class="product-image-container">
-                                        <a class="product_image" href="product_page.html"
-                                            title="LOREM IPSUM DOLOR TITLE">
-                                            <img class="img-responsive img1"
-                                                src="{{produit.image}}"
-                                                alt="{{produit.nom}}" />
-
-                                        </a>
-
-                                        <div class="actions">
-                                            <ul class="add-to-links">
-                                                <li class="lab-Wishlist">
-                                                    <a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;"
-                                                        class="add-wishlist wishlist_button" href="#"
-                                                        data-id-product="812"
-                                                        title="Ajouter &agrave; la liste de souhaits">
-                                                        <i class="mdi mdi-heart-outline"></i><span>Ajouter &agrave;
-                                                            la liste de souhaits</span></a>
-
-                                                </li>
-                                                <li class="lab-quick-view">
-                                                    <a class="" href="product_page.html" data-id-product="812"
-                                                        title="Aper&ccedil;u rapide">
-                                                        <i class="mdi mdi-eye"></i>
-                                                        <span>Aper&ccedil;u rapide</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-
-                                        </div>
-
-                                        <span class="availability">
-                                            <span class=" label-success">
-                                                Disponible
-                                                <!-- 																							 -->
-                                            </span>
-                                        </span>
-
-                                    </div>
-
-                                </div>
-                                <div class="right-block">
-                                    <div class="product-name" itemprop="name">
-                                        <a href="product_page.html" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
-                                            {{produit.nom}}
-                                        </a>
-                                    </div>
-
-                                    <p class="product-desc" itemprop="description">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
-                                        ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
-                                        architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
-                                        tempora.
-                                    </p>
-
-                                    <div class="content_price" itemprop="offers" itemscope
-                                        itemtype="https://schema.org/Offer">
-
-                                        <span class="price product-price" itemprop="price">
-                                            {{produit.price}} €</span>
-                                        <meta itemprop="priceCurrency" content="EUR" />
-
-
-
-                                    </div>
-
-                                    <div class="color-list-container"></div>
-                                    <div class="flags">
-                                    </div>
-
-                                    <div class="lab-cart">
-                                        <a class="button ajax_add_to_cart_button btn btn-default" onclick="panier_gestion('{{produit.id}}')"
-                                            href="#"
-                                            data-id-product="{{produit.id}}" title="Ajouter au panier">
-                                            <span>+ Ajouter au panier</span>
-                                        </a>
-
-                                    </div>
-                                </div>
-
-                            </div><!-- .product-container> -->
-                        </li>
-                        
-                    {% endfor %}
-
+                   {% include "product/product2.html.twig" %}
                         
 
                         
                    
 
-                    <div class="content_sortPagiBar">
+                    <!--div class="content_sortPagiBar">
                         <div class="bottom-pagination-content clearfix">
 
                             <div id="pagination_bottom" class="pagination clearfix">
@@ -384,7 +291,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div-->
                 </div>
                 </div>
                 </div>

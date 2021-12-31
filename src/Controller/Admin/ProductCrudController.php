@@ -54,6 +54,7 @@ class ProductCrudController extends AbstractCrudController
             IntegerField::new('quantite', 'Quantité'),
             AssociationField::new('category','Catégorie') ,
             AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
+            AssociationField::new('marque',"Fabriquant")->onlyOnForms() ,
             BooleanField::new('isBest',"A la une"),
             BooleanField::new('nouveaute'),
             MoneyField::new('price')->setCurrency('EUR'),

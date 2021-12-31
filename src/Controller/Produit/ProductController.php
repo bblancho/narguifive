@@ -263,7 +263,10 @@ class ProductController extends AbstractController
         
         $sousCats=$this->repoSousCat->findBy(array(),array(),$limit=4);
         $sousCat=$this->repoSousCat->findOneBy(array('slug'=>$slug));
-        
+
+        $limit=15;
+        $mypage=(int)$request->get("page", 1);
+        $tri=$request->get("tri");
        
 
         $search = new Search();
@@ -286,27 +289,22 @@ class ProductController extends AbstractController
                 10
             );
 
-        } else {
-            $produits=$this->repoProduct->findBy(array('sousCategory'=>$sousCat));
-            $produitsAll=$produits;
-            // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
-                $produits,
-                // Define the page parameter
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                8
-            );
+        } 
 
-            $produits_best = $this->repoProduct->findByIsBest(1);
+        $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, null, $tri,null,$sousCat);
+        $total=$this->repoProduct->getTotalProducts(null,null, $sousCat);
+
+        if($request->get("ajax")){    
+            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')),  'total'=>$total]);
         }
 
         return $this->render('product/sous_category.html.twig', [
             'produits' => $produits,
             'sousCats' => $sousCats,
             'sousCatActuel'=>$sousCat,
-            'produitsAll'=>$produitsAll,
+            'total'=>$total,
+            'mypage'=>$mypage,
+            'limit'=>$limit,
             'form' => $form->createView()
         ]);
 
