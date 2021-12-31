@@ -484,9 +484,9 @@ div.description-block{
     width: 100%;
 }
 
-
-
-
+.assurance img{
+    width: 30% !important;
+}
 
 /********** Footer *********/
 .footer-custom{
