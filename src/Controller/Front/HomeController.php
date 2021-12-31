@@ -40,7 +40,6 @@ class HomeController extends AbstractController
             $produits, // Doctrine Query, not results
             $request->query->getInt('page', 1), // numéro de la page en cours
             6 // Items per page
-
         );
 
         $produits_best = $this->repoProduct->findByIsBest(1);
