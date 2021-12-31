@@ -61,7 +61,7 @@ class ProductRepository extends ServiceEntityRepository
      */
 
 
-    public function getPaginatedProducts($mypage,$limit,$filter=null, $tri=null, $disponibilite=null){
+    public function getPaginatedProducts($mypage,$limit,$filter=null, $tri=null, $disponibilite=null, $cat=null){
         $query=$this->createQueryBuilder('p')
         ->orderBy('p.id');
 
@@ -73,6 +73,11 @@ class ProductRepository extends ServiceEntityRepository
         if($disponibilite !=null){
             $query->andWhere('p.en_stock IN (:value)')
             ->setParameter(':value', array($disponibilite));
+        }
+
+        if($cat !=null){
+            $query->andWhere('p.sousCategory =:value')
+            ->setParameter(':value', $cat);
         }
 
         if ($tri != null){
@@ -111,7 +116,7 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return void
      */
-    public function getTotalProducts($filter=null, $disponibilite=null){
+    public function getTotalProducts($filter=null, $disponibilite=null, $cat=null){
         $query=$this->createQueryBuilder('p')
         ->select('COUNT(p)');
 
@@ -122,6 +127,10 @@ class ProductRepository extends ServiceEntityRepository
         if($disponibilite != null){
             $query->andWhere('p.en_stock IN(:value)')
             ->setParameter(':value', array($disponibilite));
+        }
+        if($cat != null){
+            $query->andWhere('p.sousCategory = :value')
+            ->setParameter(':value', $cat);
         }
         return $query->getQuery()->getSingleScalarResult();
     }
