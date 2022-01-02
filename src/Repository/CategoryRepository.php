@@ -26,22 +26,22 @@ class CategoryRepository extends ServiceEntityRepository
         return $query;
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Category[] Returns an array of products by Category objects
+     *
+     */
+    public function findProductsByCategory($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', $value)
+            ->join('c.products', 'p') // liasion entre Catégorie et les produits
+            ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Category

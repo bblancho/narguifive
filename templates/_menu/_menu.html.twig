@@ -66,15 +66,15 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="{{ category.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ category.nom }}</a>
                                 <div class="dropdown-menu" aria-labelledby="{{ category.id }}"> 
-                                    <a class="dropdown-item" href="{{ path('menu_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
+									<a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
                                     {% for cat in category.sousCategory %}
-                                        <a  class="dropdown-item" href="{{ path('menu_sous_categorie',{ slug:category.slug, sous_menu:cat.slug } )}}">{{ cat.nom }}</a> 
+										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slug:category.slug, sous_menu:cat.slug } )}}">{{ cat.nom }}</a>
                                     {% endfor %}
                                 </div>
                             </li> 
                         {% else %}
                             <li class="nav-item"> 
-                                <a class="nav-link" href="{{ path('menu_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
+								<a class="nav-link" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}

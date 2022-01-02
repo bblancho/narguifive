@@ -27,11 +27,11 @@ class ProductController extends AbstractController
 
     public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $cat, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
     {
-        $this->manager = $manager;
-        $this->repoProduct = $repoProduct;
-        $this->repoCat = $cat;
-        $this->repoSousCat = $sousCat;
-        $this->repoMarque=$repoMarque;
+        $this->manager          = $manager;
+        $this->repoProduct      = $repoProduct;
+        $this->categoryRepo     = $cat;
+        $this->sousCategoryRepo = $sousCat;
+        $this->repoMarque       = $repoMarque;
     }
 
     /**
@@ -207,15 +207,34 @@ class ProductController extends AbstractController
     }
 
     /**
-     * /produits/chichas/chicha-classique
-     * @Route("/produits/{$nomCategories}/{$souscategories}", name="products_all_category")
+     * @Route("/categorie/{slug}/{sous_menu}", name="products_by_sous_categorie")
      */
-    // public function productAllCategory($nomCategories, $souscategories): Response
-    // {
-    //     return $this->render('product/index.html.twig', [
+    public function sousCategorie($slug,$sous_menu): Response
+    {
+        $categorie    = $this->categoryRepo->findOneBySlug($slug);
+        $sousCategory = $this->sousCategoryRepo->findOneBySlug($sous_menu);
 
-    //     ]);
-    // }
+        if( $categorie && $sousCategory ) {
+            return $this->render('home/category.html.twig',[
+                'sousCategory' => $sousCategory,
+                'categorie' => '',
+            ]);
+        }
+        
+    }
+
+    /**
+     * @Route("/categorie/{slug}", name="products_by_categorie")
+     */
+    public function productsByCategory($slug): Response
+    {
+        $categorie = $this->category->findOneBySlug($slug);
+
+        return $this->render('home/category.html.twig',[
+            'categorie' => $categorie,
+            'sousCategory' => '',
+        ]);
+    }
 
     /**
      * /produits/chichas/chicha-classique/celeste-3
