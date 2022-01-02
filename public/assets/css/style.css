@@ -16,6 +16,12 @@ body{
     margin-bottom: 1%;
 }
 
+.page-item.active .page-link {
+    color: #fff !important;
+    background-color: #F1A212 !important;
+    border-color: transparent !important;
+}
+
 .pagination > li > a, .pagination > li > span{
     color: #000 !important;
 }
