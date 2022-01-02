@@ -10,6 +10,16 @@ body{
     position: relative;
     top: 25px;
 }
+
+.pagination_knp nav {
+    background-color: #fff !important;
+    margin-bottom: 1%;
+}
+
+.pagination > li > a, .pagination > li > span{
+    color: #000 !important;
+}
+
 h1,h2{
     text-transform: uppercase;
 }
