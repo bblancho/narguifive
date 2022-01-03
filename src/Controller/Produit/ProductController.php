@@ -200,7 +200,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('products');
         }
 
-        return $this->render('product/show_product.html.twig', [
+        return $this->render('product/product_page.html.twig', [
             'produit' => $produit,
             'produits_best'  => $produits_best,
         ]);
