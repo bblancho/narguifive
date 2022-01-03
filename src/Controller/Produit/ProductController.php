@@ -102,56 +102,6 @@ class ProductController extends AbstractController
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
 
-            /*if ($filter==null){
-                if($tri=='name:asc'){
-                    $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'asc'));
-                }
-                elseif($tri=='name:desc'){
-                    $produits=$this->repoProduct->findBy(array(), $orderBy= array('nom'=>'desc'));
-                }
-                elseif($tri=='price:asc'){
-                    
-                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'asc'));
-                   
-                }
-                elseif($tri=='price:desc'){
-                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('price'=>'desc'));
-                }
-                elseif($tri=='reference:asc'){
-                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'asc'));
-                }
-                elseif($tri=='reference:desc'){
-                    $produits=$this->repoProduct->findBy(array(), $orderBy=array('id'=>'desc'));
-                }
-                elseif($tri=='quantity:desc'){
-                    $produits=$this->repoProduct->findBy(array());
-                }
-            }else{
-
-                if($tri=='name:asc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'asc'));
-                }
-                elseif($tri=='name:desc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('nom'=>'desc'));
-                }
-                elseif($tri=='price:asc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'asc'));
-                }
-                elseif($tri=='price:desc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('price'=>'desc'));
-                }
-                elseif($tri=='reference:asc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'asc'));
-                }
-                elseif($tri=='reference:desc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter), array('id'=>'desc'));
-                }
-                elseif($tri=='quantity:desc'){
-                    $produits=$this->repoProduct->findBy(array('marque'=>$filter));
-                }
-                
-            }*/
-
             $fabs=$this->repoMarque->findBy(array('id'=>$filter));
             $actifs=array();
             $actif=array();
@@ -160,17 +110,7 @@ class ProductController extends AbstractController
                 $actif["nom"]=$fab->getNom();
                 array_push($actifs,$actif);
             }
-            
-            //$total=count($produits);
-             // Paginate the results of the query
-            /* $produits = $paginator->paginate(
-                // Doctrine Query, not results
-                $produits,
-                // Define the page parameter
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                8
-            );*/
+      
             return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
