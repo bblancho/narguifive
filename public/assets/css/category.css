@@ -1,0 +1,126 @@
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+/*# WIDGET LATERAL*/
+#steavisgarantis {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  line-height: 0;
+  text-align: center;
+  padding-bottom: 18px;
+}
+
+#steavisgarantis {
+  display: inline-block;
+  margin: 15px 0;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefefe+7,fefefe+28,f3f3f3+52 */
+  background: #ffffff;
+  /* Old browsers */
+  -moz-box-shadow: inset 0 0 0 1px #f2f2f2;
+  box-shadow: inset 0 0 0 1px #f2f2f2;
+}
+
+.agWidget {
+  color: #111111;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
+
+.rad {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+/*boutons*/
+.agBt {
+  display: inline-block;
+  background: #1c5399;
+  border: 1px solid #1c5399;
+  color: #ffffff !important;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 4px 10px;
+  width: auto;
+  text-decoration: none !important;
+}
+
+.agBt:hover {
+  background: none;
+  color: #1c5399 !important;
+  text-decoration: none !important;
+}
+
+.de .agBt:hover {
+  background: none;
+  color: #333333 !important;
+  text-decoration: none !important;
+}
+
+.de .agBt {
+  background: #333333;
+  border: 1px solid #333333;
+}
+
+.it .agBt:hover {
+  background: none;
+  color: #067a45 !important;
+  text-decoration: none !important;
+}
+
+.it .agBt {
+  background: #067a45;
+  border: 1px solid #067a45;
+}
+
+.es .agBt:hover {
+  background: none;
+  color: #021f3c !important;
+  text-decoration: none !important;
+}
+
+.es .agBt {
+  background: #021f3c;
+  border: 1px solid #021f3c;
+}
+
+.agBtBig {
+  font-size: 11px;
+  line-height: 11px;
+  padding: 5px 14px;
+}
+
+.rad {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.rad4 {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/*background*/
+.bgGrey1 {
+  background: #f9f9f9;
+}
+
+.bgGrey2 {
+  background: #f3f3f3;
+}
+
+/*transition*/
+.agBt {
+  -webkit-transition: background 0.4s ease;
+  -moz-transition: background 0.4s ease;
+  -ms-transition: background 0.4s ease;
+  -o-transition: background 0.4s ease;
+  transition: background 0.4s ease;
+}
