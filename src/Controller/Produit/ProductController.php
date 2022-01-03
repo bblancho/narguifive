@@ -310,7 +310,7 @@ class ProductController extends AbstractController
         $produits   = $this->repoCategory->allProductsByCategory(1);
         $sousCats   = $categorie->getSousCategory();
 
-        dd($produits) ;
+        // dd($produits) ;
 
         $produits = $paginator->paginate(
             $produits, // Doctrine Query, not results
