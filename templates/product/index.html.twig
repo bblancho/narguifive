@@ -1,59 +1,357 @@
 {% extends 'base.html.twig' %}
-
+{% set queryParams = app.request.query.all %}
+{% set queryString = queryParams|filter((v,k) => k != 'page')|url_encode %}
 {% block title %}
 	Nargui Five 93 - Nos produits
 {% endblock %}
 
+{% block stylesheets %}
+	<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
+{% endblock %}
+
+
 {% block body %}
+
 	<!-- Three columns of text below the carousel -->
-	<div class="container">
-
-		<div class="row">
-			<div class="col-sm-3">
-				<h3> Filtre </h3>
-				{{ form_start(form) }}
-				{{ form_rest(form) }}
-					<button class="form-control btn-block btn-primary" type="submit"> Rechercher </button>
-				{{ form_end(form) }}
-			</div>
-
-			<div class=" col-sm-9">
-				<div class="row">
-					<h1>
-						Nos chichas: {{ produits.getTotalItemCount }} produits
-					</h1><hr/>
-					<p>
-						Nargui Five est la référence dans la vente de chicha de luxe, retrouvez les
-									marques les plus prestigieuses comme les chichas en verre de laboratoire
-									de la marque américaine FUMO, les chichas en bois précieux WOOKAH,
-									pleins d'exclusivités et toutes les nouveautés du monde de la chicha.
-					</p>
-				</div>
-				<div class="row product-container">
-					{% for produit in produits %}
-						<div class="col-md-3">
-							<div class="product-item text-center">
-								<a class="link-img" href="{{ path("product_show", {slug: produit.slug} ) }}"> 
-									<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
-								</a>
-								<h5> {{ produit.nom }} </h5>
-								<span class="product-price"> NARGUI FIVE </span>
-								<span> Catégorie:  {{ produit.category.nom }} </span>
-								<span> Sous-catégorie:  {{ produit.sousCategory.nom }} </span>
-								<span class="product-price">{{ (produit.price) | number_format(2, ',', '.') }} € </span>
-								<span class="nbr-product"> en stock </span>
-								<a class="btn btn-lg btn-block btn-outline-primary link-img" href="{{ path("cart_add", {id : produit.id}) }}" onclick="panier_gestion('{{produit.id}}')" role="button"> Ajouter au panier </a>
+	<div class="columns-container">
+		<div id="column" class="container">
+			<div class="row">
+				<div class="lab_breadcrumb">
+					<div
+						class="container">
+						<!-- Breadcrumb -->
+						<div class="breadcrumb clearfix">
+							<div class="breadcrumb-i">
+								<a class="home" href="#" title="retour &agrave; Accueil">
+									<i class="icons-home"></i>Accueil</a>
+								<span class="navigation-pipe">&gt;</span>
+								Chicha
 							</div>
 						</div>
-					{% endfor %}
+						<!-- /Breadcrumb -->
+					</div>
 				</div>
 			</div>
 		</div>
-		
-
-		<div class="navigation">
-            {{ knp_pagination_render(produits) }}
-        </div>
 	</div>
 
-{% endblock %}
+	<div class="columns-container">
+		<div id="columns" class="container">
+			<div class="row">
+				<div id="left_column" class=" col-xs-12 col-sm-3">
+					<!-- Block categories module -->
+					<div id="categories_block_left" class="block">
+						<div class="title_block h2 active"> Sous-catégories </div>
+						<div class="block_content">
+							<ul class="tree dhtml">
+
+								{% for sousCat in sousCats %}
+									<li>
+										<a href="{{ path('products_subcategory_show',{slug: sousCat.slug})}}" title="">
+											{{ sousCat.nom}}
+										</a>
+									</li>
+
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<!-- /Block categories module -->
+
+					<div id="layered_block_left" class="block">
+						<!-- <p class="title_block">Catalogue</p> -->
+						<p class="title_block">Filtres</p>
+						<div class="block_content">
+							<form id="layered_form">
+								<div>
+									<div id="enabled_filters">
+										<span class="layered_subtitle" style="float: none;">
+											Filtres actifs :
+										</span>
+										<ul id="filtre_actif"></ul>
+									</div>
+									<div class="layered_filter">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Disponibilité</span>
+										</div>
+										<ul id="ul_layered_quantity_0" class="col-lg-12 layered_filter_ul">
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_0" value="0"/>
+												<label for="layered_quantity_0">
+													<a href="#">En cours de réapprovisionnement<span id="quantity_0">
+															({{nbre_dispo[0]}})</span>
+													</a>
+												</label>
+											</li>
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_1" value="1"/>
+												<label for="layered_quantity_1">
+													<a href="#">En Stock<span id="quantity_1">
+															({{nbre_dispo[1]}})</span>
+													</a>
+												</label>
+											</li>
+										</ul>
+									</div>
+
+									<div class="layered_filter">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Fabricant</span>
+										</div>
+
+										<ul id="ul_layered_manufacturer_0" class="col-lg-12 layered_filter_ul">
+											{% for fabricant in fabricants %}
+
+												{% if queryParams is not empty and queryParams.layered_manufacturer is defined %}
+													{% set checked = (fabricant.id in queryParams.layered_manufacturer)? "checked" : "" %}
+												{% else %}
+													{% set checked = "" %}
+												{% endif %}
+												<li class="nomargin hiddable col-lg-12">
+													<input type="checkbox" class="checkbox" name="layered_manufacturer[]" id="layered_manufacturer_{{fabricant.id}}" value="{{fabricant.id}}" {{ checked }}/>
+													<label for="layered_manufacturer_{{fabricant.id}}">
+														<a href="#">{{ fabricant.nom}}<span>
+																({{ from_fabs[fabricant.nom]|length}})</span>
+														</a>
+													</label>
+
+												</li>
+											{% endfor %}
+											<input type="hidden" name="page" value={{mypage}}>
+										</ul>
+
+
+									</div>
+									<div class="layered_price" style="display: none;">
+										<div class="layered_subtitle_heading">
+											<span class="layered_subtitle">Prix</span>
+										</div>
+										<ul id="ul_layered_price_0" class="col-lg-12 layered_filter_ul">
+
+											<div class="layered_slider_container">
+												<div class="layered_slider" id="layered_price_slider" data-type="price" data-format="2" data-unit="€"></div>
+											</div>
+											<span id="layered_price_range"></span>
+										</ul>
+									</div>
+								</div>
+
+								<input type="hidden" name="token" value="{{ csrf_token('fabricant') }}"/>
+							</form>
+						</div>
+						<div id="layered_ajax_loader" style="display: none;">
+							<p>
+								<img src="{{ asset('assets/images/icones/loader.gif') }}" alt=""/>
+								<br/>
+								Chargement...
+							</p>
+						</div>
+					</div>
+
+					<style>
+						* {
+							-webkit-font-smoothing: antialiased;
+						}
+
+						/*# WIDGET LATERAL*/
+						#steavisgarantis {
+							display: block;
+							width: 100%;
+							max-width: 100%;
+							line-height: 0;
+							text-align: center;
+							padding-bottom: 18px
+						}
+
+						#steavisgarantis {
+							display: inline-block;
+							margin: 15px 0;
+							/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefefe+7,fefefe+28,f3f3f3+52 */
+							background: #ffffff;
+							/* Old browsers */
+							-moz-box-shadow: inset 0 0 0 1px #f2f2f2;
+							box-shadow: inset 0 0 0 1px #f2f2f2;
+						}
+
+						.agWidget {
+							color: #111111;
+							font-family: 'Open Sans', sans-serif;
+							font-weight: 400
+						}
+
+						.rad {
+							-moz-border-radius: 8px;
+							-webkit-border-radius: 8px;
+							border-radius: 8px;
+						}
+
+						/*boutons*/
+						.agBt {
+							display: inline-block;
+							background: #1c5399;
+							border: 1px solid #1c5399;
+							color: #ffffff !important;
+							font-size: 10px;
+							line-height: 10px;
+							letter-spacing: 1px;
+							text-transform: uppercase;
+							text-align: center;
+							padding: 4px 10px;
+							width: auto;
+							text-decoration: none !important;
+						}
+
+						.agBt:hover {
+							background: none;
+							color: #1c5399 !important;
+							text-decoration: none !important;
+						}
+
+						.de .agBt:hover {
+							background: none;
+							color: #333333 !important;
+							text-decoration: none !important;
+						}
+
+						.de .agBt {
+							background: #333333;
+							border: 1px solid #333333;
+						}
+
+						.it .agBt:hover {
+							background: none;
+							color: #067a45 !important;
+							text-decoration: none !important;
+						}
+
+						.it .agBt {
+							background: #067a45;
+							border: 1px solid #067a45;
+						}
+
+						.es .agBt:hover {
+							background: none;
+							color: #021F3C !important;
+							text-decoration: none !important;
+						}
+
+						.es .agBt {
+							background: #021F3C;
+							border: 1px solid #021F3C;
+						}
+
+						.agBtBig {
+							font-size: 11px;
+							line-height: 11px;
+							padding: 5px 14px;
+						}
+
+						.rad {
+							-moz-border-radius: 8px;
+							-webkit-border-radius: 8px;
+							border-radius: 8px;
+						}
+
+						.rad4 {
+							-moz-border-radius: 4px;
+							-webkit-border-radius: 4px;
+							border-radius: 4px;
+						}
+
+						/*background*/
+						.bgGrey1 {
+							background: #f9f9f9
+						}
+
+						.bgGrey2 {
+							background: #f3f3f3
+						}
+
+						/*transition*/
+						.agBt {
+							-webkit-transition: background 0.4s ease;
+							-moz-transition: background 0.4s ease;
+							-ms-transition: background 0.4s ease;
+							-o-transition: background 0.4s ease;
+							transition: background 0.4s ease;
+						}
+					</style>
+				</div>
+
+				<div id="center_column" class="center_column col-xs-12 col-sm-9">
+
+					<div class="content_scene_cat">
+
+						<div class="content_scene_cat_bg" style="background-image: {{ asset('assets/images/header/chicha.jpg') }}; min-height:520px;">
+							<div class="cat_desc">
+								<span class="category-name">
+									Chicha
+								</span>
+								<div class="rte">
+									<h1>Matériel pour Chicha</h1>
+									<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam ratione
+																														                                        eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis
+																														                                        debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+																														                                        officiis.</p>
+									<h2>Boutique de Chicha tendance</h2>
+									<p><br/>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam
+																														                                        ratione
+																														                                        eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis
+																														                                        debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+																														                                        officiis.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="page-heading product-listing">
+						<span class="cat-name">Chicha&nbsp;</span>
+					</div>
+					<div class="pull-right">
+						<span class="heading-counter" id="total">Il y a
+							{{total}}
+							produits.</span>
+					</div>
+
+					<div class="content_sortPagiBar clearfix">
+						<div class="sortPagiBar clearfix">
+							<ul class="display hidden-xs pull-left">
+								<li id="grid">
+									<a rel="nofollow" href="javascript:void(0)" title="Grille">
+										<i class="icons-grid"></i>
+									</a>
+								</li>
+								<li id="list">
+									<a rel="nofollow" href="javascript:void(0)" title="Liste">
+										<i class="icon icon-align-justify"></i>
+									</a>
+								</li>
+							</ul>
+
+
+							<form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha" class="productsSortForm pull-right">
+								<div class="select selector1">
+									<label for="selectProductSort">Tri</label>
+									<select id="selectProductSort" class="selectProductSort form-control" onchange="tri(this)">
+										<option value="quantity:desc">--</option>
+										<option value="price:asc">Le moins cher</option>
+										<option value="price:desc">Le plus cher</option>
+										<option value="name:asc">De A &agrave; Z</option>
+										<option value="name:desc">De Z &agrave; A</option>
+										<option value="quantity:desc" selected="selected">En Stock</option>
+										<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
+										<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
+										</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					{% include "product/liste_produits.html.twig" %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div>{% endblock %}
+

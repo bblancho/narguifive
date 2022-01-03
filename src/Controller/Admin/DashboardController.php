@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Admin\Header;
 use App\Entity\Product\Order;
+use App\Entity\Product\Marque;
 use App\Entity\Product\Product;
 use App\Entity\Product\Category;
 use App\Entity\Product\SousCategory;
@@ -43,6 +44,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Produits', 'fas fa-tag', Product::class);
         yield MenuItem::linkToCrud('Catégories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Sous catégories', 'fas fa-list', SousCategory::class);
+        yield MenuItem::linkToCrud('Fabriquant', 'fas fa-list', Marque::class);
         yield MenuItem::linkToCrud('Transporteur', 'fas fa-truck', Transporteur::class);
         yield MenuItem::linkToCrud('Header', 'fas fa-desktop', Header::class);
     }

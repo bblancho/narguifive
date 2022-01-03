@@ -84,7 +84,6 @@ class ProductController extends AbstractController
             $produits_best = $this->repoProduct->findByIsBest(1);
         }
 
-       
         $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, $filter, $tri, $disponibilite);
         $total=$this->repoProduct->getTotalProducts($filter,$disponibilite);
         $sousCats = $this->repoSousCat->findBy(array(),array(),4);
@@ -100,9 +99,6 @@ class ProductController extends AbstractController
             $prods=$this->repoProduct->findBy(array('marque'=>$fabricant));
             $from_fabs[$fabricant->getNom()]=$prods;
         }
-
-      
-      
         
         if($request->get("ajax")){
             $filter=$request->get("layered_manufacturer");
@@ -179,9 +175,7 @@ class ProductController extends AbstractController
             return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
-      
-      
-        return $this->render('product/index_2.html.twig', [
+        return $this->render('product/index.html.twig', [
             'produits' => $produits,
             'sousCats' => $sousCats,
             'fabricants'=>$fabricants,
