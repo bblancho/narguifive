@@ -21,15 +21,15 @@ class ProductController extends AbstractController
 {
     private $manager;
     private $repoProduct;
-    private $repoCat;
     private $repoSousCat;
+    private $repoCategory;
     private $repoMarque;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $cat, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
+    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $repoCategory, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
     {
         $this->manager          = $manager;
         $this->repoProduct      = $repoProduct;
-        $this->categoryRepo     = $cat;
+        $this->repoCategory     = $repoCategory;
         $this->sousCategoryRepo = $sousCat;
         $this->repoMarque       = $repoMarque;
     }
@@ -270,7 +270,6 @@ class ProductController extends AbstractController
         $disponibilite = $request->get("layered_quantity"); 
         $tri = $request->get("tri");
 
-
         $search = new Search();
         $form = $this->createForm(SearchType::class, $search) ;
 
@@ -307,18 +306,19 @@ class ProductController extends AbstractController
             $produits_best = $this->repoProduct->findByIsBest(1);
         }
 
-        $categorie  = $this->categoryRepo->findOneBySlug($slug);
-        $produits   = $categorie->getProducts();
+        $categorie  = $this->repoCategory->findOneBySlug($slug);
+        $produits   = $this->repoCategory->allProductsByCategory(1);
         $sousCats   = $categorie->getSousCategory();
+
+        dd($produits) ;
 
         $produits = $paginator->paginate(
             $produits, // Doctrine Query, not results
             $request->query->getInt('page', 1), /** page number */
-            6 // limit per page
+            9 // limit per page
         );
 
-        // $total      = $categorie->getProducts() ->getTotalProducts($filter,$disponibilite);
-        $total = 177;
+        $total      = $this->repoCategory->getTotalProductsByCategory( $categorie->getId() );
         $fabricants = $this->repoMarque->findAll();
         $from_fabs  = array();
        

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Product;
+namespace App\Repository;
 
 use App\Entity\Product\Transporteur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

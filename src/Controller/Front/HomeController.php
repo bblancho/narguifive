@@ -2,9 +2,7 @@
 
 namespace App\Controller\Front;
 
-use App\Service\Search;
 use App\Form\ContactType;
-use App\Form\Utils\SearchType;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;

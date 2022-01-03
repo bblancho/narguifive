@@ -47,11 +47,9 @@
 						</div>
 						<div class="block_content">
 							<ul class="tree dhtml">
-
 								{% for sousCat in sousCats %}
 									<li>
-<a href="{{ path('products_by_sous_categorie',{slugCategory:categorie.slug, slug:sousCat.slug}) }}" title="">
-
+										<a href="{{ path('products_by_sous_categorie',{slugCategory:categorie.slug, slug:sousCat.slug}) }}" title="">
 											{{ sousCat.nom}}
 										</a>
 									</li>
@@ -213,6 +211,11 @@
 							</form>
 						</div>
 					</div>
+
+					<!-- Products list -->
+					{% include "product/liste_produits_2.html.twig" %}
+
+
 				</div>
 			</div>
 		</div>

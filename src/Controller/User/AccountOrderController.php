@@ -3,7 +3,7 @@
 namespace App\Controller\User;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\Product\OrderRepository;
+use App\Repository\OrderRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AccountOrderController extends AbstractController
 {
     private $manager;
-    private $useorderReporRepo;
+    private $orderRepo;
 
     public function __construct(EntityManagerInterface $manager, OrderRepository $orderRepo)
     {
