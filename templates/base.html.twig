@@ -56,8 +56,11 @@
 				{% include "partials/_carousel.html.twig" %}
 			{% endif %}
 
-			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}"> 
-				{% block body %}{% endblock %}
+			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
+
+				
+					{% block body %}{% endblock %}
+				
 			</div>
 				
 			<!-- FOOTER -->

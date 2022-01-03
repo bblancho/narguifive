@@ -76,12 +76,4 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/category", name="category")
-     */
-    public function cat(): Response
-    {
-        return $this->render('home/category.html.twig');
-    }
-
 }

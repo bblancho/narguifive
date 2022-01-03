@@ -269,8 +269,9 @@ class ProductController extends AbstractController
         $filter = $request->get("layered_manufacturer"); 
         $disponibilite = $request->get("layered_quantity"); 
         $tri = $request->get("tri");
-        $search = new Search();
 
+
+        $search = new Search();
         $form = $this->createForm(SearchType::class, $search) ;
 
         $form->handleRequest($request) ;
@@ -327,7 +328,7 @@ class ProductController extends AbstractController
         $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
 
         foreach($fabricants as $fabricant){
-            $prods=$this->repoProduct->findBy(array('marque'=>$fabricant));
+            $prods = $this->repoProduct->findBy(array('marque'=>$fabricant) );
             $from_fabs[$fabricant->getNom()]=$prods;
         }
         
@@ -361,12 +362,12 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/categorie/{slug}/{sous_menu}", name="products_by_sous_categorie")
+     * @Route("/categorie/{slugCategory}/{slug}", name="products_by_sous_categorie")
      */
-    public function sousCategorie($slug,$sous_menu): Response
+    public function sousCategorie($slugCategory,$slug): Response
     {
-        $categorie    = $this->categoryRepo->findOneBySlug($slug);
-        $sousCategory = $this->sousCategoryRepo->findOneBySlug($sous_menu);
+        $categorie    = $this->categoryRepo->findOneBySlug($slugCategory);
+        $sousCategory = $this->sousCategoryRepo->findOneBySlug($slug);
 
         if( $categorie && $sousCategory ) {
             return $this->render('home/category.html.twig',[
