@@ -1,145 +1,229 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	<a class="navbar-brand" href="{{ path('home') }}">Nargui Five 93</a>
+{% extends 'base.html.twig' %}
 
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+{% block title %}
+	Nargui Five 93 -
+	{{categorie.nom}}
 
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Nouveautés
-				</a>
-			</li>
-			<li class="nav-item active">
-				<a class="nav-link" href="#">
-					Accueil
-					<span class="sr-only">(current)</span>
-				</a>
-			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Chichas
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">
-						Chichas Classique
-					</a>
-					<a class="dropdown-item" href="#">
-						Chichas en verre
-					</a>
-					<a class="dropdown-item" href="#">
-						Chichas de luxe
-					</a>
-					<a class="dropdown-item" href="#">
-						Chichas portable
-					</a>
-					<a class="dropdown-item" href="#">
-						Chichas traditionnelles
-					</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">
-						Chichas Premier prix
-					</a>
-				</div>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Charbons
-				</a>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Goût chicha
-				</a>
-			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Accessoires
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">
-						Foyers (têtes de chicha)
-					</a>
-					<a class="dropdown-item" href="#">
-						Tuyaux
-					</a>
-				</div>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Packs
-				</a>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					C.Electronique/ E-liquide
-				</a>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					CBD
-				</a>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Promotions
-				</a>
-			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Services
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">
-						Location
-					</a>
-					<a class="dropdown-item" href="#">
-						Comment choisir une chicha ?
-					</a>
-					<a class="dropdown-item" href="#">
-						Qui sommes nous ?
-					</a>
-				</div>
-			</li>
-			<li class="nav-item ">
-				<a class="nav-link" href="#">
-					Contact
-				</a>
-			</li>
-		</ul>
+{% endblock %}
 
-		<div class="navbar-item-custom">
-			<a href="{{ path('app_login') }}">
-				Espace PRO
-			</a>
-			|
-			{% if not app.user %}
-				<a href="{{ path('app_login') }}">
-					|
-															Connexion
-				</a>
-				<a href="{{ path('register') }}">S'inscrire</a>
-			{% else %}
-				<a href="{{ path('account') }}">
-					Mon compte
-					<small>
-						{{ app.user.nom }}
-					</small>
-				</a>
-				|
-				<a href="{{ path('app_logout') }}">
-					Déconnexion
-				</a>
-			{% endif %}
+{% block stylesheets %}
+	<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/category.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+	<!-- Three columns of text below the carousel -->
+	<div class="columns-container">
+		<div id="column" class="container">
+			<div class="row">
+				<div class="lab_breadcrumb">
+					<div
+						class="container">
+						<!-- Breadcrumb -->
+						<div class="breadcrumb clearfix">
+							<div class="breadcrumb-i">
+								<a class="home" href="#" title="retour &agrave; Accueil">
+									<i class="icons-home"></i>Accueil</a>
+								<span class="navigation-pipe">&gt;</span>
+								{{categorie.nom}}
+							</div>
+						</div>
+						<!-- /Breadcrumb -->
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</nav>
 
-<div>
-    Un large choix de chichas modernes pour tous les budgets
-Achetez votre chicha dans notre boutique de chichas classiques. Vous trouverez ici une large gamme de chichas dites fonctionnelles. Produites en série contrairement aux chichas traditionnelles, les chichas classiques se distinguent par leur modernité, leur facilité d’utilisation et leur prix abordable. Elles sont destinées aussi bien aux novices désireux de découvrir le monde de la chicha qu’aux chicheurs aguerris à la recherche du narguilé au meilleur rapport qualité-prix ! Les plus grandes marques vous sont présentés ici : Amy Deluxe, Tsar, Mya, Unity, Aladin, Kaya et bien d’autres. Découvrez sans plus attendre, notre best seller, la chicha Tsar Molotov, toute équipée, tendance avec un prix défiant toute concurrence ! Et pensez à vous aider de nos conseils sur la chicha pour faire votre choix.
-Achetez votre chicha au meilleur rapport qualité prix
-Notre boutique en ligne propose une gamme de chicha pour tous les goûts et tous les portefeuilles! Que vous cherchiez une petite chicha, une grande chicha ou encore une chicha rose, vous trouverez forcément votre bonheur! De la chicha pas chère idéale pour débuter à la chicha de luxe made in germany, c'est ici que vous trouverez votre narguilé!
-</div>
+<div class="columns-container">
+	<div id="columns" class="container">
+		<div class="row">
+			<div id="left_column" class=" col-xs-12 col-sm-3">
+				
+				<div id="categories_block_left" class="block">
+					<div class="title_block h2 active">
+						Sous-catégories
+					</div>
+					<div class="block_content">
+						<ul class="tree dhtml">
+
+							{% for sousCat in sousCats %}
+								<li>
+									<a href="{{ path('products_subcategory_show',{slug: sousCat.slug})}}" title="">
+										{{ sousCat.nom}}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+
+				<div id="layered_block_left" class="block">
+					<p class="title_block">Filtres</p>
+
+					<div class="block_content">
+						<form id="layered_form">
+							<div>
+								<div id="enabled_filters">
+									<span class="layered_subtitle" style="float: none;">
+										Filtres actifs :
+									</span>
+									<ul id="filtre_actif"></ul>
+								</div>
+
+								<div class="layered_filter">
+									<div class="layered_subtitle_heading">
+										<span class="layered_subtitle">Disponibilité</span>
+									</div>
+									<ul id="ul_layered_quantity_0" class="col-lg-12 layered_filter_ul">
+										<li class="nomargin hiddable col-lg-12">
+											<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_0" value="0"/>
+											<label for="layered_quantity_0">
+												<a href="#">En cours de réapprovisionnement<span id="quantity_0">
+														({{nbre_dispo[0]}})</span>
+												</a>
+											</label>
+										</li>
+										<li class="nomargin hiddable col-lg-12">
+											<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_1" value="1"/>
+											<label for="layered_quantity_1">
+												<a href="#">En Stock<span id="quantity_1">
+														({{nbre_dispo[1]}})</span>
+												</a>
+											</label>
+										</li>
+									</ul>
+								</div>
+
+								<div class="layered_filter">
+									<div class="layered_subtitle_heading">
+										<span class="layered_subtitle">Fabricant</span>
+									</div>
+
+									<ul id="ul_layered_manufacturer_0" class="col-lg-12 layered_filter_ul">
+										{% for fabricant in fabricants %}
+
+											{% if queryParams is not empty and queryParams.layered_manufacturer is defined %}
+												{% set checked = (fabricant.id in queryParams.layered_manufacturer)? "checked" : "" %}
+											{% else %}
+												{% set checked = "" %}
+											{% endif %}
+											<li class="nomargin hiddable col-lg-12">
+												<input type="checkbox" class="checkbox" name="layered_manufacturer[]" id="layered_manufacturer_{{fabricant.id}}" value="{{fabricant.id}}" {{ checked }}/>
+												<label for="layered_manufacturer_{{fabricant.id}}">
+													<a href="#">{{ fabricant.nom}}<span>
+															({{ from_fabs[fabricant.nom]|length}})</span>
+													</a>
+												</label>
+
+											</li>
+										{% endfor %}
+										<input type="hidden" name="page" value={{mypage}}>
+									</ul>
+								</div>
+
+								<div class="layered_price" style="display: none;">
+									<div class="layered_subtitle_heading">
+										<span class="layered_subtitle">Prix</span>
+									</div>
+									<ul id="ul_layered_price_0" class="col-lg-12 layered_filter_ul">
+
+										<div class="layered_slider_container">
+											<div class="layered_slider" id="layered_price_slider" data-type="price" data-format="2" data-unit="€"></div>
+										</div>
+										<span id="layered_price_range"></span>
+									</ul>
+								</div>
+							</div>
+
+							<input type="hidden" name="token" value="{{ csrf_token('fabricant') }}"/>
+						</form>
+					</div>
+
+					<div id="layered_ajax_loader" style="display: none;">
+						<p>
+							<img src="{{ asset('assets/images/icones/loader.gif') }}" alt=""/>
+							<br/>
+							Chargement...
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="center_column" class="center_column col-xs-12 col-sm-9">
+				<div class="content_scene_cat">
+					<div class="content_scene_cat_bg" style="background-image: {{ asset('assets/images/header/chicha.jpg') }}; min-height:520px;">
+						<div class="cat_desc">
+							<span class="category-name">
+								Chicha
+							</span>
+							<div class="rte">
+								<h1>Matériel pour Chicha</h1>
+								<p>
+									Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam ratione
+									eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis																										                                        debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+									officiis.
+								</p>
+								<h2>Boutique de Chicha tendance</h2>
+								<p>
+									<br/>
+									Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam
+									ratione
+									eligendi, repellat alias mollitia, eius, ducimus placeat tempora perferendis
+									debitis explicabo labore ipsam delectus quo quaerat accusamus libero fugit
+									officiis.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="page-heading product-listing">
+					<span class="cat-name">Chicha&nbsp;</span>
+				</div>
+				<div class="pull-right">
+					<span class="heading-counter" id="total">Il y a
+						{{total}}
+						produits.</span>
+				</div>
+
+				<div class="content_sortPagiBar clearfix">
+					<div class="sortPagiBar clearfix">
+						<ul class="display hidden-xs pull-left">
+							<li id="grid">
+								<a rel="nofollow" href="javascript:void(0)" title="Grille">
+									<i class="icons-grid"></i>
+								</a>
+							</li>
+							<li id="list">
+								<a rel="nofollow" href="javascript:void(0)" title="Liste">
+									<i class="icon icon-align-justify"></i>
+								</a>
+							</li>
+						</ul>
+
+						<form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha" class="productsSortForm pull-right">
+							<div class="select selector1">
+								<label for="selectProductSort">Tri</label>
+								<select id="selectProductSort" class="selectProductSort form-control" onchange="tri(this)">
+									<option value="quantity:desc">--</option>
+									<option value="price:asc">Le moins cher</option>
+									<option value="price:desc">Le plus cher</option>
+									<option value="name:asc">De A &agrave; Z</option>
+									<option value="name:desc">De Z &agrave; A</option>
+									<option value="quantity:desc" selected="selected">En Stock</option>
+									<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
+									<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
+									</option>
+								</select>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div></div>
+{% endblock %}
+

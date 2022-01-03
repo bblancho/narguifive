@@ -39,7 +39,6 @@ class ProductController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
-
         $limit=15;
         $mypage=(int)$request->get("page", 1);
         //dd($mypage);
@@ -86,7 +85,7 @@ class ProductController extends AbstractController
 
         $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, $filter, $tri, $disponibilite);
         $total=$this->repoProduct->getTotalProducts($filter,$disponibilite);
-        $sousCats = $this->repoSousCat->findBy(array(),array(),4);
+        $sousCats = $this->sousCategoryRepo->findBy(array(),array(),4);
         $fabricants=$this->repoMarque->findAll();
         $from_fabs=array();
 
@@ -188,92 +187,11 @@ class ProductController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/produit/{slug}/", name="product_show")
-     */
-    public function show($slug): Response
-    {
-        $produit = $this->repoProduct->findOneBySlug($slug);
-        $produits_best = $this->repoProduct->findByIsBest(1);
-
-        if (!$produit) {
-            return $this->redirectToRoute('products');
-        }
-
-        return $this->render('product/show_product.html.twig', [
-            'produit' => $produit,
-            'produits_best'  => $produits_best,
-        ]);
-    }
-
-    /**
-     * @Route("/categorie/{slug}/{sous_menu}", name="products_by_sous_categorie")
-     */
-    public function sousCategorie($slug,$sous_menu): Response
-    {
-        $categorie    = $this->categoryRepo->findOneBySlug($slug);
-        $sousCategory = $this->sousCategoryRepo->findOneBySlug($sous_menu);
-
-        if( $categorie && $sousCategory ) {
-            return $this->render('home/category.html.twig',[
-                'sousCategory' => $sousCategory,
-                'categorie' => '',
-            ]);
-        }
-        
-    }
-
-    /**
-     * @Route("/categorie/{slug}", name="products_by_categorie")
-     */
-    public function productsByCategory($slug): Response
-    {
-        $categorie = $this->category->findOneBySlug($slug);
-
-        return $this->render('home/category.html.twig',[
-            'categorie' => $categorie,
-            'sousCategory' => '',
-        ]);
-    }
-
-    /**
-     * /produits/chichas/chicha-classique/celeste-3
-     * @Route("/produits/{$nomCategories}/{$souscategories}/{$idProduit}", name="products_by_category")
-     */
-    // public function productByCategory($nomCategories, $souscategories, $idProduit): Response
-    // {
-    //     return $this->render('product/index.html.twig', [
-
-    //     ]);
-    // }
-    
-    
-    public function AttributionSousCategory(): Response
-    {
-        $cats = $this->repoCat->findAll();
-        $sous = $this->repoSousCat->findAll();
-        $produits = $this->repoProduct ->findAll() ;
-
-        foreach ($produits as $produit) {
-            foreach ($sous as $s) {
-                if ($produit->getCategory()->getNom() == $s->getNom()) {
-                    $produit->setSousCategory($s);
-
-                    $this->manager->persist($produit);
-                }
-            }
-        }
-
-        $this->manager->flush();
-
-        return $this->redirectToRoute('products') ;
-    }
-
      /**
      * @Route("/produits/{slug}", name="products_subcategory_show", methods="GET")
      */
-    public function subcategory(Request $request, PaginatorInterface $paginator,$slug){
-        
+    public function subcategory(Request $request, PaginatorInterface $paginator,$slug)
+    {
         $sousCats=$this->repoSousCat->findBy(array(),array(),$limit=4);
         $sousCat=$this->repoSousCat->findOneBy(array('slug'=>$slug));
 
@@ -281,7 +199,6 @@ class ProductController extends AbstractController
         $mypage=(int)$request->get("page", 1);
         $tri=$request->get("tri");
        
-
         $search = new Search();
 
         $form = $this->createForm(SearchType::class, $search) ;
@@ -323,5 +240,172 @@ class ProductController extends AbstractController
 
     }
 
-   
+    /**
+     * @Route("/produit/{slug}/", name="product_show")
+     */
+    public function show($slug): Response
+    {
+        $produit = $this->repoProduct->findOneBySlug($slug);
+        $produits_best = $this->repoProduct->findByIsBest(1);
+
+        if (!$produit) {
+            return $this->redirectToRoute('products');
+        }
+
+        return $this->render('product/show_product.html.twig', [
+            'produit' => $produit,
+            'produits_best'  => $produits_best,
+        ]);
+    }
+
+    /**
+     * @Route("/categorie/{slug}", name="products_by_categorie")
+     */
+    public function productsByCategory(Request $request, PaginatorInterface $paginator,$slug): Response
+    {
+        $limit  = 15;
+        $mypage = (int)$request->get("page", 1);
+
+        $filter = $request->get("layered_manufacturer"); 
+        $disponibilite = $request->get("layered_quantity"); 
+        $tri = $request->get("tri");
+        $search = new Search();
+
+        $form = $this->createForm(SearchType::class, $search) ;
+
+        $form->handleRequest($request) ;
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            $produits = $this->repoProduct->findBySearch($search);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                10
+            );
+
+        } else {
+            $produits = $this->repoProduct->findAll();
+            $total= count($produits);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                8
+            );
+
+            $produits_best = $this->repoProduct->findByIsBest(1);
+        }
+
+        $categorie  = $this->categoryRepo->findOneBySlug($slug);
+        $produits   = $categorie->getProducts();
+        $sousCats   = $categorie->getSousCategory();
+
+        $produits = $paginator->paginate(
+            $produits, // Doctrine Query, not results
+            $request->query->getInt('page', 1), /** page number */
+            6 // limit per page
+        );
+
+        // $total      = $categorie->getProducts() ->getTotalProducts($filter,$disponibilite);
+        $total = 177;
+        $fabricants = $this->repoMarque->findAll();
+        $from_fabs  = array();
+       
+        //Disponibilité
+        $nbre_dispo=array();
+        $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
+        $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
+
+        foreach($fabricants as $fabricant){
+            $prods=$this->repoProduct->findBy(array('marque'=>$fabricant));
+            $from_fabs[$fabricant->getNom()]=$prods;
+        }
+        
+        if($request->get("ajax")){
+            $filter=$request->get("layered_manufacturer");
+
+            $fabs=$this->repoMarque->findBy(array('id'=>$filter));
+            $actifs=array();
+            $actif=array();
+            foreach($fabs as $fab){
+                $actif["id"]=$fab->getId();
+                $actif["nom"]=$fab->getNom();
+                array_push($actifs,$actif);
+            }
+            
+            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
+        }
+
+        return $this->render('product/category.html.twig', [
+            'produits'  => $produits,
+            'sousCats'  => $sousCats,
+            'categorie' => $categorie,
+            'fabricants'=>  $fabricants,
+            'nbre_dispo'=>  $nbre_dispo,
+            'from_fabs' =>  $from_fabs,
+            'total'     =>  $total,
+            'limit'     =>  $limit,
+            'mypage'    =>  $mypage,
+            'form'      => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/categorie/{slug}/{sous_menu}", name="products_by_sous_categorie")
+     */
+    public function sousCategorie($slug,$sous_menu): Response
+    {
+        $categorie    = $this->categoryRepo->findOneBySlug($slug);
+        $sousCategory = $this->sousCategoryRepo->findOneBySlug($sous_menu);
+
+        if( $categorie && $sousCategory ) {
+            return $this->render('home/category.html.twig',[
+                'sousCategory' => $sousCategory,
+                'categorie' => '',
+            ]);
+        }
+        
+    }
+
+    public function AttributionSousCategory(): Response
+    {
+        $cats = $this->categoryRepo->findAll();
+        $sous = $this->sousCategoryRepo->findAll();
+        $produits = $this->repoProduct ->findAll() ;
+
+        foreach ($produits as $produit) {
+            foreach ($sous as $s) {
+                if ($produit->getCategory()->getNom() == $s->getNom()) {
+                    $produit->setSousCategory($s);
+
+                    $this->manager->persist($produit);
+                }
+            }
+        }
+
+        $this->manager->flush();
+
+        return $this->redirectToRoute('products') ;
+    }
+
+    /**
+     * /produits/chichas/chicha-classique/celeste-3
+     * @Route("/produits/{$nomCategories}/{$souscategories}/{$idProduit}", name="products_by_category")
+     */
+    // public function productByCategory($nomCategories, $souscategories, $idProduit): Response
+    // {
+    //     return $this->render('product/index.html.twig', [
+
+    //     ]);
+    // }
 }
