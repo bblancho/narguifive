@@ -6,8 +6,8 @@ use App\Entity\Product\Color;
 use App\Entity\Product\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ColorRepository;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Helpers\simple_html_dom;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,15 +21,13 @@ class SrapingChichaDataCommand extends Command
 
     private $entityManager;
     private $categoryRepository;
-    private $productRepository;
     private $colorRepository;
 
-    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ProductRepository $productRepository, ColorRepository $colorRepository)
+    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ColorRepository $colorRepository)
     {
 
         $this->entityManager = $entityManager;
         $this->categoryRepository = $categoryRepository;
-        $this->productRepository = $productRepository;
         $this->colorRepository = $colorRepository;
 
         if ( empty( $this->colorRepository->find(1) ) ) {
@@ -46,8 +44,10 @@ class SrapingChichaDataCommand extends Command
 
     protected function configure(): void
     {
-    	$this->setDescription('scraping du site el vadia')
-        ->setHelp('Pour recupérer les données chicha et catégorie et les insérer dans la base de donnée');
+        $this
+            ->setDescription('Scraping du site el Badia')
+            ->setHelp('Pour recupérer les données chicha et catégorie et les insérer dans la base de donnée') 
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -59,7 +59,7 @@ class SrapingChichaDataCommand extends Command
             '',
         ]);
 
-        $this->getCategory();
+        // $this->getCategory();
 
         $output->writeln([
             'Etape 2 récupération des produits',
@@ -67,19 +67,17 @@ class SrapingChichaDataCommand extends Command
             '',
         ]);
 
-        $this->getProduitByCat();
+        // $this->getProduitByCat();
+        
+        $idcat      = 3;
+        $idSousCat  = 15 ;
+
+        $this->addProduit($idcat, $idSousCat);
 
         return Command::SUCCESS;
 
-        // or return this if some error happened during the execution
-        // (it's equivalent to returning int(1))
-        // return Command::FAILURE;
-
-        // or return this to indicate incorrect command usage; e.g. invalid options
-        // or missing arguments (it's equivalent to returning int(2))
         // return Command::INVALID
     }
-
 
     public function getCategory(){
         
@@ -109,8 +107,6 @@ class SrapingChichaDataCommand extends Command
             }
         }
     }
-
-
 
     public  function getProduitByCat(){
 
@@ -178,6 +174,79 @@ class SrapingChichaDataCommand extends Command
 
 
     }
+
+    public function addProduit($idcat, $idSousCat){
+
+        //récuperation de la categorie & sous-catégorie
+        $category = $this->categoryRepository->find($idcat) ;
+        $sousCat  =  $this->categoryRepository->find($idSousCat) ;
+        
+        $urlval =  "https://www.el-badia.com/fr/30-naturels";
+       
+        //ETAPE 2
+        $html = file_get_html($urlval);
+        $divlistproduit = $html->find('div[id=axfilterresult]');
+
+        $val = 0 ;
+        
+        foreach($divlistproduit[0]->find( 'ul' ) as $ul)
+        {
+            foreach($ul->find( ' li ' ) as $li)
+            {
+                if( $val < 3 ){
+                    $produitname = $li->find('a[class=product-name]');
+                    if (is_array($produitname) && count($produitname)>0) {
+                        $produitnameval =   str_replace("'", '',$produitname[0]->plaintext );
+                    }
+
+                    $produitmarque = $li->find('div[class=product-manu]');
+                    if (is_array($produitmarque) && count($produitmarque)>0) {
+                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->plaintext );
+                    }
+
+                    $productdesc = $li->find('p[class=product-desc]');
+                    if (is_array($productdesc) && count($productdesc)>0) 
+                    {
+                        $productdescval =   str_replace("'", '',$productdesc[0]->plaintext );
+                    }
+
+                    $productprice = $li->find('span[class=price product-price]');
+                    if (is_array($productprice) && count($productprice)>0) 
+                    {
+                        $productpriceval = $productprice[0]->plaintext;
+                    }
+
+                    $productimg = $li->find('img');
+                    if (is_array($productimg) && count($productimg)>0) 
+                    {
+                        $productimgval = $productimg[0]->attr['data-src'];
+                    }
+
+                    $produit = new Product();
+                    $produit->setNom($produitnameval);
+                    $produit->setSlug(make_slug($produitnameval));
+                    $produit->setContent($productdescval);
+                    $produit->setMarque($produitmarqueval);
+                    $produit->setPrice(intval($productpriceval));
+                    $produit->setPriceHT(intval($productpriceval));
+                    $produit->setImage($productimgval);
+                    $produit->setTaille(0);
+                    $produit->setVase('');
+                    $produit->setTuyau('');
+                    $produit->setFixation('');
+                    $produit->setColor($this->colorRepository->find(1));
+                    $produit->setCategory($category);
+                    $produit->setSousCategory($sousCat);
+
+                    $this->entityManager->persist($produit);
+                    $this->entityManager->flush();
+
+                    $val++;
+                }
+            }
+        }
+    }
+
 
 }
 

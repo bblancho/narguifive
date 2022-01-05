@@ -4,15 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "c389d53bab6256df16ed38fe757797b9",
-=======
-<<<<<<< HEAD
-    "content-hash": "be4b29bd8ddd18e0ef65c4fa5972c2ca",
-=======
-    "content-hash": "f58edfa76e76acae8fa87dd1327cb656",
->>>>>>> 704c441d519feb5cf441a5a5ede99bde4f2584c5
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2220,7 +2212,6 @@
         },
         {
             "name": "knplabs/knp-paginator-bundle",
-<<<<<<< HEAD
             "version": "v5.8.0",
             "source": {
                 "type": "git",
@@ -2231,24 +2222,11 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/216b9d5708001788321916c5b7632da9fb9ef6ca",
                 "reference": "216b9d5708001788321916c5b7632da9fb9ef6ca",
-=======
-            "version": "v5.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "d5608abc236b6896a413a924a6637738da9705eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/d5608abc236b6896a413a924a6637738da9705eb",
-                "reference": "d5608abc236b6896a413a924a6637738da9705eb",
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
                 "shasum": ""
             },
             "require": {
                 "knplabs/knp-components": "^2.4 || ^3.0",
                 "php": "^7.3 || ^8.0",
-<<<<<<< HEAD
                 "symfony/config": "^4.4 || ^5.3 || ^6.0",
                 "symfony/dependency-injection": "^4.4 || ^5.3 || ^6.0",
                 "symfony/event-dispatcher": "^4.4 || ^5.3 || ^6.0",
@@ -2256,28 +2234,13 @@
                 "symfony/http-kernel": "^4.4 || ^5.3 || ^6.0",
                 "symfony/routing": "^4.4 || ^5.3 || ^6.0",
                 "symfony/translation": "^4.4 || ^5.3 || ^6.0",
-=======
-                "symfony/config": "^4.4 || ^5.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0",
-                "symfony/event-dispatcher": "^4.4 || ^5.0",
-                "symfony/http-foundation": "^4.4 || ^5.0",
-                "symfony/http-kernel": "^4.4 || ^5.0",
-                "symfony/routing": "^4.4 || ^5.0",
-                "symfony/translation": "^4.4 || ^5.0",
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
                 "twig/twig": "^2.0 || ^3.0"
             },
             "require-dev": {
                 "phpstan/phpstan": "^0.12.93",
-<<<<<<< HEAD
                 "phpunit/phpunit": "^8.5 || ^9.5",
                 "symfony/expression-language": "^4.4 || ^5.3 || ^6.0",
                 "symfony/templating": "^4.4 || ^5.3 || ^6.0"
-=======
-                "phpunit/phpunit": "^8.5 || ^9.4",
-                "symfony/expression-language": "^4.4 || ^5.0",
-                "symfony/templating": "^4.4 || ^5.0"
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2317,15 +2280,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/KnpPaginatorBundle/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/KnpLabs/KnpPaginatorBundle/tree/v5.8.0"
             },
             "time": "2021-10-30T08:27:46+00:00"
-=======
-                "source": "https://github.com/KnpLabs/KnpPaginatorBundle/tree/v5.7.0"
-            },
-            "time": "2021-09-16T12:21:57+00:00"
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
         },
         {
             "name": "laminas/laminas-code",
@@ -11420,9 +11377,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-<<<<<<< HEAD
-    "plugin-api-version": "2.0.0"
-=======
     "plugin-api-version": "2.1.0"
->>>>>>> ab499dbafb630e0c7b878b39638e76236f01c151
 }
