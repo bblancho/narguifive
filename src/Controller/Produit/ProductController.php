@@ -350,4 +350,24 @@ class ProductController extends AbstractController
 
     //     ]);
     // }
+
+
+       /**
+     * @Route("/product/{slug}", name="products_filter_show", methods="GET")
+     */
+    public function affichage_produit(Request $request, PaginatorInterface $paginator,$slug)
+    {
+        $produit = $this->repoProduct->findOneBySlug($slug);
+        $produits_best = $this->repoProduct->findByIsBest(1);
+
+        if (!$produit) {
+            return $this->redirectToRoute('products');
+        }
+
+        return $this->render('product/product_page.html.twig', [
+            'produit' => $produit,
+            'produits_best'  => $produits_best,
+        ]);
+    }
+
 }
