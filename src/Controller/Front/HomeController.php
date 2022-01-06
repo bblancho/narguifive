@@ -3,10 +3,13 @@
 namespace App\Controller\Front;
 
 use App\Form\ContactType;
+use voku\helper\HtmlDomParser;
+use App\Entity\Product\Product;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SousCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +22,12 @@ class HomeController extends AbstractController
     private $repoProduct;
     private $category;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category)
+    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category, SousCategoryRepository $sousCategoryRepository)
     {
         $this->manager = $manager ;
         $this->repoProduct = $repoProduct ;
         $this->category = $category ;
+        $this->sousCategoryRepository = $sousCategoryRepository;
     }
   
     /**
@@ -72,6 +76,86 @@ class HomeController extends AbstractController
         return $this->render('home/contact.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/scrap", name="home_scrap")
+     */
+    public function scrap(): Response
+    {
+        $category = $this->category->find(3) ;
+        $sousCat  = $this->sousCategoryRepository->find(14) ;
+
+        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique"; //https://www.el-badia.com/fr/30-naturels
+       
+        //ETAPE 2
+        $html = HtmlDomParser::file_get_html($urlval);
+        $divlistproduit = $html->find('div[id=axfilterresult]');
+
+        $val = 0 ;
+        
+        foreach( $divlistproduit[0]->find('ul') as $ul )
+        {
+            foreach( $ul->find('li') as $li )
+            {
+                if( $val < 3 ){
+                    $produitmarque = $li->find('div[class=product-manu]');
+                    if ( count($produitmarque) > 0) {
+                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
+                    }
+
+                    $produitname = $li->find('a[class=product-name]'); 
+                    if ( count($produitname) > 0 ) {
+                        $produitnameval =   $produitname[0]->text();
+                    }
+
+                    $productprice = $li->find('span[class=product-price]');
+                    // $productpriceval =  $productprice->find('span[class=product-price]') ;
+                    if ( count($productprice) > 0 ) 
+                    {
+                        $productpriceval =  $productprice->find("span[class=price product-price]") ;
+                    }
+                    
+                    $productdesc = $li->find('p[class=product-desc]');
+                    if ( count($productdesc) > 0 ) 
+                    {
+                        $productdescval =   str_replace("'", '',$productdesc[0]->text() );
+                    }
+
+                    $productimg = $li->find('img');
+                    if ( count($productimg) > 0 ) 
+                    {
+                        $productimgval = $productimg[0]->attr['data-src'];
+                    }
+
+                    dd($productprice) ;
+
+                    $produit = new Product();
+                    $produit->setNom($produitnameval);
+                    $produit->setSlug(make_slug($produitnameval));
+                    $produit->setContent($productdescval);
+                    $produit->setMarque($produitmarqueval);
+                    $produit->setPrice(intval($productpriceval));
+                    $produit->setPriceHT(intval($productpriceval));
+                    $produit->setImage($productimgval);
+                    $produit->setTaille(0);
+                    $produit->setVase('');
+                    $produit->setTuyau('');
+                    $produit->setFixation('');
+                    $produit->setColor($this->colorRepository->find(1));
+                    $produit->setCategory($category);
+                    $produit->setSousCategory($sousCat);
+
+                    dd($produit);
+                    $this->entityManager->persist($produit);
+                    $this->entityManager->flush();
+
+                    $val++;
+                }
+            }
+        }
+
+        return $this->render('home/contact.html.twig');
     }
 
 }

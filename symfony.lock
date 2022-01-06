@@ -692,6 +692,15 @@
             "./config/packages/vich_uploader.yaml"
         ]
     },
+    "voku/portable-ascii": {
+        "version": "1.5.6"
+    },
+    "voku/portable-utf8": {
+        "version": "6.0.0"
+    },
+    "voku/simple_html_dom": {
+        "version": "4.7.31"
+    },
     "webmozart/assert": {
         "version": "1.10.0"
     }

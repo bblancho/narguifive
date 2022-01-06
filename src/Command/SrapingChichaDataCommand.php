@@ -5,9 +5,10 @@ use App\Entity\Product\Category;
 use App\Entity\Product\Color;
 use App\Entity\Product\Product;
 use App\Repository\CategoryRepository;
+use App\Repository\SousCategoryRepository;
 use App\Repository\ColorRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Helpers\simple_html_dom;
+use voku\helper\HtmlDomParser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,12 +23,13 @@ class SrapingChichaDataCommand extends Command
     private $entityManager;
     private $categoryRepository;
     private $colorRepository;
+    private $sousCategoryRepository ;
 
-    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ColorRepository $colorRepository)
+    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository ,ColorRepository $colorRepository)
     {
-
         $this->entityManager = $entityManager;
         $this->categoryRepository = $categoryRepository;
+        $this->sousCategoryRepository = $sousCategoryRepository;
         $this->colorRepository = $colorRepository;
 
         if ( empty( $this->colorRepository->find(1) ) ) {
@@ -179,48 +181,53 @@ class SrapingChichaDataCommand extends Command
 
         //récuperation de la categorie & sous-catégorie
         $category = $this->categoryRepository->find($idcat) ;
-        $sousCat  =  $this->categoryRepository->find($idSousCat) ;
+        $sousCat  = $this->sousCategoryRepository->find($idSousCat) ;
         
-        $urlval =  "https://www.el-badia.com/fr/30-naturels";
+        $urlval =  "https://www.el-badia.com/fr/150-charbon-320-par-el-badia"; //https://www.el-badia.com/fr/30-naturels
        
         //ETAPE 2
-        $html = file_get_html($urlval);
+        $html = HtmlDomParser::file_get_html($urlval);
         $divlistproduit = $html->find('div[id=axfilterresult]');
 
         $val = 0 ;
         
-        foreach($divlistproduit[0]->find( 'ul' ) as $ul)
+        foreach( $divlistproduit[0]->find('ul') as $ul )
         {
-            foreach($ul->find( ' li ' ) as $li)
+            foreach( $ul->find('li') as $li )
             {
                 if( $val < 3 ){
-                    $produitname = $li->find('a[class=product-name]');
-                    if (is_array($produitname) && count($produitname)>0) {
-                        $produitnameval =   str_replace("'", '',$produitname[0]->plaintext );
-                    }
-
                     $produitmarque = $li->find('div[class=product-manu]');
-                    if (is_array($produitmarque) && count($produitmarque)>0) {
-                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->plaintext );
+                    if ( count($produitmarque) > 0) {
+                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
                     }
 
+                    $produitname = $li->find('a[class=product-name]'); 
+                    if ( count($produitname) > 0 ) {
+                        $produitnameval =   $produitname[0]->text();
+                    }
+
+                    $productprice = $li->find('div[class=content_price]');
+                    $productpriceval =  $productprice[0]->find('span[class=product-price]') ;
+                    if ( count($productprice) > 0 ) 
+                    {
+                        $productpriceval =  $productprice->find('span[class=product-price]') ;
+                    }
+                    
                     $productdesc = $li->find('p[class=product-desc]');
-                    if (is_array($productdesc) && count($productdesc)>0) 
+                    if ( count($productdesc) > 0 ) 
                     {
-                        $productdescval =   str_replace("'", '',$productdesc[0]->plaintext );
+                        $productdescval =   str_replace("'", '',$productdesc[0]->text() );
                     }
 
-                    $productprice = $li->find('span[class=price product-price]');
-                    if (is_array($productprice) && count($productprice)>0) 
-                    {
-                        $productpriceval = $productprice[0]->plaintext;
-                    }
+                    
 
                     $productimg = $li->find('img');
-                    if (is_array($productimg) && count($productimg)>0) 
+                    if ( count($productimg) > 0 ) 
                     {
                         $productimgval = $productimg[0]->attr['data-src'];
                     }
+
+                    dd($productpriceval) ;
 
                     $produit = new Product();
                     $produit->setNom($produitnameval);
@@ -238,6 +245,7 @@ class SrapingChichaDataCommand extends Command
                     $produit->setCategory($category);
                     $produit->setSousCategory($sousCat);
 
+                    dd($produit);
                     $this->entityManager->persist($produit);
                     $this->entityManager->flush();
 
