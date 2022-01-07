@@ -2,6 +2,7 @@
 namespace App\Command;
 
 use App\Entity\Product\Color;
+use App\Entity\Product\Marque;
 use voku\helper\HtmlDomParser;
 use App\Entity\Product\Product;
 use App\Entity\Product\Category;
@@ -68,7 +69,8 @@ class SrapingChichaDataCommand extends Command
         $idcat      = 1;
         $idSousCat  = 1 ;
 
-        $this->addProduit($idcat, $idSousCat);
+        // $this->addProduit($idcat, $idSousCat);
+        $this->distinctFabriquant();
 
         return Command::SUCCESS;
     }
@@ -248,6 +250,81 @@ class SrapingChichaDataCommand extends Command
 
     }
 
+    public function addFabriquant()
+    {
+        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique"; //https://www.el-badia.com/fr/30-naturels
+       
+        //ETAPE 2
+        $html = HtmlDomParser::file_get_html($urlval);
+        $divlistproduit = $html->find('div[id=axfilterresult]');
+        
+        // Faire un findAll pour la comparaison
+
+        foreach( $divlistproduit[0]->find('ul') as $ul )
+        {
+            foreach( $ul->find('li') as $li )
+            {
+                $produitmarque = $li->find('div[class=product-manu]');
+                if ( count($produitmarque) > 0) {
+                    $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
+                }
+
+                $marque = new Marque();
+                $marque->setNom($produitmarqueval);
+                $marque->setType("2");
+
+                // dd($produit);
+                $this->entityManager->persist($marque);
+                $this->entityManager->flush();
+            } // FIn foreach
+        } // FIn foreach
+    }
+
+    public function distinctFabriquant()
+    {
+        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique?p=8"; //https://www.el-badia.com/fr/30-naturels
+       
+        $html = HtmlDomParser::file_get_html($urlval);
+        $divlistproduit = $html->find('div[id=axfilterresult]');
+        
+        // Faire un findAll pour la comparaison
+        $allFabriquant = $this->marqueRepository->findAll() ;
+
+        $all_fabriquant_bdd = [];
+
+        foreach( $allFabriquant as $fab )
+        {
+            $all_fabriquant_bdd[] = $fab->getNom();
+        }
+
+        // dd($all_fabriquant_bdd);
+  
+        foreach( $divlistproduit[0]->find('ul') as $ul )
+        {
+            foreach( $ul->find('li') as $li )
+            {
+                $produitmarque = $li->find('div[class=product-manu]');
+                if ( count($produitmarque) > 0) {
+                    $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
+                }
+
+                if( in_array($produitmarqueval, $all_fabriquant_bdd) ) // Si pas présent on rajoute
+                {
+                   
+                }else{
+                    if( !empty($produitmarqueval) ){
+                        $marque = new Marque();
+                        $marque->setNom($produitmarqueval);
+                        $marque->setType("2");
+
+                        $this->entityManager->persist($marque);
+                        $this->entityManager->flush();
+                    }
+                }
+            } // FIn foreach
+        } // FIn foreach
+
+    }
 
 }
 
