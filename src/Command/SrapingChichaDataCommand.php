@@ -70,7 +70,7 @@ class SrapingChichaDataCommand extends Command
         $idSousCat  = 1 ;
 
         // $this->addProduit($idcat, $idSousCat);
-        $this->distinctFabriquant();
+        // $this->addFabriquant();
 
         return Command::SUCCESS;
     }
@@ -78,7 +78,7 @@ class SrapingChichaDataCommand extends Command
     public function getCategory(){
         
         //ETAPE 1
-        $html = file_get_html('https://www.el-badia.com/fr/');
+        $html = HtmlDomParser::file_get_html('https://www.el-badia.com/fr/');
         $topmenue = $html->find('div[id=block_top_menu]');
 
         foreach($topmenue[0]->find( 'ul' ) as $ul)
@@ -91,22 +91,16 @@ class SrapingChichaDataCommand extends Command
 
                $categorie = new Category();
                $categorie->setNom($li->plaintext);
-               $categorie->setSlug(make_slug($li->plaintext));
+               $categorie->setSlug( $this->slugger->slug( $li->text() ) );
                $categorie->setContent( $li->children(0)->href);
 
                $this->entityManager->persist($categorie);
                $this->entityManager->flush();
-
-               	if ($count >= 4) {
-                   break;
-               	}
             }
         }
     }
 
     public  function getProduitByCat(){
-
-        //récuperation des categories
         $categories = $this->categoryRepository->findAll();
 
         foreach ($categories as $categorie){
@@ -115,7 +109,7 @@ class SrapingChichaDataCommand extends Command
             $urlval =  $categorie->getContent();
 
             //ETAPE 2
-            $html = file_get_html($urlval);
+            $html = HtmlDomParser::file_get_html($urlval);
             $divlistproduit = $html->find('div[id=axfilterresult]');
 
             foreach($divlistproduit[0]->find( 'ul' ) as $ul)
@@ -146,7 +140,6 @@ class SrapingChichaDataCommand extends Command
                     if (is_array($productimg) && count($productimg)>0) {
                         $productimgval = $productimg[0]->attr['data-src'];
                     }
-
 
                     $produit = new Product();
                     $produit->setNom($produitnameval);
@@ -218,12 +211,6 @@ class SrapingChichaDataCommand extends Command
                     $productimgval = $productimg[0]->attr['data-src'];
                 }
 
-                // $newFabriquant = "";
-                // foreach( $fabriquants as $fab)
-                // {
-                //     if()
-                // }
-
                 $produit = new Product();
                 $produit->setNom($produitnameval);
                 $produit->setSlug( $produitSlug );
@@ -252,36 +239,6 @@ class SrapingChichaDataCommand extends Command
 
     public function addFabriquant()
     {
-        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique"; //https://www.el-badia.com/fr/30-naturels
-       
-        //ETAPE 2
-        $html = HtmlDomParser::file_get_html($urlval);
-        $divlistproduit = $html->find('div[id=axfilterresult]');
-        
-        // Faire un findAll pour la comparaison
-
-        foreach( $divlistproduit[0]->find('ul') as $ul )
-        {
-            foreach( $ul->find('li') as $li )
-            {
-                $produitmarque = $li->find('div[class=product-manu]');
-                if ( count($produitmarque) > 0) {
-                    $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
-                }
-
-                $marque = new Marque();
-                $marque->setNom($produitmarqueval);
-                $marque->setType("2");
-
-                // dd($produit);
-                $this->entityManager->persist($marque);
-                $this->entityManager->flush();
-            } // FIn foreach
-        } // FIn foreach
-    }
-
-    public function distinctFabriquant()
-    {
         $urlval =  "https://www.el-badia.com/fr/40-chicha-classique?p=8"; //https://www.el-badia.com/fr/30-naturels
        
         $html = HtmlDomParser::file_get_html($urlval);
@@ -296,7 +253,6 @@ class SrapingChichaDataCommand extends Command
         {
             $all_fabriquant_bdd[] = $fab->getNom();
         }
-
         // dd($all_fabriquant_bdd);
   
         foreach( $divlistproduit[0]->find('ul') as $ul )
@@ -323,7 +279,6 @@ class SrapingChichaDataCommand extends Command
                 }
             } // FIn foreach
         } // FIn foreach
-
     }
 
 }
