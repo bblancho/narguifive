@@ -1,17 +1,18 @@
 <?php
 namespace App\Command;
 
-use App\Entity\Product\Category;
 use App\Entity\Product\Color;
-use App\Entity\Product\Product;
-use App\Repository\CategoryRepository;
-use App\Repository\SousCategoryRepository;
-use App\Repository\ColorRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use voku\helper\HtmlDomParser;
+use App\Entity\Product\Product;
+use App\Entity\Product\Category;
+use App\Repository\MarqueRepository;
+use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SousCategoryRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SrapingChichaDataCommand extends Command
 {
@@ -22,24 +23,17 @@ class SrapingChichaDataCommand extends Command
 
     private $entityManager;
     private $categoryRepository;
-    private $colorRepository;
+    private $marqueRepository;
     private $sousCategoryRepository ;
+    private $slugger; 
 
-    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository ,ColorRepository $colorRepository)
+    public function __construct( EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository ,MarqueRepository $marqueRepository,SluggerInterface $slugger )
     {
         $this->entityManager = $entityManager;
         $this->categoryRepository = $categoryRepository;
         $this->sousCategoryRepository = $sousCategoryRepository;
-        $this->colorRepository = $colorRepository;
-
-        if ( empty( $this->colorRepository->find(1) ) ) {
-            $color = new Color();
-            $color->setRef('test');
-            $color->setTitle('test');
-
-            $this->entityManager->persist($color);
-            $this->entityManager->flush();
-        }
+        $this->marqueRepository = $marqueRepository;
+        $this->slugger = $slugger ;
 
         parent::__construct();
     }
@@ -71,14 +65,12 @@ class SrapingChichaDataCommand extends Command
 
         // $this->getProduitByCat();
         
-        $idcat      = 3;
-        $idSousCat  = 15 ;
+        $idcat      = 1;
+        $idSousCat  = 1 ;
 
         $this->addProduit($idcat, $idSousCat);
 
         return Command::SUCCESS;
-
-        // return Command::INVALID
     }
 
     public function getCategory(){
@@ -177,13 +169,14 @@ class SrapingChichaDataCommand extends Command
 
     }
 
-    public function addProduit($idcat, $idSousCat){
-
+    public function addProduit($idcat, $idSousCat)
+    {
         //récuperation de la categorie & sous-catégorie
         $category = $this->categoryRepository->find($idcat) ;
         $sousCat  = $this->sousCategoryRepository->find($idSousCat) ;
+        $fabriquants   = $this->marqueRepository->findAll() ;
         
-        $urlval =  "https://www.el-badia.com/fr/150-charbon-320-par-el-badia"; //https://www.el-badia.com/fr/30-naturels
+        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique"; //https://www.el-badia.com/fr/30-naturels
        
         //ETAPE 2
         $html = HtmlDomParser::file_get_html($urlval);
@@ -195,64 +188,64 @@ class SrapingChichaDataCommand extends Command
         {
             foreach( $ul->find('li') as $li )
             {
-                if( $val < 3 ){
-                    $produitmarque = $li->find('div[class=product-manu]');
-                    if ( count($produitmarque) > 0) {
-                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
-                    }
-
-                    $produitname = $li->find('a[class=product-name]'); 
-                    if ( count($produitname) > 0 ) {
-                        $produitnameval =   $produitname[0]->text();
-                    }
-
-                    $productprice = $li->find('div[class=content_price]');
-                    $productpriceval =  $productprice[0]->find('span[class=product-price]') ;
-                    if ( count($productprice) > 0 ) 
-                    {
-                        $productpriceval =  $productprice->find('span[class=product-price]') ;
-                    }
-                    
-                    $productdesc = $li->find('p[class=product-desc]');
-                    if ( count($productdesc) > 0 ) 
-                    {
-                        $productdescval =   str_replace("'", '',$productdesc[0]->text() );
-                    }
-
-                    
-
-                    $productimg = $li->find('img');
-                    if ( count($productimg) > 0 ) 
-                    {
-                        $productimgval = $productimg[0]->attr['data-src'];
-                    }
-
-                    dd($productpriceval) ;
-
-                    $produit = new Product();
-                    $produit->setNom($produitnameval);
-                    $produit->setSlug(make_slug($produitnameval));
-                    $produit->setContent($productdescval);
-                    $produit->setMarque($produitmarqueval);
-                    $produit->setPrice(intval($productpriceval));
-                    $produit->setPriceHT(intval($productpriceval));
-                    $produit->setImage($productimgval);
-                    $produit->setTaille(0);
-                    $produit->setVase('');
-                    $produit->setTuyau('');
-                    $produit->setFixation('');
-                    $produit->setColor($this->colorRepository->find(1));
-                    $produit->setCategory($category);
-                    $produit->setSousCategory($sousCat);
-
-                    dd($produit);
-                    $this->entityManager->persist($produit);
-                    $this->entityManager->flush();
-
-                    $val++;
+                $produitmarque = $li->find('div[class=product-manu]');
+                if ( count($produitmarque) > 0) {
+                    $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
                 }
-            }
-        }
+
+                $produitname = $li->find('a[class=product-name]'); 
+                if ( count($produitname) > 0 ) {
+                    $produitnameval =   $produitname[0]->text();
+                    $produitSlug = strtolower( $this->slugger->slug($produitnameval) ) ;
+                }
+
+                $productprice = $li->find('span[class="price product-price"]');
+                if ( count($productprice) > 0 ) {
+                    $productpriceval = $productprice[0]->plaintext;
+                }
+                
+                $productdesc = $li->find('p[class=product-desc]');
+                if ( count($productdesc) > 0 ) 
+                {
+                    $productdescval =   str_replace("'", '',$productdesc[0]->text() );
+                }
+
+                $productimg = $li->find('img');
+                if ( count($productimg) > 0 ) 
+                {
+                    $productimgval = $productimg[0]->attr['data-src'];
+                }
+
+                // $newFabriquant = "";
+                // foreach( $fabriquants as $fab)
+                // {
+                //     if()
+                // }
+
+                $produit = new Product();
+                $produit->setNom($produitnameval);
+                $produit->setSlug( $produitSlug );
+                $produit->setContent($productdescval);
+                $produit->setMarque($produitmarqueval);
+                $produit->setPrice(intval($productpriceval));
+                $produit->setPriceHT(intval($productpriceval));
+                $produit->setImage($productimgval);
+                $produit->setTaille(0);
+                $produit->setVase('');
+                $produit->setTuyau('');
+                $produit->setFixation('');
+                // $produit->setColor($this->colorRepository->find(1));
+                $produit->setCategory($category);
+                $produit->setSousCategory($sousCat);
+                $produit->setIsBest(0);
+                $produit->setEnStock(1);
+
+                // dd($produit);
+                $this->entityManager->persist($produit);
+                $this->entityManager->flush();
+            } // FIn foreach
+        } // FIn foreach
+
     }
 
 

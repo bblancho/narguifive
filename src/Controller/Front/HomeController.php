@@ -14,6 +14,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -21,13 +22,15 @@ class HomeController extends AbstractController
     private $manager;
     private $repoProduct;
     private $category;
+    private $slugger ;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category, SousCategoryRepository $sousCategoryRepository)
+    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
         $this->manager = $manager ;
         $this->repoProduct = $repoProduct ;
         $this->category = $category ;
         $this->sousCategoryRepository = $sousCategoryRepository;
+        $this->slugger = $slugger ;
     }
   
     /**
@@ -85,8 +88,9 @@ class HomeController extends AbstractController
     {
         $category = $this->category->find(3) ;
         $sousCat  = $this->sousCategoryRepository->find(14) ;
+        
 
-        $urlval =  "https://www.el-badia.com/fr/40-chicha-classique"; //https://www.el-badia.com/fr/30-naturels
+        $urlval =  "https://www.el-badia.com/fr/30-naturels"; //https://www.el-badia.com/fr/30-naturels
        
         //ETAPE 2
         $html = HtmlDomParser::file_get_html($urlval);
@@ -107,14 +111,14 @@ class HomeController extends AbstractController
                     $produitname = $li->find('a[class=product-name]'); 
                     if ( count($produitname) > 0 ) {
                         $produitnameval =   $produitname[0]->text();
+                        $produitSlug = strtolower( $this->slugger->slug($produitnameval) ) ;
                     }
 
-                    $productprice = $li->find('span[class=product-price]');
-                    // $productpriceval =  $productprice->find('span[class=product-price]') ;
-                    if ( count($productprice) > 0 ) 
-                    {
-                        $productpriceval =  $productprice->find("span[class=price product-price]") ;
+                    $productprice = $li->find('span[class="price product-price"]');
+                    if ( count($productprice) > 0 ) {
+                        $productpriceval = $productprice[0]->plaintext;
                     }
+                    // dd($productpriceval) ;
                     
                     $productdesc = $li->find('p[class=product-desc]');
                     if ( count($productdesc) > 0 ) 
@@ -128,13 +132,11 @@ class HomeController extends AbstractController
                         $productimgval = $productimg[0]->attr['data-src'];
                     }
 
-                    dd($productprice) ;
-
                     $produit = new Product();
                     $produit->setNom($produitnameval);
-                    $produit->setSlug(make_slug($produitnameval));
+                    $produit->setSlug( $produitSlug );
                     $produit->setContent($productdescval);
-                    $produit->setMarque($produitmarqueval);
+                    // $produit->setMarque($produitmarqueval);
                     $produit->setPrice(intval($productpriceval));
                     $produit->setPriceHT(intval($productpriceval));
                     $produit->setImage($productimgval);
@@ -142,20 +144,22 @@ class HomeController extends AbstractController
                     $produit->setVase('');
                     $produit->setTuyau('');
                     $produit->setFixation('');
-                    $produit->setColor($this->colorRepository->find(1));
+                    // $produit->setColor($this->colorRepository->find(1));
                     $produit->setCategory($category);
                     $produit->setSousCategory($sousCat);
+                    $produit->setIsBest(0);
+                    $produit->setEnStock(15);
 
-                    dd($produit);
-                    $this->entityManager->persist($produit);
-                    $this->entityManager->flush();
+                    // dd($produit);
+                    $this->manager->persist($produit);
+                    $this->manager->flush();
 
                     $val++;
                 }
             }
         }
 
-        return $this->render('home/contact.html.twig');
+        return $this->render('product/index.html.twig');
     }
 
 }
