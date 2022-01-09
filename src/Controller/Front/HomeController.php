@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Form\ContactType;
 use voku\helper\HtmlDomParser;
 use App\Entity\Product\Product;
+use App\Repository\MarqueRepository;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -21,15 +22,18 @@ class HomeController extends AbstractController
 {
     private $manager;
     private $repoProduct;
-    private $category;
+    private $categoryRepository;
     private $slugger ;
+    private $sousCategoryRepository;
+    private $marqueRepository;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $category, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
+    public function __construct(EntityManagerInterface $manager,MarqueRepository $marqueRepository, ProductRepository $repoProduct, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
         $this->manager = $manager ;
         $this->repoProduct = $repoProduct ;
-        $this->category = $category ;
+        $this->categoryRepository = $categoryRepository ;
         $this->sousCategoryRepository = $sousCategoryRepository;
+        $this->marqueRepository = $marqueRepository;
         $this->slugger = $slugger ;
     }
   
@@ -86,79 +90,74 @@ class HomeController extends AbstractController
      */
     public function scrap(): Response
     {
-        $category = $this->category->find(3) ;
-        $sousCat  = $this->sousCategoryRepository->find(14) ;
+        $category       = $this->categoryRepository->find(2) ;
+        $sousCat        = $this->sousCategoryRepository->find(27) ;
+        $fabriquants    = $this->marqueRepository->findAll() ;
         
-
-        $urlval =  "https://www.el-badia.com/fr/30-naturels"; //https://www.el-badia.com/fr/30-naturels
+        $urlval =  "https://www.el-badia.com/fr/31-gout"; //https://www.el-badia.com/fr/30-naturels
        
-        //ETAPE 2
         $html = HtmlDomParser::file_get_html($urlval);
         $divlistproduit = $html->find('div[id=axfilterresult]');
-
-        $val = 0 ;
         
         foreach( $divlistproduit[0]->find('ul') as $ul )
         {
             foreach( $ul->find('li') as $li )
             {
-                if( $val < 3 ){
-                    $produitmarque = $li->find('div[class=product-manu]');
-                    if ( count($produitmarque) > 0) {
-                        $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
-                    }
-
-                    $produitname = $li->find('a[class=product-name]'); 
-                    if ( count($produitname) > 0 ) {
-                        $produitnameval =   $produitname[0]->text();
-                        $produitSlug = strtolower( $this->slugger->slug($produitnameval) ) ;
-                    }
-
-                    $productprice = $li->find('span[class="price product-price"]');
-                    if ( count($productprice) > 0 ) {
-                        $productpriceval = $productprice[0]->plaintext;
-                    }
-                    // dd($productpriceval) ;
-                    
-                    $productdesc = $li->find('p[class=product-desc]');
-                    if ( count($productdesc) > 0 ) 
-                    {
-                        $productdescval =   str_replace("'", '',$productdesc[0]->text() );
-                    }
-
-                    $productimg = $li->find('img');
-                    if ( count($productimg) > 0 ) 
-                    {
-                        $productimgval = $productimg[0]->attr['data-src'];
-                    }
-
-                    $produit = new Product();
-                    $produit->setNom($produitnameval);
-                    $produit->setSlug( $produitSlug );
-                    $produit->setContent($productdescval);
-                    // $produit->setMarque($produitmarqueval);
-                    $produit->setPrice(intval($productpriceval));
-                    $produit->setPriceHT(intval($productpriceval));
-                    $produit->setImage($productimgval);
-                    $produit->setTaille(0);
-                    $produit->setVase('');
-                    $produit->setTuyau('');
-                    $produit->setFixation('');
-                    // $produit->setColor($this->colorRepository->find(1));
-                    $produit->setCategory($category);
-                    $produit->setSousCategory($sousCat);
-                    $produit->setIsBest(0);
-                    $produit->setEnStock(15);
-
-                    // dd($produit);
-                    $this->manager->persist($produit);
-                    $this->manager->flush();
-
-                    $val++;
+                $produitmarque = $li->find('div[class=product-manu]');
+                if ( count($produitmarque) > 0) {
+                    $produitmarqueval =   str_replace("'", '',$produitmarque[0]->text() );
+                    $fabriquant = $this->marqueRepository->findOneByNom($produitmarqueval);
+                    // dd($fabriquant) ;
                 }
-            }
-        }
 
+                $produitname = $li->find('a[class=product-name]'); 
+                if ( count($produitname) > 0 ) {
+                    $produitnameval =   $produitname[0]->text();
+                    $produitSlug = strtolower( $this->slugger->slug($produitnameval) ) ;
+                }
+
+                $productprice = $li->find('span[class="price product-price"]');
+                if ( count($productprice) > 0 ) {
+                    $prix = (float)$productprice[0]->text();
+                    $productpriceval = number_format( $prix, 2, ',', ' ' );
+                }
+                
+                $productdesc = $li->find('p[class=product-desc]');
+                if ( count($productdesc) > 0 ) 
+                {
+                    $productdescval =   str_replace("'", '',$productdesc[0]->text() );
+                }
+
+                $productimg = $li->find('img');
+                if ( count($productimg) > 0 ) 
+                {
+                    $productimgval = $productimg[0]->attr['data-src'];
+                }
+
+                $produit = new Product();
+                $produit->setNom($produitnameval);
+                $produit->setSlug( $produitSlug );
+                $produit->setContent($productdescval);
+                $produit->setMarque($fabriquant);
+                $produit->setPrice(intval($productpriceval));
+                $produit->setPriceHT(intval($productpriceval));
+                $produit->setImage($productimgval);
+                $produit->setTaille(0);
+                $produit->setVase('');
+                $produit->setTuyau('');
+                $produit->setFixation('');
+                // $produit->setColor($this->colorRepository->find(1));
+                $produit->setCategory($category);
+                $produit->setSousCategory($sousCat);
+                $produit->setIsBest(0);
+                $produit->setEnStock(1);
+
+                // dd($produit);
+                $this->manager->persist($produit);
+                $this->manager->flush();
+            } // FIn foreach
+        } // FIn foreach
+        
         return $this->render('product/index.html.twig');
     }
 
