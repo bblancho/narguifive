@@ -89,19 +89,9 @@
                         class="" title="Autres vues" href="javascript:{}"> Précédent </a> </span>
                     <div id="thumbs_list">
                       <ul id="thumbs_list_frame">
-                        <li id="thumbnail_10943"> <a href="#" data-fancybox-group="other-views"
-                            class="fancybox" title="Lorem"> <img class="img-responsive" id="thumb_10943"
-                              src="{{ produit.image }}" alt="Lorem" title="Lorem" height="110" width="110"
-                              itemprop="image" /> </a>
-                        </li>
-                        <li id="thumbnail_10938"> <a href="#" data-fancybox-group="other-views"
-                            class="fancybox" title="Lorem"> <img class="img-responsive" id="thumb_10938"
-                              src="{{ produit.image }}" alt="Lorem" title="Lorem" height="110" width="110"
-                              itemprop="image" /> </a>
-                        </li>
-                        <li id="thumbnail_10940"> <a href="#" data-fancybox-group="other-views"
-                            class="fancybox" title="Lorem"> <img class="img-responsive" id="thumb_10940"
-                              src="{{ produit.image }}" alt="Lorem" title="Lorem" height="110" width="110"
+                        <li id="thumbnail_10943"> <a data-fancybox-group="other-views"
+                            class="fancybox" title="Lorem"> <img class="img-responsive" id="thumb_{{produit.id}}"
+                              src="{{ produit.image }}" onclick="show_image('thumb_{{produit.id}}')" alt="Lorem" title="Lorem" height="110" width="110"
                               itemprop="image" /> </a>
                         </li>
 
@@ -368,6 +358,12 @@
         if(last_val>0)
             $('#quantity_wanted').val(last_val-1);
     });
+
+    function show_image(id){
+      //alert(id);
+      $("#bigpic").attr('src',$('#'+id).attr('src'))
+    }
 </script>
+
 {% endblock %}
 
