@@ -21,9 +21,9 @@ class ProductController extends AbstractController
 {
     private $manager;
     private $repoProduct;
-    private $repoSousCat;
     private $repoCategory;
     private $repoMarque;
+    private $sousCategoryRepo;
 
     public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $repoCategory, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
     {
@@ -111,7 +111,7 @@ class ProductController extends AbstractController
                 array_push($actifs,$actif);
             }
       
-            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
         return $this->render('product/index.html.twig', [
@@ -132,8 +132,8 @@ class ProductController extends AbstractController
      */
     public function subcategory(Request $request, PaginatorInterface $paginator,$slug)
     {
-        $sousCats=$this->repoSousCat->findBy(array(),array(),$limit=4);
-        $sousCat=$this->repoSousCat->findOneBy(array('slug'=>$slug));
+        $sousCats=$this->sousCategoryRepo->findBy(array(),array(), $limit=4);
+        $sousCat=$this->sousCategoryRepo->findOneBy(array('slug'=>$slug));
 
         $limit=15;
         $mypage=(int)$request->get("page", 1);
@@ -165,7 +165,7 @@ class ProductController extends AbstractController
         $total=$this->repoProduct->getTotalProducts(null,null, $sousCat);
 
         if($request->get("ajax")){    
-            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')),  'total'=>$total]);
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')),  'total'=>$total]);
         }
 
         return $this->render('product/sous_category.html.twig', [
@@ -285,7 +285,7 @@ class ProductController extends AbstractController
                 array_push($actifs,$actif);
             }
             
-            return new JsonResponse(['content'=> $this->renderView('product/product2.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
         return $this->render('product/category.html.twig', [
