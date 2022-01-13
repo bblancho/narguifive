@@ -2,7 +2,7 @@
 
 namespace App\Entity\Product;
 
-use App\Repository\Product\PictureRepository;
+use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
