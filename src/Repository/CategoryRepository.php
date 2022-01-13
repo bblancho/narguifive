@@ -43,22 +43,6 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Category[] Returns an array of products by Category objects
-     *
-     */
-    public function allProductsByCategory($idCategory)
-    {
-        $query = $this->createQueryBuilder('c')
-            ->join('c.products', 'p') // liasion entre Catégorie et les produits
-            ->andWhere('p.category = :idCat')
-            ->setParameter('idCat', $idCategory)
-            ->orderBy('p.id', 'DESC')
-            ;
-
-        return $query->getQuery()->getResult();
-    }
-
-    /**
      * @return integer
      */
     public function getTotalProductsByCategory($idCategory){
@@ -71,17 +55,4 @@ class CategoryRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getSingleScalarResult();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

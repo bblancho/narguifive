@@ -206,6 +206,7 @@ class ProductController extends AbstractController
     {
         $limit  = 15;
         $mypage = (int)$request->get("page", 1);
+        $categorie  = $this->repoCategory->findOneBySlug($slug) ;
 
         $filter = $request->get("layered_manufacturer"); 
         $disponibilite = $request->get("layered_quantity"); 
@@ -227,11 +228,11 @@ class ProductController extends AbstractController
                 // Define the page parameter
                 $request->query->getInt('page', 1), // numéro de la page en cours
                 // Items per page
-                10
+                9
             );
 
         } else {
-            $produits = $this->repoProduct->findAll();
+            $produits = $categorie->getProducts() ;
             $total= count($produits);
 
             // Paginate the results of the query
@@ -241,17 +242,14 @@ class ProductController extends AbstractController
                 // Define the page parameter
                 $request->query->getInt('page', 1), // numéro de la page en cours
                 // Items per page
-                8
+                9
             );
 
             $produits_best = $this->repoProduct->findByIsBest(1);
         }
 
-        $categorie  = $this->repoCategory->findOneBySlug($slug);
-        $produits   = $this->repoCategory->allProductsByCategory(1);
-        $sousCats   = $categorie->getSousCategory();
-
-        // dd($produits) ;
+        $produits   = $categorie->getProducts() ;
+        $sousCats   = $categorie->getSousCategory() ;
 
         $produits = $paginator->paginate(
             $produits, // Doctrine Query, not results
@@ -260,11 +258,11 @@ class ProductController extends AbstractController
         );
 
         $total      = $this->repoCategory->getTotalProductsByCategory( $categorie->getId() );
-        $fabricants = $this->repoMarque->findAll();
+        $fabricants = $this->repoMarque->findAll() ;
         $from_fabs  = array();
        
         //Disponibilité
-        $nbre_dispo=array();
+        $nbre_dispo = array();
         $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
         $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
 

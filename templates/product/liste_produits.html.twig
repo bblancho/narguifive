@@ -3,10 +3,9 @@
 
 	<ul class="lablistproducts product_list grid row">
 		{% for produit in produits %}
-			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line
-																																	first-item-of-mobile-line
-																																	">
+			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
 				<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+
 					<div class="left-block">
 						<div class="product-image-container">
 							<a class="product_image" href="{{ path('products_filter_show', {slug:produit.slug})}}" title="LOREM IPSUM DOLOR TITLE">
@@ -17,11 +16,9 @@
 								<ul class="add-to-links">
 									<li class="lab-Wishlist">
 										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
-
 											<i class="mdi mdi-heart-outline"></i>
 											<span>Ajouter &agrave; la liste de souhaits</span>
 										</a>
-
 									</li>
 									<li class="lab-quick-view">
 										<a class="" href="{{ path('products_filter_show', {slug:produit.slug})}}" data-id-product="812" title="Aper&ccedil;u rapide">
@@ -38,10 +35,9 @@
 									Disponible
 								</span>
 							</span>
-
 						</div>
-
 					</div>
+
 					<div class="right-block">
 						<div class="product-name" itemprop="name">
 							<a href="{{ path('products_filter_show',{slug:produit.slug}) }}" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
@@ -50,10 +46,7 @@
 						</div>
 
 						<p class="product-desc" itemprop="description">
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam
-														ad nam atque molestiae voluptatum dolorum aliquid blanditiis libero
-														architecto ipsum, iusto sapiente illum vero deserunt perspiciatis autem non
-														tempora.
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam.
 						</p>
 
 						<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -64,10 +57,8 @@
 						<div class="color-list-container"></div>
 						<div class="flags"></div>
 
-
 						<div class="lab-cart">
 							<a class="button  btn btn-default" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="{{produit.id}}" title="Ajouter au panier">
-
 								<span>Voir le produit</span>
 							</a>
 						</div>
@@ -76,7 +67,6 @@
 				</div>
 				<!-- .product-container> -->
 			</li>
-
 		{% endfor %}
 	</ul>
 
@@ -118,7 +108,6 @@
 									<span>{{ item }}</span>
 								</a>
 							</li>
-
 						{% endif %}
 
 					{% endfor %}
