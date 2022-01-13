@@ -2,7 +2,7 @@
 
 namespace App\Entity\Product;
 
-use App\Repository\Product\TransporteurRepository;
+use App\Repository\TransporteurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,7 +44,7 @@ class Transporteur
 
     public function __toString()
     {
-        return $this->getNom().'[br]'.$this->getDescription()."[br]". number_format($this->getPrice()/100, 2, ',', ',')." €";
+        return $this->getNom() . '[br]' . $this->getDescription() . "[br]" . number_format($this->getPrice() / 100, 2, ',', ',') . " €";
     }
 
     public function setNom(string $nom): self

@@ -664,12 +664,25 @@ div.description-block{
 .product-item{
     padding: 5%;
     margin-top: 2%;
+    border: 1px solid  transparent;
 }
 
 .product-item:hover{
     background-color: rgba(255,255,255, 0.8);
     box-sizing: border-box;
-    border: 1px solid yellow;
+    border: 1px solid grey;
+}
+
+.pb-left-column #image-block img{
+    width: 50% !important;
+}
+
+.btn-outline-primary:hover{
+    color: #fff !important;
+}
+
+.nbr-product{
+    color: green;
 }
 
 .link-img:hover{

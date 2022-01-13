@@ -3,11 +3,12 @@
 {% block title %} Valider ma commande - Nargui Five {% endblock %}
 
 {% block body %}
-    <h1> Valider ma commande </h1>
+
+    <div class="container">
+        <h1> Valider ma commande </h1>
     <p> Choisissez vos préférences avant de passer votre commande sur Nargui Five. </p>
     <hr>
 
-    <div class="row">
         <div class="col-md-6">
             {% set formHtml %}
                 {{ form_start(form, {'method':'POST', action:path('order_recap')} )  }}

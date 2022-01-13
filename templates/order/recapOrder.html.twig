@@ -7,11 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1> Récapitulatif de la commande </h1>
-    <p> Vérifier vos informations avant de payer ma commande  </p>
-    <hr>
 
-    <div class="row">
+    <div class="container">
+        <h1> Récapitulatif de la commande </h1>
+        <p> Vérifier vos informations avant de payer ma commande  </p>
+        <hr>
+
         <div class="col-md-6">
             <strong> Mon adresse de livraison </strong>  <br/>
             <div class="form-check mt-4">
@@ -33,8 +34,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="text-center"> <b> Ma commande </b>
-            </div>
+            <strong class="text-center"> Ma commande </strong>  <br/>
             <div class="order-summary">
                 {% set total = null %}
                 {% for key,product in panier %}
@@ -54,8 +54,10 @@
             <strong> Livraison: </strong> {{ transporteur.price/100 }} € 
             <hr>
             <strong> Total: </strong> {{ ((transporteur.price/100) + total) | number_format(2, ',', ',') }} € <br>
-            <a id="checkout-button" class="btn btn-success btn-block mt-3"> PAYER | {{ (transporteur.price/100 + total) | number_format(2, ',', ',') }} € </a>
+            <a id="checkout-button" class="btn btn-success btn-block mt-3" href="/commmande/create-session/{{ reference }}"> PAYER | {{ (transporteur.price/100 + total) | number_format(2, ',', ',') }} € </a>
         </div>
+
+        <hr class='separation'>
     </div>
 
 {% endblock %}
@@ -80,7 +82,6 @@
             } else {
                 return stripe.redirectToCheckout({ sessionId: session.id });
             }
-            
         })
         .then(function(result) {
             if (result.error) {
