@@ -53,9 +53,9 @@ class AccountController extends AbstractController
 
                 $user->setPassword($NewpasswordHasher) ;
                 $this->manager->flush();
-                $notification = "Votre mote de passe a bien été mis à jour.";
+                $notification = "Votre mot de passe a bien été mis à jour.";
             }{
-                $notification = "Votre mote de passe n'est pas le bon.";
+                $notification = "Votre mot de passe n'est pas le bon.";
             }
         }
 

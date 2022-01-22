@@ -1,0 +1,8 @@
+{% if is_granted("ROLE_ADMIN") %}
+	<a href="/admin"><i class="lien-icone-compte fas fa-tachometer-alt"> Acceder l'administration du site  </i> </a>    <br/>
+{% endif %}
+<a href="{{ path('account') }}"> <i class="lien-icone-compte fas fa-tachometer-alt"> Mon compte  </i> </a>  <br/>
+<a href="{{ path('account_order') }}"> <i class="lien-icone-compte far fa-calendar-alt"> Acceder à mes Commandes </i> </a>  <br/>
+<a href="{{ path('account_password') }}"> <i class="lien-icone-compte fas fa-lock"> Modifier mon mote de passe </i> </a>   <br/>
+<a class="active" href="{{ path('adresse_compte') }}"> <i class="lien-icone-compte fas fa-map-marker-alt"> Gérer mes Adresses </i> </a>  <br/>
+<a href="{{ path('app_logout') }}"> <i class="lien-icone-compte fas fa-sign-out-alt"> Se déconnecter  </i> </a>  <br/>
