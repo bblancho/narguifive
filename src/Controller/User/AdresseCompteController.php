@@ -80,11 +80,15 @@ class AdresseCompteController extends AbstractController
 
         if( $form->isSubmitted() && $form->isValid() ){
             $this->manager->flush();
+
+            $this->addFlash('success', 'Votre mise à jour a bien été prise en compte.');
+
             return $this->redirectToRoute('adresse_compte');
         }
 
         return $this->render('account/adresses_edit.html.twig',[
             'form' => $form->createView(),
+            'adresse' => $adresse
         ]);
     }
 
@@ -94,15 +98,17 @@ class AdresseCompteController extends AbstractController
     public function remove($id): Response
     {
         $adresse = $this->repoAdresse->find($id);
+        $nom = $adresse->getNom();
 
-        if( $adresse && ($adresse->getUser() == $this->getUser()) )
+        if( $adresse && ( $adresse->getUser() == $this->getUser() ) )
         {
             $this->manager->remove($adresse);
             $this->manager->flush();
         }
 
-        return $this->redirectToRoute('adresse_compte');
+        $this->addFlash('warning', "L'adresse {$nom} a bien été supprimée. ") ;
 
+        return $this->redirectToRoute('adresse_compte');
     }
 
 }

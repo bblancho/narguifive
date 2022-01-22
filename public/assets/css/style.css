@@ -11,6 +11,21 @@ body{
     top: 25px;
 }
 
+.custom-btn{
+    min-width: 125px !important;
+    margin-bottom: 4% !important;
+    text-transform: uppercase !important;
+}
+
+p {
+    font-size: 14px;
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+.navbar{
+    margin-bottom: 0px !important;
+}
+
 .pagination_knp nav {
     background-color: #fff !important;
     margin-bottom: 1%;
@@ -758,6 +773,7 @@ img{
 .mon-compte{
     background-color: #F6F6F6;
     padding: 45px 0px;
+    padding-top: 2%;
 }
 
 .mon-compte .container{
@@ -821,7 +837,7 @@ span.adresse{
 }
 
 .card{
-    margin-right: 10px;
+    margin: 0px 15px;
 }
 
 .bg-primary{

@@ -8,9 +8,11 @@
 
 <div class="mon-compte">
     <div class="container">
+
         <h1> Ajouter une adresse de livraison </h1>
-        <a href="{{ path("adresse_compte") }}"> Retour </a>
+        <a class="btn btn-info" href="{{ path("adresse_compte") }}"> Mon compte </a>
 		<hr>
+
         <div class="row">
             <div class="col-md-4 compte-lien">
 				{% include('partials/_sidebarAccount.html.twig') %}
@@ -75,10 +77,11 @@
 							{{ form_row(form.pays) }}
 						</div>
 					</div>
-
+					
+					<div class="col-md-6">
+						<button class="btn btn-info custom-btn pull-right" type="submit"> Ajouter une adresse </button>
+					</div>
 					{{ form_rest(form) }}
-					<button class="btn btn-primary btn-block float-right" type="submit"> Ajouter une adresse </button>
-
 				</div>
 				{{ form_end(form) }}
             </div>

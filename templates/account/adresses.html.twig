@@ -6,43 +6,49 @@
 
 <div class="mon-compte">
     <div class="container">
-        <a href="{{ path('adresse_compte_add') }}" class="btn btn-primary">Ajouter une adresse</a>
+        <a href="{{ path('adresse_compte_add') }}" class='btn btn-info custom-btn' >Ajouter une adresse</a>
+
+        {% set messages = app.flashes %}
+        {% if messages is not empty %}
+            {# {{ dump(messages) }} #}
+            {{ include ("partials/alert.html.twig", with_context = true) }} 
+        {% endif %}
+
 
         <h1> Mes adresses </h1>
         <p>
-            Choisissez vos adresses de facturation et de livraison. Ces dernières seront présélectionnées lors de vos commandes. 
-            Vous pouvez également ajouter d'autres adresses, 
-            ce qui est particulièrement intéressant pour envoyer des cadeaux ou recevoir votre commande au bureau.
+            Choisissez vos adresses de facturation et de livraison. <br> Ces dernières seront présélectionnées lors de vos commandes. <br>
+            Vous pouvez également ajouter d'autres adresses, ce qui est particulièrement intéressant pour envoyer des cadeaux ou recevoir votre commande au bureau.
         </p>
-        <br>
+        <hr>
         
         <div class="row">
             <div class="col-md-4 compte-lien">
                 {% include('partials/_sidebarAccount.html.twig') %}
             </div>
-        
+
             <div class="col-md-8">
                 {% if adresses|length > 0 %}
-                    <p>
-                        <span class="adresse"> Vos adresses sont listées ci-dessous. <br> </span> 
+                    <div>
+                        <p>
+                            <span class="adresse"> Vos adresses sont listées ci-dessous. </span> <br><br>
 
-                        Pensez à les tenir à jour si ces dernières venaient à changer.
-                    </p>
+                            Pensez à les tenir à jour si ces dernières venaient à changer.
+                        </p>
+                    </div>
                     <div class="row">
                         {% for adresse in adresses %}
-                            
-                                <div class="card" style="width: 18rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ adresse.nom }}</h5>
-                                        <p class="card-text"> 
-                                            {{ adresse.adresse }}, <br>
-                                            {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
-                                        </p>
-                                        <a class='btn btn-info' href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Mettre à jour </a>
-                                        <a class='btn btn-danger' href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
-                                    </div>
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ adresse.nom }}</h5>
+                                    <p class="card-text"> 
+                                        {{ adresse.adresse }}, <br>
+                                        {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
+                                    </p>
+                                    <a class='btn btn-info custom-btn' href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Mettre à jour </a>
+                                    <a class='btn btn-danger custom-btn' href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
                                 </div>
-                        
+                            </div>
                         {% endfor %}
                     </div>
                 {% else %}

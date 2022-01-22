@@ -7,9 +7,7 @@
 {% block body %}
 	<div class="mon-compte">
 		<div class="container">
-			<h1> Modifier une adresse </h1>
-			<a href="{{ path("adresse_compte") }}"> Retour </a>
-			<hr>
+			<h1> Modification de l' adresse: {{ adresse.nom }} </h1>
 
 			<div class="row">
 				<div class="col-md-4 compte-lien">
@@ -19,7 +17,7 @@
 				<div class="col-md-8">
 					{{  form_start(form, {'method': 'POST'})  }}
 
-						<div class="row">
+						<div class="">
 
 							<div class="my-custom-class-for-errors">
 								{{ form_errors(form) }}
@@ -73,10 +71,10 @@
 								<div class="col">
 									{{ form_row(form.pays) }}
 								</div>
+								<button class="btn btn-info custom-btn pull-right" type="submit"> Modifier </button> 
 							</div>
 
 							{{ form_rest(form) }}
-							<button class="btn btn-info btn-block float-right" type="submit"> Valider </button>
 
 						</div>
 					{{ form_end(form) }}
