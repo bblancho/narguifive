@@ -40,7 +40,7 @@
 								<img src="{{ item.produit.image }}" alt="NARGUI FIVE-{{ item.produit.nom }}" height="75px"><br/>
 							</td>
 							<td> {{ item.produit.nom }} </td>
-							<td> {{ item.produit.price | number_format(2, '.', ',') }} € </td>
+							<td> {{ item.produit.price | number_format(2, ',', ',') }} € </td>
 							<td> 
 								<a href="{{ path("cart_add", { "id": item.produit.id }) }}"> 
 									<img src="{{ asset('assets/images/icones/signe-plus.png') }}" title="Google" class="signe-plus"  alt="item.produit.nom">
@@ -52,7 +52,7 @@
 							</td>
 							<td> {{  (item.quantity * item.produit.price) | number_format(2, ',', ',') }} € </td>
 							<td> <a href="{{ path('cart_delete', {"id" :item.produit.id }) }}" > <img src="{{ asset('assets/images/icones/corbeille.png') }}" title="Freepik" height="25px" alt="item.produit.nom"> </a></td>
-							
+
 							{% set total = total + item.quantity * item.produit.price %}
 						</tr>
 					{% endfor %}
@@ -60,10 +60,10 @@
 			</table>
 			<hr/>
 
-			<div class="text-right mb-5">
-				<b> 	Mon panier contient : {{ nbrProduits }} produit(s) </b><br>
-				<b> Total de mon panier :  {{ total | number_format(2, ',', ',') }} €</b>
-				<a href="{{ path('order') }}" class="btn btn-success  mt-3"> Valider mon panier </a>
+			<div class="text-right">
+				<b> Mon panier contient : {{ nbrProduits }} produit(s) </b> <br>
+				<b> Total de mon panier :  {{ total | number_format(2, ',', ',') }} €</b><br>
+				<a href="{{ path('order') }}" class="btn btn-info custom-btn  mt-3"> Valider mon panier </a>
 			</div>
 
 		{% else %}
