@@ -20,4 +20,38 @@ jQuery(document).ready(function () {
   $("#all").click(function () {
     $(".produits").show(3000, "linear");
   });
+
+  /**************** Onglet *******************/ 
+
+  // Au click sur le lien
+
+//   function pop_toogle (section){
+//     document.querySelectorAll("[data-route]").forEach( e => {
+
+//         e.classList.remove("is-active");
+//     });
+//     // querySelectorAll return an array of dom elements, u can access them directly.
+
+//     // I suppose in your case that ' section ' variable is the clicked element so :
+
+//     document.querySelectorAll("[data-route]").forEach( e => {
+
+//         e.classList.add("is-active");
+//     });
+
+//    // if not you have to store the dom element from the event, and add the class here.
+// }
+
+  $(".onglet_categorie button").click(function () {
+    let categorie;
+
+    categorie = $(this).attr("id");
+
+    $(".tab-pane").removeClass("fade");
+    $(".tab-pane").removeClass("show");
+
+   console.log(categorie) ;
+  });
+
+
 });
