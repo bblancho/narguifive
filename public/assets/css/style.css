@@ -841,8 +841,12 @@ span.adresse{
     font-size: 15px;
 }
 
-.card{
+.adresse .card{
     margin: 0px 15px;
+}
+
+.adresse .card:hover{
+    background-color: #a4b0be;
 }
 
 .bg-primary{
