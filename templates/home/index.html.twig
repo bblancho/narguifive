@@ -123,15 +123,16 @@
 		<div class="d-flex justify-content-center">
 			{% set preview =  1  %}
 			{% set next =  54  %}
+			{% set queryParams = app.request.query.all %}
 
-			{% if (params['page'] is defined) and params['page'] != 0 %}
-				{% set preview =  params['page'] - 1  %}
-				{% set next =  params['page'] + 1   %}
-				{% set current_page =  params['page']  %}
+			{% if (queryParams['page'] is defined) and queryParams['page'] != 0 %}
+				{% set preview =  queryParams['page'] - 1  %}
+				{% set next =  queryParams['page'] + 1   %}
+				{% set current_page =  queryParams['page']  %}
 
-				{% if params['page'] == 1 %}
+				{% if queryParams['page'] == 1 %}
 					{% set preview =  1  %}
-				{% elseif params['page'] == 54 %}
+				{% elseif queryParams['page'] == 54 %}
 					{% set next =  54  %}
 				{% endif %}
 			{% endif %}

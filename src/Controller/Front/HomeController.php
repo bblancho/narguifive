@@ -54,14 +54,12 @@ class HomeController extends AbstractController
             6 // limit per page
         );
 
-        $params = $request->query->all();
         $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1), 9);
 
         return $this->render('home/index.html.twig', [
             'produits' => $produits,
             'produits_bis' => $produits_bis,
             'nb_produits_total'  => $nb_produits_total,
-            'params' => $params,
         ]);
     }
 
