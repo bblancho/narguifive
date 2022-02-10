@@ -5,25 +5,9 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Three columns of text below the carousel -->
-
-    <div class="columns-container">
-        <div id="column" class="container">
-            <div class="row">
-                <div class="lab_breadcrumb">
-                    <div class="container">
-                        <!-- Breadcrumb -->
-                        <div class="breadcrumb clearfix">
-                            <div class="breadcrumb-i">
-                                <a class="home" href="#" title="retour &agrave; Accueil"><i class="icons-home"></i>Accueil</a>
-                            </div>
-                        </div>
-                        <!-- /Breadcrumb -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	
+	{# Breadcrumb #}
+	{{ include("partials/_breadcrumb.html.twig")}}
 
 	<div class="container">
 		<div class="title-block">

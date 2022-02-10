@@ -127,6 +127,24 @@ class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/produit/{slug}/", name="product_show")
+     */
+    public function show($slug): Response
+    {
+        $produit = $this->repoProduct->findOneBySlug($slug);
+        $produits_best = $this->repoProduct->findByIsBest(1);
+
+        if (!$produit) {
+            return $this->redirectToRoute('products');
+        }
+
+        return $this->render('product/product_page.html.twig', [
+            'produit' => $produit,
+            'produits_best'  => $produits_best,
+        ]);
+    }
+
      /**
      * @Route("/produits/{slug}", name="products_subcategory_show", methods="GET")
      */
@@ -178,25 +196,6 @@ class ProductController extends AbstractController
             'form' => $form->createView()
         ]);
 
-    }
-
-
-    /**
-     * @Route("/produit/{slug}/", name="product_show")
-     */
-    public function show($slug): Response
-    {
-        $produit = $this->repoProduct->findOneBySlug($slug);
-        $produits_best = $this->repoProduct->findByIsBest(1);
-
-        if (!$produit) {
-            return $this->redirectToRoute('products');
-        }
-
-        return $this->render('product/product_page.html.twig', [
-            'produit' => $produit,
-            'produits_best'  => $produits_best,
-        ]);
     }
 
     /**
@@ -317,55 +316,103 @@ class ProductController extends AbstractController
         
     }
 
-    public function AttributionSousCategory(): Response
+    public function productsByCategory_original(Request $request, PaginatorInterface $paginator,$slug): Response
     {
-        $cats = $this->categoryRepo->findAll();
-        $sous = $this->sousCategoryRepo->findAll();
-        $produits = $this->repoProduct ->findAll() ;
+        $limit  = 15;
+        $mypage = (int)$request->get("page", 1);
+        $categorie  = $this->repoCategory->findOneBySlug($slug) ;
 
-        foreach ($produits as $produit) {
-            foreach ($sous as $s) {
-                if ($produit->getCategory()->getNom() == $s->getNom()) {
-                    $produit->setSousCategory($s);
+        $filter = $request->get("layered_manufacturer"); 
+        $disponibilite = $request->get("layered_quantity"); 
+        $tri = $request->get("tri");
 
-                    $this->manager->persist($produit);
-                }
+        $search = new Search();
+        $form = $this->createForm(SearchType::class, $search) ;
+
+        $form->handleRequest($request) ;
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            $produits = $this->repoProduct->findBySearch($search);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                9
+            );
+
+        } else {
+            $produits = $categorie->getProducts() ;
+            $total= count($produits);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                // Doctrine Query, not results
+                $produits,
+                // Define the page parameter
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                // Items per page
+                9
+            );
+
+            $produits_best = $this->repoProduct->findByIsBest(1);
+        }
+
+        $produits   = $categorie->getProducts() ;
+        $sousCats   = $categorie->getSousCategory() ;
+
+        $produits = $paginator->paginate(
+            $produits, // Doctrine Query, not results
+            $request->query->getInt('page', 1), /** page number */
+            9 // limit per page
+        );
+
+        $total      = $this->repoCategory->getTotalProductsByCategory( $categorie->getId() );
+        $fabricants = $this->repoMarque->findAll() ;
+        $from_fabs  = array();
+       
+        //Disponibilité
+        $nbre_dispo = array();
+        $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
+        $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
+
+        foreach($fabricants as $fabricant){
+            $prods = $this->repoProduct->findBy(array('marque'=>$fabricant) );
+            $from_fabs[$fabricant->getNom()]=$prods;
+        }
+        
+        if($request->get("ajax")){
+            $filter=$request->get("layered_manufacturer");
+
+            $fabs=$this->repoMarque->findBy(array('id'=>$filter));
+            $actifs=array();
+            $actif=array();
+            foreach($fabs as $fab){
+                $actif["id"]=$fab->getId();
+                $actif["nom"]=$fab->getNom();
+                array_push($actifs,$actif);
             }
+            
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
         }
 
-        $this->manager->flush();
-
-        return $this->redirectToRoute('products') ;
-    }
-
-    /**
-     * /produits/chichas/chicha-classique/celeste-3
-     * @Route("/produits/{$nomCategories}/{$souscategories}/{$idProduit}", name="products_by_category")
-     */
-    // public function productByCategory($nomCategories, $souscategories, $idProduit): Response
-    // {
-    //     return $this->render('product/index.html.twig', [
-
-    //     ]);
-    // }
-
-
-       /**
-     * @Route("/product/{slug}", name="products_filter_show", methods="GET")
-     */
-    public function affichage_produit(Request $request, PaginatorInterface $paginator,$slug)
-    {
-        $produit = $this->repoProduct->findOneBySlug($slug);
-        $produits_best = $this->repoProduct->findByIsBest(1);
-
-        if (!$produit) {
-            return $this->redirectToRoute('products');
-        }
-
-        return $this->render('product/product_page.html.twig', [
-            'produit' => $produit,
-            'produits_best'  => $produits_best,
+        return $this->render('product/category.html.twig', [
+            'produits'  => $produits,
+            'sousCats'  => $sousCats,
+            'categorie' => $categorie,
+            'fabricants'=>  $fabricants,
+            'nbre_dispo'=>  $nbre_dispo,
+            'from_fabs' =>  $from_fabs,
+            'total'     =>  $total,
+            'limit'     =>  $limit,
+            'mypage'    =>  $mypage,
+            'form'      => $form->createView()
         ]);
     }
+
 
 }

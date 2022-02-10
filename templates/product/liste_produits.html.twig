@@ -8,7 +8,7 @@
 
 					<div class="left-block">
 						<div class="product-image-container">
-							<a class="product_image" href="{{ path('products_filter_show', {slug:produit.slug})}}" title="LOREM IPSUM DOLOR TITLE">
+							<a class="product_image" href="{{ path('product_show', {slug:produit.slug})}}" title="LOREM IPSUM DOLOR TITLE">
 								<img class="img-responsive img1" src="{{produit.image}}" alt="{{produit.nom}}"/>
 							</a>
 
@@ -21,7 +21,7 @@
 										</a>
 									</li>
 									<li class="lab-quick-view">
-										<a class="" href="{{ path('products_filter_show', {slug:produit.slug})}}" data-id-product="812" title="Aper&ccedil;u rapide">
+										<a class="" href="{{ path('product_show', {slug:produit.slug})}}" data-id-product="812" title="Aper&ccedil;u rapide">
 											<i class="mdi mdi-eye"></i>
 											<span>Aper&ccedil;u rapide</span>
 										</a>
@@ -40,7 +40,7 @@
 
 					<div class="right-block">
 						<div class="product-name" itemprop="name">
-							<a href="{{ path('products_filter_show',{slug:produit.slug}) }}" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
+							<a href="{{ path('product_show',{slug:produit.slug}) }}" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
 								{{produit.nom}}
 							</a>
 						</div>

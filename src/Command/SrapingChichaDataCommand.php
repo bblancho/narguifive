@@ -275,6 +275,28 @@ class SrapingChichaDataCommand extends Command
         } // FIn foreach
     }
 
+    public function AttributionSousCategory(): Response
+    {
+        $cats = $this->categoryRepo->findAll();
+        $sous = $this->sousCategoryRepo->findAll();
+        $produits = $this->repoProduct ->findAll() ;
+
+        foreach ($produits as $produit) {
+            foreach ($sous as $s) {
+                if ($produit->getCategory()->getNom() == $s->getNom()) {
+                    $produit->setSousCategory($s);
+
+                    $this->manager->persist($produit);
+                }
+            }
+        }
+
+        $result = $this->manager->flush();
+
+        return $result ;
+    }
+
+
 }
 
 
