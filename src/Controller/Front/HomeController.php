@@ -43,7 +43,9 @@ class HomeController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $produits = $this->productRepository->findAll();
-        $nb_produits = $this->productRepository->countProduct();
+
+        // Recup la valeur du nbr de total de produits en BDD
+        $nb_produits_total = $this->productRepository->countTotalProduct();
 
         // Paginate the results of the query
         $produits = $paginator->paginate(
@@ -52,13 +54,14 @@ class HomeController extends AbstractController
             6 // limit per page
         );
 
-        // $page = ;
-        $produits_bis = $this->productRepository->getPaginateProduits( (int)$request->query->get("page", 1), 9);
+        $params = $request->query->all();
+        $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1), 9);
 
         return $this->render('home/index.html.twig', [
             'produits' => $produits,
             'produits_bis' => $produits_bis,
-            'nb_produits'  => $nb_produits,
+            'nb_produits_total'  => $nb_produits_total,
+            'params' => $params,
         ]);
     }
 

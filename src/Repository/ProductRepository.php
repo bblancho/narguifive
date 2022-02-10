@@ -60,7 +60,6 @@ class ProductRepository extends ServiceEntityRepository
      * @return void
      */
 
-
     public function getPaginatedProducts($mypage,$limit,$filter=null, $tri=null, $disponibilite=null, $cat=null){
         $query=$this->createQueryBuilder('p')
         ->orderBy('p.id');
@@ -88,7 +87,6 @@ class ProductRepository extends ServiceEntityRepository
                 $query->orderBy('p.nom', 'desc');
             }
             elseif($tri=='price:asc'){
-                
                 $query->orderBy('p.price', 'asc');
             }
             elseif($tri=='price:desc'){
@@ -107,10 +105,10 @@ class ProductRepository extends ServiceEntityRepository
             $query->orderBy('p.quantite', 'desc');
         }
 
-        $query->setFirstResult(($mypage * $limit)-$limit)
+        $query->setFirstResult( ($mypage * $limit) - $limit) // indice du curseur dans le tableau
         ->setMaxResults($limit);
-        return $query->getQuery()->getResult();
 
+        return $query->getQuery()->getResult();
     }
 
     /**
@@ -138,17 +136,18 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * Nombre de produit en BDD
      */
-    public function countProduct(){
+    public function countTotalProduct(){
 
         return $this->createQueryBuilder('p')
             ->select( "COUNT(p.id)" )
             ->getQuery()
-            ->getSingleScalarResult() // return un valeur( int, string) jamais de tableau ou objet 
+            ->getSingleScalarResult() // return une valeur(int, string) jamais de tableau ou objet 
         ;
     }
 
     /** Pagination ***/
     public function getPaginateProduits(int $page, int $length){
+
         $query = $this->createQueryBuilder('p')
             ->OrderBy('p.id', "desc")
             ->setFirstResult( ($page - 1) * $length) // indice du curseur dans le tableau

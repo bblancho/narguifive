@@ -19,7 +19,7 @@ class Marque
         4 => 'E-liquide',
     ];
 
-    public const STATUS_DEFAULT_YPE_FABRIQUANT = 1 ; // Aucun
+    public const STATUS_DEFAULT_TYPE_FABRIQUANT = 1 ; // Aucun
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,7 +35,7 @@ class Marque
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $type = self::STATUS_DEFAULT_YPE_FABRIQUANT;
+    private $type = self::STATUS_DEFAULT_TYPE_FABRIQUANT;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="marque")

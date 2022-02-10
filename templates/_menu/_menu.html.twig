@@ -10,7 +10,7 @@
 	<div id="info">
 		<div class="icone_menu" id="panier">
 			<div class="icon-top">
-				<a href="#"  class="nav-link" title="Panier">
+				<a href="#" class="nav-link" title="Panier">
 					<i class="bi bi-cart"></i>
 					<span class="panier" id="panier_number"></span>
 					<span class="labelTop">Panier</span>
@@ -27,8 +27,12 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown000">
 						{% if not app.user %}
-							<a class="dropdown-item" href="{{ path('app_login') }}"> Connexion </a>
-							<a class="dropdown-item" href="{{ path('register') }}">  Inscription </a>
+							<a class="dropdown-item" href="{{ path('app_login') }}">
+								Connexion
+							</a>
+							<a class="dropdown-item" href="{{ path('register') }}">
+								Inscription
+							</a>
 						{% else %}
 							<a class="dropdown-item" href="{{ path('account') }}">
 								Mon compte
@@ -36,7 +40,9 @@
 									{{ app.user.nom }}
 								</small>
 							</a>
-							<a class="dropdown-item" href="{{ path('app_logout') }}"> Déconnexion </a>
+							<a class="dropdown-item" href="{{ path('app_logout') }}">
+								Déconnexion
+							</a>
 						{% endif %}
 					</div>
 				</div>
@@ -53,35 +59,36 @@
 		</div>
 	</div>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mb-2 mb-md-0">
-                    {% for category in categories %}
-                        {% if category.sousCategory is not empty %} {# chicha #}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="{{ category.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ category.nom }}</a>
-                                <div class="dropdown-menu" aria-labelledby="{{ category.id }}"> 
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav mb-2 mb-md-0">
+					{% for category in categories %}
+						{% if category.sousCategory is not empty %}
+							{# chicha #}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="{{ category.id }}" data-toggle="dropdown" aria-expanded="false">{{ category.nom }}</a>
+								<div class="dropdown-menu">
 									<a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
-                                    {% for cat in category.sousCategory %}
+									{% for cat in category.sousCategory %}
 										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slug:cat.slug } )}}">
 											{{ cat.nom }}
 										</a>
-                                    {% endfor %}
-                                </div>
-                            </li> 
-                        {% else %}
-                            <li class="nav-item"> 
+									{% endfor %}
+								</div>
+							</li>
+						{% else %}
+							<li class="nav-item">
 								<a class="nav-link" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </nav>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</nav>
 </header>

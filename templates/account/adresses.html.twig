@@ -6,10 +6,10 @@
 
 <div class="mon-compte">
     <div class="container">
-        {% set messages = app.flashes %}
+        {% set messages = [app.flashes] %}
         {% if messages is not empty %}
             {# {{ dump(messages) }} #}
-            {{ include ("partials/alert.html.twig", with_context = true) }} 
+            {{ include ("partials/alert.html.twig", messages) }}
         {% endif %}
 
         <h1> Mes adresses </h1>
@@ -43,7 +43,7 @@
                                     <hr>
                                     <p class="card-text"> 
                                         {{ adresse.adresse }}, <br>
-                                        {{ adresse.postal }} - <br> {{ adresse.ville }} - {{ adresse.pays }}
+                                        {{ adresse.postal }} - <br> {{ adresse.ville|upper }} - {{ adresse.pays }}
                                     </p>
                                     <a class='btn btn-info custom-btn' href="{{ path("adresse_compte_edit", {"id":adresse.id}) }}"> Mettre à jour </a>
                                     <a class='btn btn-danger custom-btn' href="{{ path("adresse_compte_delete", {"id":adresse.id}) }}"> Supprimer </a>
