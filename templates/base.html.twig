@@ -40,7 +40,7 @@
 		{% endblock %}
 
 		<!-- Nargui CSS -->
-		<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">																
+		<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
 		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 	</head>
 
@@ -58,7 +58,7 @@
 			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
 				{% block body %}{% endblock %}
 			</div>
-				
+
 			<!-- FOOTER -->
 			{% include "partials/_footer.html.twig" %}
 		</main>

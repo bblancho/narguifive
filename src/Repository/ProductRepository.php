@@ -118,7 +118,7 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function getTotalProducts($filter=null, $disponibilite=null, $cat=null){
         $query=$this->createQueryBuilder('p')
-        ->select('COUNT(p)');
+            ->select('COUNT(p)');
 
         if($filter != null){
             $query->andWhere('p.marque IN(:marqs)')
@@ -134,8 +134,30 @@ class ProductRepository extends ServiceEntityRepository
         }
         return $query->getQuery()->getSingleScalarResult();
     }
-    
-     // $produits = $this->repoProduct->findBy(
+
+    /**
+     * Nombre de produit en BDD
+     */
+    public function countProduct(){
+
+        return $this->createQueryBuilder('p')
+            ->select( "COUNT(p.id)" )
+            ->getQuery()
+            ->getSingleScalarResult() // return un valeur( int, string) jamais de tableau ou objet 
+        ;
+    }
+
+    /** Pagination ***/
+    public function getPaginateProduits(int $page, int $length){
+        $query = $this->createQueryBuilder('p')
+            ->OrderBy('p.id', "desc")
+            ->setFirstResult( ($page - 1) * $length) // indice du curseur dans le tableau
+            ->setMaxResults($length)
+        ;
+
+        return $query->getQuery()->getResult() ;
+    }
+    // $produits = $this->repoProduct->findBy(
             //     array(),
             //     array('id' => 'DESC'),    // $orderBy
             //     null,                        // $limit

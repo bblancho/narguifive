@@ -468,7 +468,6 @@ div.description-block{
 }
 
 /** Block nos valeurs **/
-
 .block-valeur{
     padding: 0 !important;
     margin: 0 !important;
@@ -489,7 +488,6 @@ div.description-block{
     object-fit:scale-down;
 }*/
 
-
 .block-valeur img{
     width: 100%;
     object-fit:cover;
@@ -503,7 +501,6 @@ div.description-block{
 }
 
 /** Block nos partenaires **/
-
 .partenaire{
     width: 100%;
     background-color: #fff;
