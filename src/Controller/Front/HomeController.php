@@ -54,7 +54,7 @@ class HomeController extends AbstractController
             6 // limit per page
         );
 
-        $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1), 9);
+        $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1) , 9);
 
         return $this->render('home/index.html.twig', [
             'produits' => $produits,
