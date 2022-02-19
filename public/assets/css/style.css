@@ -240,22 +240,21 @@ ul.navbar-nav{
 }
 
 .content-home h2{
-    font-size: 24px;
+    font-size: 17px;
     line-height: 1em;
     text-transform: uppercase;
     color: #fff;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-decoration: underline;
+    margin-bottom: 5px;
 }
 
 .content-home p{
-    font-size: 15px;
+    font-size: 13px;
     line-height: 2em;
     color: #fff;
     text-align: justify;
     width: 60%;
     margin: 0 auto;
+    font-style: italic;
 }
 
 /**** Onglet home ***/
@@ -274,10 +273,10 @@ ul.navbar-nav{
     color: #000;
     display: block;
     font-family: "Roboto",sans-serif;
-    font-size: 34px;
+    font-size: 28px;
     letter-spacing: 2px;
     font-weight: 100;
-    line-height: 100px;
+    line-height: 72px;
     margin: 0px;
     position: relative;
     text-transform: uppercase;
@@ -375,10 +374,10 @@ ul.navbar-nav{
     font-style: italic;
     display: block;
     font-family: "Roboto",sans-serif;
-    font-size: 34px;
+    font-size: 25px;
     letter-spacing: 2px;
     font-weight: 100;
-    line-height: 100px;
+    line-height: 53px;
     margin: 0;
     position: relative;
 }
@@ -528,7 +527,7 @@ div.description-block{
 }
 
 .assurance img{
-    width: 30% !important;
+    width: 15% !important;
 }
 
 /********** Footer *********/
