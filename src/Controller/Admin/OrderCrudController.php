@@ -102,7 +102,7 @@ class OrderCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            DateTimeField::new("createdAt", "Passé le")->setFormat('dd-MM-Y à HH:mm'), 
+            DateTimeField::new("createdAt", "Passé le")->setFormat('Y-MM-dd à HH:mm')->renderAsNativeWidget(), 
             TextField::new('user.getFullName',"Client"),
             TextEditorField::new('delivry', "Adresse de livraison")->onlyOnDetail(),
             MoneyField::new('total', 'Total produit')->setCurrency('EUR'),

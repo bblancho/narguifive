@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Form\MarqueType;
 use App\Entity\Product\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,10 +31,11 @@ class ProductType extends AbstractType
             ->add('gramme')
             ->add('en_stock')
             ->add('quantite')
-            // ->add('category')
-            // ->add('sousCategory')
+            ->add('category')
+            ->add('sousCategory')
             ->add('color')
-            // ->add('marque')
+            // ->add('marque', MarqueType::class)
+            ->add('marque')
         ;
     }
 
