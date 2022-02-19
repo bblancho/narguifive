@@ -114,7 +114,8 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return void
      */
-    public function getTotalProducts($filter=null, $disponibilite=null, $cat=null){
+    public function getTotalProducts($filter=null, $disponibilite=null, $cat=null)
+    {
         $query=$this->createQueryBuilder('p')
             ->select('COUNT(p)');
 
@@ -136,22 +137,36 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * Nombre de produit en BDD
      */
+    public function getProductActif()
+    {
+        return $this->createQueryBuilder('p')
+            ->select( " COUNT(p.id) " )
+            ->getQuery()
+            ->getSingleScalarResult() // return une valeur(int, string) jamais de tableau ou objet 
+        ;
+    }
+
+    /**
+     * Nombre de produit en BDD
+     */
     public function countTotalProduct(){
 
         return $this->createQueryBuilder('p')
-            ->select( "COUNT(p.id)" )
+            ->select( " COUNT(p.id) " )
             ->getQuery()
             ->getSingleScalarResult() // return une valeur(int, string) jamais de tableau ou objet 
         ;
     }
 
     /** Pagination ***/
-    public function getPaginateProduits(int $page, int $length){
+    public function getPaginateProduits(int $page = 1 , int $nbElements = 9){
+        $nbProduits = $this->countTotalProduct() ;
 
+        $nbPages = ceil( $nbProduits / $nbElements) ;
         $query = $this->createQueryBuilder('p')
             ->OrderBy('p.id', "desc")
-            ->setFirstResult( ($page - 1) * $length) // indice du curseur dans le tableau
-            ->setMaxResults($length)
+            ->setFirstResult( ($page - 1) * $nbElements) // indice du curseur dans le tableau
+            ->setMaxResults($nbElements)
         ;
 
         return $query->getQuery()->getResult() ;

@@ -9,10 +9,18 @@ body{
     z-index: 0;
 }
 
+div.footer{
+    padding: 0px 180px;
+}
+
 .separation{
     width: 100%;
     position: relative;
     top: 25px;
+}
+
+#pagination_site{
+    margin: 10px 0;
 }
 
 .custom-btn{
@@ -26,6 +34,7 @@ p {
     font-family: 'Roboto';
     font-weight: 500;
 }
+
 .navbar{
     margin-bottom: 0px !important;
 }
@@ -108,6 +117,7 @@ h1,h2{
     font-family: Roboto,serif;
     font-size: 9px;
 }
+
 .blog-header-logo {
     background: #000;
     text-align: center;
@@ -184,6 +194,7 @@ nav, .navbar{
 
 .bi{
     padding-right: 10px;
+    width: auto;
 }
 
 .labelTop{
@@ -210,7 +221,7 @@ ul.navbar-nav{
 }
 /************** Body ************/
 .marketing{
-    /* margin-bottom: 45px ; */
+    margin-bottom: 45px ;
     color: #000;
 }
 
@@ -338,7 +349,6 @@ ul.navbar-nav{
 	position: relative;
 	margin: 0 0 0 25px;
 	padding: 0;
-    .column div
 }
 
 .hover01 figure {
@@ -569,20 +579,17 @@ div.description-block{
 }
 
 .block-footer h3{
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
     text-align: left;
+    font-style: italic;
 }
 
 .block-footer p{
     font-style: italic;
     font-size: 12px;
     text-align: left;
-}
-
-.lien-rs-footer{
-    /* text-align: center !important; */
 }
 
 .footer .block-valeur figure{
@@ -597,8 +604,9 @@ div.description-block{
 }
 
 .lien-rs{
-    width: 30px;
-    margin: 0px 15px;
+    width: 35px;
+    margin-right: 15px;
+    height: 35px;
 }
 
 .block-footer span{
@@ -761,6 +769,11 @@ div.description-block{
 img{
     vertical-align: middle;
 }
+
+img.img-thumbnail-admin{
+    width: 33% !important;
+}
+
 .order-summary{
     padding: 20px;
     margin-top: 45px;
@@ -854,6 +867,12 @@ span.adresse{
     color: blue !important;
 }
 
+/**** Admin **/
+
+/** Poduit ***/
+#form-produit{
+    margin-bottom: 45px;
+}
 
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {

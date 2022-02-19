@@ -6,7 +6,7 @@ use App\Form\OrderType;
 use App\Entity\Product\Order;
 use App\Service\Carte\CarteService;
 use App\Entity\Product\OrderDetails;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +16,7 @@ class OrderController extends AbstractController
 {
     private $manager;
 
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $manager)
     {
         $this->manager = $manager;
     }
@@ -68,6 +68,8 @@ class OrderController extends AbstractController
             $delivry_content .= '<br/>'.$delivry->getPostal().' '.$delivry->getVille() ;
             $delivry_content .= '<br/>'.$delivry->getPays() ;
 
+            $em = $this->manager->getManager();
+
             // Enregistrement de ma commande
                 $order = new Order();
 
@@ -81,7 +83,7 @@ class OrderController extends AbstractController
                 $order->setStatut(1) ; // Non validée car on a pas encore payé
                 $order->setIsPaid(false) ;
 
-            $this->manager->persist($order) ;
+            $em->persist($order) ;
             // dd($order);
 
             // Enregistrement du détails de la commande
@@ -94,10 +96,10 @@ class OrderController extends AbstractController
                     $orderDetail->setPrice( $product['produit']->getPrice() ) ;
                     $orderDetail->setTotal( $product['produit']->getPrice() * $product['quantity'] ) ;
 
-                    $this->manager->persist($orderDetail) ;
+                    $em->persist($orderDetail) ;
                 }
 
-            $this->manager->flush() ;
+            $em->flush() ;
 
             return $this->render('order/recapOrder.html.twig',[
                 'panier'       => $panier->getFullCarte(),

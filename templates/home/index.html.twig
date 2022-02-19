@@ -66,9 +66,8 @@
 		</ul>
 	</div>
 
+	{# onglet #}
 	<div class="container">
-		
-		{# onglet #}
 		<div class="row product-container tab-content" id="myTabContent">
 			<div class="tab-pane show active" id="news" role="tabpanel" aria-labelledby="news-tab">New</div>
 			<div class="tab-pane fade" id="promos" role="tabpanel" aria-labelledby="promos-tab">Promos</div>
@@ -121,46 +120,11 @@
 
 		{# pagination #}
 		<div class="d-flex justify-content-center">
-			{% set preview =  1  %}
-			{% set next =  54  %}
-			{% set queryParams = app.request.query.all %}
-
-			{% if (queryParams['page'] is defined) and queryParams['page'] != 0 %}
-				{% set preview =  queryParams['page'] - 1  %}
-				{% set next =  queryParams['page'] + 1   %}
-				{% set current_page =  queryParams['page']  %}
-
-				{% if queryParams['page'] == 1 %}
-					{% set preview =  1  %}
-				{% elseif queryParams['page'] == 54 %}
-					{% set next =  54  %}
-				{% endif %}
-			{% endif %}
-
-			<ul class="pagination pagination-lg ">
-				<li class="page-item">
-					<a class="page-link" href="{{ path('home', {page: preview}) }}" aria-label="Précédent">
-						<span aria-hidden="true">&laquo;</span>
-						<span class="sr-only">Précédent</span>
-					</a>
-				</li>
-				
-				{% for i in 1..( (nb_produits_total/9)|round(0,'ceil') ) %}
-					<li class="page-item"><a class="page-link" href="{{ path('home', {page: i  }) }}"> {{i}}</a></li>
-				{% endfor %}
-
-				<li class="page-item">
-					<a class="page-link" href="{{ path('home', {page: next}) }}" aria-label="Suivant">
-						<span aria-hidden="true">&raquo;</span>
-						<span class="sr-only">Suivant</span>
-					</a>
-				</li>
-			</ul>
-			
-			{# {{ knp_pagination_render(produits, 'partials/_pagination.html.twig') }} #}
+			{{ knp_pagination_render(produits, 'partials/_pagination.html.twig') }}
 		</div>
 	</div>
 
+	{# Catégories #}
 	<div class="bloc-chicha">
 		<div class="container">
 			<div class="title-block container">
@@ -299,6 +263,7 @@
 		</div>
 	</div>
 
+	{# Description #}
 	<div class="content-home">
 		<h2 class="text-center">
 			NarguiFive : LA BOUTIQUE CHICHA DE RÉFÉRENCE
@@ -323,6 +288,7 @@
 		</p>
 	</div>
 
+	{# Nos valeurs #}
 	<div class="bloc-chicha">
 		<div class="title-block container">
 			<h2 class="text-center title-custom">
@@ -381,6 +347,7 @@
 		</div>
 	</div>
 
+	{# Nos partenaires #}
 	<div class="partenaire">
 		<div class="title-block container">
 			<h2 class="text-center title-custom">

@@ -4,30 +4,31 @@ namespace App\Controller\Produit;
 
 use App\Service\Search;
 use App\Form\Utils\SearchType;
+use App\Entity\Product\Product;
 use App\Entity\Product\SousCategory;
+use App\Repository\MarqueRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\MarqueRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-    private $manager;
+    private $doctrine;
     private $repoProduct;
     private $repoCategory;
     private $repoMarque;
     private $sousCategoryRepo;
 
-    public function __construct(EntityManagerInterface $manager, ProductRepository $repoProduct, CategoryRepository $repoCategory, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
+    public function __construct(ManagerRegistry $doctrine, ProductRepository $repoProduct, CategoryRepository $repoCategory, SousCategoryRepository $sousCat, MarqueRepository $repoMarque)
     {
-        $this->manager          = $manager;
+        $this->doctrine         = $doctrine;
         $this->repoProduct      = $repoProduct;
         $this->repoCategory     = $repoCategory;
         $this->sousCategoryRepo = $sousCat;
@@ -130,78 +131,22 @@ class ProductController extends AbstractController
     /**
      * @Route("/produit/{slug}/", name="product_show")
      */
-    public function show($slug): Response
+    public function show(Product $produit): Response
     {
-        $produit = $this->repoProduct->findOneBySlug($slug);
-        $produits_best = $this->repoProduct->findByIsBest(1);
-
         if (!$produit) {
-            return $this->redirectToRoute('products');
+           $this->addFlash('error', "Aucun produit trouvé.");
+           $this->redirectToRoute('home') ;
         }
 
         return $this->render('product/product_page.html.twig', [
             'produit' => $produit,
-            'produits_best'  => $produits_best,
         ]);
     }
 
      /**
-     * @Route("/produits/{slug}", name="products_subcategory_show", methods="GET")
-     */
-    public function subcategory(Request $request, PaginatorInterface $paginator,$slug)
-    {
-        $sousCats=$this->sousCategoryRepo->findBy(array(),array(), $limit=4);
-        $sousCat=$this->sousCategoryRepo->findOneBy(array('slug'=>$slug));
-
-        $limit=15;
-        $mypage=(int)$request->get("page", 1);
-        $tri=$request->get("tri");
-       
-        $search = new Search();
-
-        $form = $this->createForm(SearchType::class, $search) ;
-
-        $form->handleRequest($request) ;
-
-        if ( $form->isSubmitted() && $form->isValid() ) {
-
-            $produits = $this->repoProduct->findBySearch($search);
-
-            // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
-                $produits,
-                // Define the page parameter
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                10
-            );
-
-        } 
-
-        $produits=$this->repoProduct->getPaginatedProducts($mypage,$limit, null, $tri,null,$sousCat);
-        $total=$this->repoProduct->getTotalProducts(null,null, $sousCat);
-
-        if($request->get("ajax")){    
-            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')),  'total'=>$total]);
-        }
-
-        return $this->render('product/sous_category.html.twig', [
-            'produits' => $produits,
-            'sousCats' => $sousCats,
-            'sousCatActuel'=>$sousCat,
-            'total'=>$total,
-            'mypage'=>$mypage,
-            'limit'=>$limit,
-            'form' => $form->createView()
-        ]);
-
-    }
-
-    /**
      * @Route("/categorie/{slug}", name="products_by_categorie")
      */
-    public function productsByCategory(Request $request, PaginatorInterface $paginator,$slug): Response
+    public function productsByCategory(Request $request, PaginatorInterface $paginator, $slug): Response
     {
         $limit  = 15;
         $mypage = (int)$request->get("page", 1);
@@ -221,13 +166,10 @@ class ProductController extends AbstractController
             $produits = $this->repoProduct->findBySearch($search);
 
             // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
+                $produits = $paginator->paginate(
                 $produits,
-                // Define the page parameter
                 $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                9
+                9 // Items per page
             );
 
         } else {
@@ -235,13 +177,10 @@ class ProductController extends AbstractController
             $total= count($produits);
 
             // Paginate the results of the query
-            $produits = $paginator->paginate(
-                // Doctrine Query, not results
+                $produits = $paginator->paginate(
                 $produits,
-                // Define the page parameter
                 $request->query->getInt('page', 1), // numéro de la page en cours
-                // Items per page
-                9
+                9 // Items per page
             );
 
             $produits_best = $this->repoProduct->findByIsBest(1);
@@ -297,6 +236,56 @@ class ProductController extends AbstractController
             'mypage'    =>  $mypage,
             'form'      => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/produits/{slug}", name="products_subcategory_show", methods="GET")
+     */
+    public function subcategory(Request $request, PaginatorInterface $paginator,$slug)
+    {
+        $sousCats=$this->sousCategoryRepo->findBy(array(),array(), $limit=4);
+        $sousCat=$this->sousCategoryRepo->findOneBy(array('slug'=>$slug));
+
+        $limit=15;
+        $mypage=(int)$request->get("page", 1);
+        $tri=$request->get("tri");
+       
+        $search = new Search();
+
+        $form = $this->createForm(SearchType::class, $search) ;
+
+        $form->handleRequest($request) ;
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            $produits = $this->repoProduct->findBySearch($search);
+
+            // Paginate the results of the query
+            $produits = $paginator->paginate(
+                $produits,
+                $request->query->getInt('page', 1), // numéro de la page en cours
+                9 // Items per page
+            );
+
+        } 
+
+        $produits   =   $this->repoProduct->getPaginatedProducts($mypage,$limit, null, $tri,null,$sousCat);
+        $total      =   $this->repoProduct->getTotalProducts(null,null, $sousCat);
+
+        if($request->get("ajax")){    
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')),  'total'=>$total]);
+        }
+
+        return $this->render('product/sous_category.html.twig', [
+            'produits' => $produits,
+            'sousCats' => $sousCats,
+            'sousCatActuel'=>$sousCat,
+            'total'=>$total,
+            'mypage'=>$mypage,
+            'limit'=>$limit,
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**

@@ -9,7 +9,7 @@ use App\Repository\MarqueRepository;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\SousCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class HomeController extends AbstractController
     private $sousCategoryRepository;
     private $marqueRepository;
 
-    public function __construct(EntityManagerInterface $manager,MarqueRepository $marqueRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
+    public function __construct(ManagerRegistry $manager,MarqueRepository $marqueRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
         $this->manager = $manager ;
         $this->productRepository = $productRepository ;
@@ -43,6 +43,10 @@ class HomeController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $produits = $this->productRepository->findAll();
+
+        $newProduit = '';
+        $promosProduit = '';
+        $chichasProduit = ''; 
 
         // Recup la valeur du nbr de total de produits en BDD
         $nb_produits_total = $this->productRepository->countTotalProduct();
