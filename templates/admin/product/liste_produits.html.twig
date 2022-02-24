@@ -1,6 +1,13 @@
 <!-- Products list -->
 <div id="products_filter">
 
+	{# start button new #}
+		<div class="mb-2 mt-1">
+			<a href="{{ path('admin_produit_edit') }}" class="btn btn-primary btn-lg">{{ 'Ajouter un nouveau produit' | trans | capitalize }}</a>
+		</div>
+	{# end button new #}
+
+	{# startdisplay data #}
 	<ul class="lablistproducts product_list grid row">
 		{% for produit in produits %}
 			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
@@ -57,8 +64,13 @@
 						<div class="flags"></div>
 
 						<div class="lab-cart">
-							<a class="button  btn btn-default" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="{{produit.id}}" title="Ajouter au panier">
-								<span>Voir le produit</span>
+							<a href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="{{produit.id}}" class="btn btn-primary btn-sm">
+								<i class="bi bi-pencil"></i>
+								<span> Modifier </span>
+							</a>
+							<a name="delete" data-href="#" class="btn btn-danger btn-sm">
+								<i class="bi bi-trash"></i>
+								<span> Supprimer </span>
 							</a>
 						</div>
 					</div>
@@ -68,42 +80,45 @@
 			</li>
 		{% endfor %}
 	</ul>
+	{# end display data #}
 
 	{% set queryParams = app.request.query.all %}
 	{% set queryString = queryParams|filter((v,k) => k != 'page' and k !='ajax')|url_encode %}
 	{% set pages = (total / limit)|round(0,'ceil') %}
 	
-	<ul class="pagination text-center">
-		<li id="pagination_previous_bottom" class="{{ ( mypage > 1) ? '' : 'disabled' }} pagination_previous">
-			<a href="{{ ( mypage > 1) ? '?page=' ~ ( mypage - 1) : '' }}">
-				<i class="icon-chevron-left"></i>
-				<b>Pr&eacute;c&eacute;dent</b>
+	{# display navigation #}
+	<div class="row">
+		<div class="col-sm-1 d-flex justify-content-start mb-3">
+			<a href="#">
+				<span class="badge rounded-pill bg-primary p-2">
+					<i class="bi bi-chevron-double-up"></i>
+				</span>
 			</a>
-		</li>
-
-		{% for i in range( 1, pages ) %}
-			{% if mypage == i %}
-				<li class="active current">
-					<span>
-						<span>{{ i }}</span>
-					</span>
-				</li>
-			{% else %}
-				<li>
-					<a href="?page={{i}}&{{queryString}}">
-						<span>{{ i }}</span>
-					</a>
-				</li>
-			{% endif %}
-		{% endfor %}
-		
-		<li id="pagination_next_bottom" class="{{  (mypage == pages) ? 'disabled' : '' }} pagination_next">
-			<a href="{{ ( mypage < total) ? '?page=' ~ ( mypage + 1) : '' }}">
-				<b>Suivant</b> <i class="icon-chevron-right"></i>
-			</a>
-		</li> 
-	</ul>
-
+		</div>
+		<div class="col-sm-11 navigation d-flex justify-content-center">
+			{{ knp_pagination_render(produits) }}
+		</div>
+	</div>
+	{# end display navigation #}
 	<br>
 </div>
+
+<script>
+	$(document).ready(function () {
+		$('a[name=delete]').on('click', async function () {
+			let url = $(this).attr('data-href');
+			let confirm = await window.confirm('Êtes-vous sûr(e) de vouloir supprimer ce produit ?');
+			if (! confirm) {
+				return false;
+			}
+
+			$.get(url).done(function (response, textStatus, xhr) 
+				{
+					window.location.reload();
+				}).fail(function () 
+			{ // Fail
+			});
+		})
+	});
+</script>
 	

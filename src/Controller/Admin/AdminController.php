@@ -74,7 +74,7 @@ class AdminController extends AbstractController
         $total      = $this->productRepository->countProductsByCategory( $categorie->getId() ) ;
         $limit      = 15 ;
         $mypage     = (int)$request->get("page", 1) ;
-        $limit      = (int)$request->get("limit", 3) ;
+        $limit      = (int)$request->get("limit", 9) ;
 
         // Paginate the results of the query
         $produits = $paginator->paginate(
