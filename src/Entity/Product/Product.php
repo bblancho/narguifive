@@ -171,6 +171,11 @@ class Product
      */
     private $quantite;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $intro;
+
     public function __construct()
     {
         $this->imageProduct = new ArrayCollection();
@@ -530,6 +535,18 @@ class Product
     public function setQuantite(?int $quantite): self
     {
         $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(?string $intro): self
+    {
+        $this->intro = $intro;
 
         return $this;
     }

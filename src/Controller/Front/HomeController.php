@@ -60,6 +60,16 @@ class HomeController extends AbstractController
 
         $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1) , 9);
 
+        $chichas    = $this->categoryRepository->getProductsPublish(1);
+        $gouts      = $this->categoryRepository->getProductsPublish(2);
+        $charbons   = $this->categoryRepository->getProductsPublish(3);
+        $tuyaux     = $this->categoryRepository->getProductsPublish(4);
+        $eliquide   = $this->categoryRepository->getProductsPublish(7);
+        $foyers     = $this->categoryRepository->getProductsPublish(2);
+        $cat = $this->categoryRepository->getProductsPublish(2);
+        $cat = $this->categoryRepository->getProductsPublish(2);
+        $cat = $this->categoryRepository->getProductsPublish(2);
+
         return $this->render('home/index.html.twig', [
             'produits' => $produits,
             'produits_bis' => $produits_bis,

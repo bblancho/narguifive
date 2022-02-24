@@ -49,6 +49,7 @@ class ProductCrudController extends AbstractCrudController
         $fields = [
             TextField::new('nom'),
             SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            TextField::new('intro')->onlyOnForms()->setRequired(false),
             TextareaField::new('content')->onlyOnForms(),
             BooleanField::new('en_stock', 'En stock'),
             IntegerField::new('quantite', 'Quantité'),

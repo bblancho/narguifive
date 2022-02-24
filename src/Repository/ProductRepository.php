@@ -6,6 +6,7 @@ use App\Service\Search;
 use App\Entity\Product\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -136,9 +137,11 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * Nombre de produit en BDD
+     * @return integer
      */
-    public function getProductActif()
+    public function countTotalProduct()
     {
+
         return $this->createQueryBuilder('p')
             ->select( " COUNT(p.id) " )
             ->getQuery()
@@ -147,22 +150,59 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * Nombre de produit en BDD
+     * Nombre total de produit par catégorie
+     * @return integer
      */
-    public function countTotalProduct(){
-
-        return $this->createQueryBuilder('p')
+    public function countProductsByCategory($idCat)
+    {
+        $query = $this->createQueryBuilder('p')
             ->select( " COUNT(p.id) " )
+            ->innerJoin('p.category', 'c')
+            ->where('p.category = :id')
+            ->setParameter('id', $idCat)
             ->getQuery()
-            ->getSingleScalarResult() // return une valeur(int, string) jamais de tableau ou objet 
         ;
+
+       return $query->getSingleScalarResult() ;
+    }
+
+    /**
+     * Nombre total de produit publié par catégorie
+     * @return integer
+     */
+    public function countProductsPublishByCategory($idCat)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select( " COUNT(p.id) " )
+            ->innerJoin('p.category', 'c')
+            ->where('p.category = :id')
+            ->andWhere('p.publie = 1 ')
+            ->setParameter('id', $idCat)
+            ->getQuery()
+        ;
+
+        return $query->getSingleScalarResult() ;
+    }
+
+    /**
+     * Produits publiés par catégorie
+     * @return integer
+     */
+    public function productsPublishByCategory($idCat)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->where('p.category = :id')
+            ->andWhere('p.publie = 1 ')
+            ->setParameter('id', $idCat)
+            ->getQuery()
+        ;
+
+        return $query->getResult() ;
     }
 
     /** Pagination ***/
     public function getPaginateProduits(int $page = 1 , int $nbElements = 9){
-        $nbProduits = $this->countTotalProduct() ;
-
-        $nbPages = ceil( $nbProduits / $nbElements) ;
         $query = $this->createQueryBuilder('p')
             ->OrderBy('p.id', "desc")
             ->setFirstResult( ($page - 1) * $nbElements) // indice du curseur dans le tableau
@@ -178,15 +218,5 @@ class ProductRepository extends ServiceEntityRepository
             //     0                          // $offset
             // );
 
-    /*
-    public function findOneBySomeField($value): ?Product
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

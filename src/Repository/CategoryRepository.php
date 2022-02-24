@@ -19,6 +19,10 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    /**
+     * @return Category[] Returns an array of Category objects
+     *
+     */
     public function getAllCategory()
     {
         $query = $this->createQueryBuilder('c')->getQuery()->getResult() ;
@@ -30,12 +34,13 @@ class CategoryRepository extends ServiceEntityRepository
      * @return Category[] Returns an array of products by Category objects
      *
      */
-    public function findProductsByCategory($value)
+    public function findProductsByCategory($id): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.slug = :slug')
-            ->setParameter('slug', $value)
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
             ->join('c.products', 'p') // liasion entre Catégorie et les produits
+            ->andWhere('c.id = :id')
             ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult()
@@ -43,16 +48,25 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return integer
+     * @return Product[] Returns an array of products by Category objects
      */
-    public function getTotalProductsByCategory($idCategory){
+    public function getProductsPublish($id): array
+    {
         $query = $this->createQueryBuilder('c')
             ->andWhere('c.id = :id')
-            ->setParameter('id', $idCategory)
+            ->setParameter('id', $id)
             ->join('c.products', 'p') // liasion entre Catégorie et les produits
+            ->andWhere('p.publie = 1')
             ->orderBy('p.id', 'DESC')
-            ->select('COUNT(c)');
+            ->getQuery()
+        ;
 
-        return $query->getQuery()->getSingleScalarResult();
+        return $query->getResult();
     }
+
+    
+
+    // $qb = $this->createQueryBuilder('c')
+    
+    
 }

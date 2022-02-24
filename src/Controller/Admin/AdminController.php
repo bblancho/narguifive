@@ -68,21 +68,27 @@ class AdminController extends AbstractController
             $this->addFlash('error', "Aucune catégorie trouvée.");
             $this->redirectToRoute('admin_gestion') ;
         }
- 
-        $produits       = $categorie->getProducts() ;
-        $totalProduits  = $this->categoryRepository->getTotalProductsByCategory( $categorie->getId() ) ;
+        
+        // nos produits
+        $nos_produits   = $categorie->getProducts() ;
+        $total      = $this->productRepository->countProductsByCategory( $categorie->getId() ) ;
+        $limit      = 15 ;
+        $mypage     = (int)$request->get("page", 1) ;
+        $limit      = (int)$request->get("limit", 3) ;
 
         // Paginate the results of the query
         $produits = $paginator->paginate(
-            $produits, // Doctrine Query, not results
-            $request->query->getInt('page', 1), /** page number */
-            9 // limit per page
+            $nos_produits, // Doctrine Query, not results
+            $mypage, /** page number */
+            $limit// limit per page
         );
 
         return $this->render('admin/admin_categorie.html.twig', [
             'produits'   => $produits, 
-            'totalProduits' => $totalProduits,
+            'total' => $total,
             'categorie' => $categorie,
+            'mypage' => $mypage,
+            'limit' => $limit,
         ]);
     }
 

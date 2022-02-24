@@ -16,7 +16,7 @@
 			</h1>
 		</div>
 
-		{# liens onglet #}
+		{# Menu onglet #}
 		<ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
 			<li class="nav-item onglet_categorie" role="presentation">
 				<button type="button" class="nav-link active" id="news-tab" data-bs-toggle="tab" data-bs-target="#news" type="button" role="tab" aria-controls="news" aria-selected="true">
@@ -40,7 +40,7 @@
 			</li>
 			<li class="nav-item onglet_categorie" role="presentation">
 				<button type="button" class="nav-link"  id="accesssoires-tab" data-bs-toggle="tab" data-bs-target="#accesssoires" type="button" role="tab" aria-controls="accesssoires" aria-selected="false">
-					Accessoires
+					Charbons
 				</button>
 			</li>
 			<li class="nav-item onglet_categorie" role="presentation">
@@ -64,10 +64,7 @@
 				</button>
 			</li>
 		</ul>
-	</div>
 
-	{# onglet #}
-	<div class="container">
 		<div class="row product-container tab-content" id="myTabContent">
 			<div class="tab-pane show active" id="news" role="tabpanel" aria-labelledby="news-tab">New</div>
 			<div class="tab-pane fade" id="promos" role="tabpanel" aria-labelledby="promos-tab">Promos</div>
@@ -78,9 +75,9 @@
 						<div class="product-item text-center">
 							<a class="link-img" href="{{ path("product_show", {slug: produit.slug} ) }}">
 								{% if produit.image is null %}
-									<img src="{{ vich_uploader_asset(produit, 'imageFile') }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+									<img src="/{{ vich_uploader_asset(produit, 'imageFile') }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
 								{% else %}
-									<img src="{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
+									<img src="/{{ produit.image }}" class="img-fluid" alt="NARGUI FIVE-{{ produit.nom }}">
 								{% endif %}
 							</a>
 							<h5>
@@ -88,14 +85,6 @@
 							</h5>
 							<span class="product-price">
 								NARGUI FIVE
-							</span>
-							<span>
-								Catégorie:
-								{{ produit.category.nom }}
-							</span>
-							<span>
-								Sous-catégorie:
-								{{ produit.sousCategory.nom }}
 							</span>
 							<span class="product-price">{{ (produit.price) | number_format(2, ',', '.') }}
 								€
@@ -110,8 +99,8 @@
 					</div>
 				{% endfor %}	
 			</div>
-			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">gouts</div>
-			<div class="tab-pane fade" id="accesssoires" role="tabpanel" aria-labelledby="accesssoires-tab">accesssoires</div>
+			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">Goûts</div>
+			<div class="tab-pane fade" id="accesssoires" role="tabpanel" aria-labelledby="accesssoires-tab">Charbons</div>
 			<div class="tab-pane fade" id="electronique" role="tabpanel" aria-labelledby="electronique-tab">electronique</div>
 			<div class="tab-pane fade" id="liquide" role="tabpanel" aria-labelledby="liquide-tab">liquide</div>
 			<div class="tab-pane fade" id="cbd" role="tabpanel" aria-labelledby="cbd-tab">cbd</div>
