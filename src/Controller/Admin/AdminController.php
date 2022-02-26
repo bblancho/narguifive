@@ -59,7 +59,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/produit/categorie/{id}', name: 'admin_categorie', methods: ['GET'])]
+    #[Route('/admin/categorie/{id}', name: 'admin_categorie', methods: ['GET'])]
     public function productsByCategory(Request $request, PaginatorInterface $paginator, $id = 2 ): Response
     {
         $categorie  = $this->categoryRepository->find($id) ;
@@ -74,7 +74,7 @@ class AdminController extends AbstractController
         $total      = $this->productRepository->countProductsByCategory( $categorie->getId() ) ;
         $limit      = 15 ;
         $mypage     = (int)$request->get("page", 1) ;
-        $limit      = (int)$request->get("limit", 9) ;
+        $limit      = (int)$request->get("limit", 12) ;
 
         // Paginate the results of the query
         $produits = $paginator->paginate(
@@ -92,7 +92,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/produit/edit/{id}', name: 'admin_produit_edit', methods: ['POST', 'GET'])]
+    #[Route('/admin/produit/edit/{id?0}', name: 'admin_produit_edit', methods: ['POST', 'GET'])]
     /**
      *
      * @param Request $request
@@ -101,35 +101,58 @@ class AdminController extends AbstractController
      */
     public function update(Request $request, int $id = null): Response
     {
+        $new = true ;
         $produit = new product();
 
-        if ($id && $id > 0) {
+        if ( $id && $id > 0) {
+            $new = false;
             $produit = $this->productRepository->find($id);
         }
 
         $form = $this->createForm(ProductType::class, $produit);
-        
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
+        
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            dd( $form->getData() );
             $em = $this->doctrine->getManager();
 
             // Création d'un nouveau produit
-            if ($id == 0) {
-                $em->persist($produit);
-                $this->addFlash('success', 'le produit a bien été créé.');
+            if( $new ){
+                // $em->persist($produit);
+                $message = "le produit a bien été créé avec succès.";
+            } else{
+                $message = "le produit a bien été mis à jour.";  // MAJ
             }
-
-            $em->flush();
+            
+            $this->addFlash('success', $message);
+           
+            // $em->flush();
 
             return $this->redirectToRoute('admin');
         }
 
-        return $this->renderForm('admin/product/product.html.twig', [
+        return $this->renderForm('admin/product/ajout_product.html.twig', [
             'produit' => $produit,
             'form' => $form
         ]);
+    }
+
+    #[Route('/admin/produit/{id}', name: 'admin_show_produit', methods: ['GET'])]
+    /**
+     *
+     * @param integer $id
+     * @return Response
+     */
+    public function showProduit(int $id): Response
+    {
+        $produit  = $this->productRepository->find($id) ;
+  
+        if ( !$produit ) {
+            $this->addFlash('error', "Aucune produit trouvé.");
+            $this->redirectToRoute('admin_gestion') ;
+        }
+
+        return $this->renderForm('admin/product/produit.html.twig', compact('produit') ) ;
     }
 
     #[Route('/admin/produit/delete/{id}', name: 'admin_produit_delete', methods: ['GET', 'POST'])]
@@ -148,11 +171,11 @@ class AdminController extends AbstractController
         } catch (Exception $e) {
             $this->addFlash('danger', $e);
 
-            return $this->redirectToRoute('admin_agence_index');
+            return $this->redirectToRoute('admin_gestion');
         }
 
         $this->addFlash('success', 'Suppression effectuée.');
         
-        return $this->redirectToRoute('admin');
+        return $this->redirectToRoute('admin_gestion');
     }
 }

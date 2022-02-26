@@ -3,7 +3,7 @@
 
 	<ul class="lablistproducts product_list grid row">
 		{% for produit in produits %}
-			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
+			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-3 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
 				<div class="product-container item" itemscope itemtype="https://schema.org/Product">
 
 					<div class="left-block">
@@ -18,6 +18,12 @@
 										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
 											<i class="mdi mdi-heart-outline"></i>
 											<span>Ajouter &agrave; la liste de souhaits</span>
+										</a>
+									</li>
+									<li class="lab-Wishlist">
+										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; au panier">
+											<i class="mdi mdi-shopping"></i>
+											<span>Ajouter &agrave; au panier</span>
 										</a>
 									</li>
 									<li class="lab-quick-view">
@@ -118,4 +124,5 @@
 					</li> 
 				</ul>
 				<br>
+				
 

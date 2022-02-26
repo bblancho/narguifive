@@ -1,0 +1,35 @@
+{% macro app_form_row(field, label = null, label_attr = null, value_attr = null, required = false) %}
+
+	{% if label_attr == {} or label_attr is null %}
+		{% set label_attr = { 'label_attr': {'class': 'col-form-label'} } %}
+	{% endif %}
+
+	{% if value_attr == {} or value_attr is null %}
+		{% set value_attr = { 'attr': {'class': 'form-control'} } %}
+	{% endif %}
+
+	<div class="row mb-2">
+		<div class="row">
+			{# <div class="col-12">
+				{{ form_errors(field) }}
+			</div> #}
+			<div class="form-error">
+				{{ form_errors(field) }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-3">
+				{{ form_label(field , label, label_attr) }}
+
+				{% if required == true %}
+					<span class="text-danger fw-bold">*</span>
+				{% endif %}
+			</div>
+
+			<div class="col-9">
+				{{ form_widget(field , value_attr) }}
+			</div>
+		</div>
+	</div>
+{% endmacro %}

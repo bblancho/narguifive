@@ -1,25 +1,42 @@
 {% extends 'base.html.twig' %}
+{% import "macro/form_row.html.twig" as macro %}
 
 {% block title %}
 	Nargui Five 93 - Nos produits Admin
 {% endblock %}
 
 {% block body %}
-	
-	{# Breadcrumb #}
-	{{ include("partials/_breadcrumb.html.twig")}}
-
 	<div class="container">
+
+		{# Breadcrumb #}
+		{{ include("partials/_breadcrumb.html.twig")}}
+
 		<div class="title-block">
-			<h1 class="text-center title-custom">
-				nouveau produit
-			</h1>
+			<h1 class="text-center title-custom"> {{ produit.id > 0 ? 'Modifier le produit' : 'Nouveau produit' }} </h1>
 		</div>
 
-        {# Catégories #}
-		<div id="form-produit">
-			{{ form(form) }}
+		{{ form_start(form) }}
+		
+       	{# message d'erreur #}
+		{{ include('partials/alert.html.twig') }}
+
+		{% if form.id is defined %}
+			{{ macro.app_form_row(form.id, 'produit', null, null, true) }}
+		{% endif %}
+
+		<div class='col-md-6'>
+			{{ macro.app_form_row(form.nom, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
+			{{ macro.app_form_row(form.intro, "Introduction" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+			{{ macro.app_form_row(form.content, 'Description' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+			{{ macro.app_form_row(form.price, 'Prix TTC €' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+			{{ macro.app_form_row(form.priceHT, 'Prix HT €' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+			{{ macro.app_form_row(form.publie, "Publié l'article" | trans | capitalize, {}, { 'attr': {'class': 'form-check-input'}}) }}
 		</div>
+
+		<div class="col">
+			<button class="btn btn-primary btn-md mr-5">{{ button_label|default('Enregistrer') }}</button>
+		</div>
+		{{ form_end(form) }}
   
     </div>
 {% endblock %}

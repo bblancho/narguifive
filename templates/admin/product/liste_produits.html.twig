@@ -10,12 +10,12 @@
 	{# startdisplay data #}
 	<ul class="lablistproducts product_list grid row">
 		{% for produit in produits %}
-			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-4 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
+			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-3 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
 				<div class="product-container item" itemscope itemtype="https://schema.org/Product">
 
 					<div class="left-block">
 						<div class="product-image-container">
-							<a class="product_image" href="{{ path('product_show', {slug:produit.slug})}}" title="LOREM IPSUM DOLOR TITLE">
+							<a class="product_image" href="{{ path('admin_produit_edit', {id: produit.id}) }}" title="LOREM IPSUM DOLOR TITLE">
 								<img class="img-responsive img1" src="{{produit.image}}" alt="{{produit.nom}}"/>
 							</a>
 
@@ -27,8 +27,14 @@
 											<span>Ajouter &agrave; la liste de souhaits</span>
 										</a>
 									</li>
+									<li class="lab-Wishlist">
+										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; au panier">
+											<i class="mdi mdi-shopping"></i>
+											<span>Ajouter &agrave; au panier</span>
+										</a>
+									</li>
 									<li class="lab-quick-view">
-										<a class="" href="{{ path('product_show', {slug:produit.slug})}}" data-id-product="812" title="Aper&ccedil;u rapide">
+										<a class="" href="{{ path('admin_produit_edit', {id: produit.id}) }}" data-id-product="812" title="Aper&ccedil;u rapide">
 											<i class="mdi mdi-eye"></i>
 											<span>Aper&ccedil;u rapide</span>
 										</a>
@@ -46,25 +52,17 @@
 
 					<div class="right-block">
 						<div class="product-name" itemprop="name">
-							<a href="{{ path('product_show',{slug:produit.slug}) }}" title="LOREM IPSUM DOLOR TITLE" itemprop="url">
+							<a href="{{ path('admin_show_produit',{id:produit.id}) }}" title="{{ produit.nom }}" itemprop="url">
 								{{produit.nom}}
 							</a>
 						</div>
 
-						<p class="product-desc" itemprop="description">
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quam.
-						</p>
-
 						<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-							<span class="price product-price" itemprop="price"></span>
-							<meta itemprop="priceCurrency" content="EUR"/>
+							<span class="price product-price" itemprop="price"> {{ (produit.price) | number_format(2, ',', '.') }} €</span> 
 						</div>
 
-						<div class="color-list-container"></div>
-						<div class="flags"></div>
-
 						<div class="lab-cart">
-							<a href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="{{produit.id}}" class="btn btn-primary btn-sm">
+							<a href="{{ path('admin_produit_edit', {id: produit.id}) }}" data-id-product="{{produit.id}}" class="btn btn-primary btn-sm">
 								<i class="bi bi-pencil"></i>
 								<span> Modifier </span>
 							</a>
@@ -95,8 +93,8 @@
 				</span>
 			</a>
 		</div>
-		<div class="col-sm-11 navigation d-flex justify-content-center">
-			{{ knp_pagination_render(produits) }}
+		<div class="d-flex justify-content-center">
+			{{ knp_pagination_render(produits, 'partials/_pagination.html.twig') }}
 		</div>
 	</div>
 	{# end display navigation #}

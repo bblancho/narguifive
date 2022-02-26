@@ -1,0 +1,441 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 -
+	{{produit.nom}}
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:600,400,400i|Oswald:700" rel="stylesheet" type="text/css" media="all">
+
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,600&amp;subset=latin,latin-ext" type="text/css" media="all"/>
+
+	<link rel="stylesheet" href="{{ asset('assets/css/stylef2.css') }}" type="text/css" media="all"/>
+	<link rel="stylesheet" href="{{ asset('assets/css/stylef3.css')}}" type="text/css" media="print"/>
+
+	<script type="text/javascript" src="{{ asset('assets/js/select.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('assets/js/slick.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/js/jquery.sticky.js') }}"></script>
+
+	<style>
+		.ybc-blog-post-footer .read_more:hover {
+			background: #2FC3A5;
+			border-color: #2FC3A5;
+		}
+
+		.ybc-blog-like-span.active,
+		.be-tag-block .be-tags a,
+		.be-tag-block .be-tags,
+		.ybc-blog-related-posts-meta-categories > a {
+			color: #2FC3A5;
+		}
+
+		.ybc-blog-form-comment .blog-submit .button {
+			background: #2FC3A5;
+		}
+
+		a:hover,
+		.ybc-blog-like-span:hover,
+		.ybc-block-comment-report:hover {
+			color: #2FC3A5;
+		}
+
+		.nivo-caption {
+			background: #2FC3A5;
+			opacity: 0.6;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+
+<body id="product" class="header_dark menu_dark footer_darkproduct product-1465 product-aladin-mvp-360 category-3 category-chicha show-left-column show-right-column lang_fr w_displaynav">
+	<div id="page">
+		<div class="columns-container">
+			<div id="columns" class="container">
+				<div class="row">
+					<div id="center_column" class="center_column col-xs-12 col-sm-12">
+						<div>
+            
+							<!-- Section 1 -->
+							<div class="primary_block flex">
+								<div class="pb-left-column">
+									<div class="just_mobile">
+										<div class="breadcrumb clearfix">
+											<span itemprop="itemListElement">
+												<a itemprop="item" href="{{ path('home')}}" title="Accueil">
+													Accueil
+												</a>
+												<span class="navigation-pipe">•</span>
+											</span>
+											<span itemprop="itemListElement">
+												<a itemprop="item" href="https://www.darnashop.fr/fr/3-chicha" title="Chicha">
+													Chicha
+												</a>
+												<span class="navigation-pipe">•</span>
+											</span>
+											<span itemprop="itemListElement">
+												{{ produit.nom}}
+											</span>
+										</div>
+									</div>
+									<div id="image-block" class="clearfix">
+										<span id="view_full_size">
+											<img
+											id="bigpic" itemprop="image" src="{{ produit.image }}" title="Lorem" alt="Lorem" width="800" height="800"/>
+										<!-- <span class="no-print zoom"></span> -->
+										</span>
+										<div class="just_mobile prev"></div>
+										<div class="just_mobile next"></div>
+									</div>
+									<div id="views_block" class="clearfix ">
+										<span class="view_scroll_spacer">
+											<a id="view_scroll_left" class="" title="Autres vues" href="javascript:{}">
+												Précédent
+											</a>
+										</span>
+										<div id="thumbs_list">
+											<ul id="thumbs_list_frame">
+												<li id="thumbnail_10943">
+													<a data-fancybox-group="other-views" class="fancybox" title="Lorem">
+														<img class="img-responsive" id="thumb_{{produit.id}}" src="{{ produit.image }}" onclick="show_image('thumb_{{produit.id}}')" alt="Lorem" title="Lorem" height="110" width="110" itemprop="image"/>
+													</a>
+												</li>
+											</ul>
+										</div>
+										<a id="view_scroll_right" title="Autres vues" href="javascript:{}">
+											Suivant
+										</a>
+									</div>
+								</div>
+
+								<div class="pb-right-column">
+									<div class="breadcrumb clearfix">
+										<span itemprop="itemListElement">
+											<a itemprop="item" href="{{path('home')}}" title="Accueil">
+												Accueil
+											</a>
+											<span class="navigation-pipe">•</span>
+										</span>
+										<span itemprop="itemListElement">
+											<a itemprop="item" href="#" title="Chicha">
+												Chicha
+											</a>
+											<span class="navigation-pipe">•</span>
+										</span>
+										<span itemprop="itemListElement">
+											{{produit.nom}}
+										</span>
+									</div>
+
+									<div class="h1_product">
+										<h1 itemprop="name">{{ produit.nom}}</h1>
+									</div>
+
+									<div id="short_description_block">
+										<p class="buttons_bottom_block">
+											<a onclick="scrollToDiv('#anchor_details');">
+												Plus de détails
+											</a>
+										</p>
+									</div>
+
+									<form id="buy_block" action="#" method="post">
+
+										<div class="box-info-product">
+											<div class="content_prices clearfix">
+												<div>
+													<p class="our_price_display">
+														<span id="our_price_display" class="price" itemprop="price" content="{{produit.price}}">{{produit.price }}€</span>
+														TTC
+													</p>
+													<p id="reduction_percent" style="display:none;">
+														<span id="reduction_percent_display"></span>
+													</p>
+													<p id="reduction_amount" style="display:none">
+														<span id="reduction_amount_display"></span>
+													</p>
+													<p id="old_price" class="hidden">
+														<span id="old_price_display">
+															<span class="price"></span>
+														</span>
+													</p>
+													<span class="plstock stock_ok">
+														{{ (produit.enStock != 0 )? 'En stock': 'En réapprovisonnement'}}</span>
+													<span class="order_sent">Livraison 24h
+														<small>pour toute commande passée avant
+															                              15h</small>
+													</span>
+												</div>
+												<div style="display:none">
+													<input type="hidden" id="alma-widget-config" value="{&quot;price&quot;:&quot;[itemprop=price],#our_price_display&quot;,&quot;attrSelect&quot;:&quot;#buy_block .attribute_select&quot;,&quot;attrRadio&quot;:&quot;#buy_block .attribute_radio&quot;,&quot;colorPick&quot;:&quot;#buy_block .color_pick&quot;,&quot;quantity&quot;:&quot;#buy_block #quantity_wanted&quot;,&quot;isCustom&quot;:false,&quot;position&quot;:null}"/>
+												</div>
+												<div class="alma-pp-container ps16">
+													<div id="alma-installments-1465" class="alma-widget-container" data-settings="{&quot;merchantId&quot;:&quot;merchant_11mamF428UC4BMuMiywAUyy222Ewp19OWS&quot;,&quot;apiMode&quot;:&quot;live&quot;,&quot;amount&quot;:8900,&quot;plans&quot;:[{&quot;installmentsCount&quot;:2,&quot;minAmount&quot;:8000,&quot;maxAmount&quot;:200000},{&quot;installmentsCount&quot;:3,&quot;minAmount&quot;:15000,&quot;maxAmount&quot;:200000},{&quot;installmentsCount&quot;:4,&quot;minAmount&quot;:20000,&quot;maxAmount&quot;:200000}],&quot;refreshPrice&quot;:true,&quot;decimalSeparator&quot;:&quot;,&quot;,&quot;thousandSeparator&quot;:&quot; &quot;}"></div>
+													<script type="text/javascript">
+														window.__alma_refreshWidgets && __alma_refreshWidgets();
+													</script>
+												</div>
+												<div class="si-product-page">
+													<div class="si-indicator-variant si-indicator-variant-6965" style="display: none;">
+														<div class="si-indicator si-bar si-bar-sm si-colors">
+															<div class="si-outer" data-toggle="asi-popover" data-placement="top" data-html="true" title="<div class='text-center'>État des stocks: <b>Très haut</b></div>">
+																<div class="si-inner si-lvl-5"></div>
+															</div>
+															<div class="si-items">
+																83 articles en stock</div>
+														</div>
+													</div>
+													<div class="si-indicator-variant si-indicator-variant-6966" style="display: none;">
+														<div class="si-indicator si-bar si-bar-sm si-colors">
+															<div class="si-outer" data-toggle="asi-popover" data-placement="top" data-html="true" title="<div class='text-center'>État des stocks: <b>Très haut</b></div>">
+																<div class="si-inner si-lvl-5"></div>
+															</div>
+															<div class="si-items">
+																89 articles en stock</div>
+														</div>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="product_attributes clearfix">
+												<div id="attributes">
+													<div class="clearfix"></div>
+													<fieldset class="attribute_fieldset">
+														<div class="attribute_list couleur">
+															<select name="group_1" id="group_1" class="form-control attribute_select no-print">
+																<option value="0" title="Clear Pattern">Clear Pattern</option>
+																<option value="1" title="Shiny clear">Shiny clear</option>
+																<option value="2" title="shiny bottom blue">shiny bottom blue</option>
+																<option value="3" title="shiny bottom red">shiny bottom red</option>
+															</select>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											<p id="availability_statut" style="display: none;">
+												<span id="availability_value" class="label label-success"></span>
+											</p>
+											<div class="box-cart-bottom">
+												<p id="quantity_wanted_p">
+													<input type="number" min="1" name="qty" id="quantity_wanted" class="text" value="1"/>
+													<span class="qty_buttons">
+														<a href="#" data-field-qty="qty" class="btn btn-default button-minus product_quantity_down">
+															<span>
+																<i class="icon-minus"></i>
+															</span>
+														</a>
+														<a href="#" data-field-qty="qty" class="btn btn-default button-plus product_quantity_up">
+															<span>
+																<i class="icon-plus"></i>
+															</span>
+														</a>
+													</span>
+												</p>
+												<p id="minimal_quantity_wanted_p" style="display: none;">
+													La quantité minimale pour
+													                          pouvoir commander ce produit est
+													<b id="minimal_quantity_label">1</b>
+												</p>
+												<div class="div_atc">
+													<p id="add_to_cart" class="ajax_add_to_cart_button_product buttons_bottom_block no-print">
+														<button type="submit" name="Submit" class="btn btngreen" onclick="panier_gestion('{{produit.id}}')">
+															<span>Ajouter au panier</span>
+														</button>
+													</p>
+												</div>
+											</div>
+										</div>
+									</form>
+
+									<div id="oosHook" style="display: none;">
+										<form>
+											<p class="form-group">
+												<input type="text" id="oos_customer_email" name="customer_email" size="20" value="votre@email.com" class="mailalerts_oos_email form-control"/></p>
+											<button type="submit" class="btn btn-default" title="Prévenez-moi lorsque le produit est disponible" id="mailalert_link" rel="nofollow">Prévenez-moi lorsque le produit est disponible</button>
+											<span id="oos_customer_email_result" style="display:none; display: block;"></span>
+										</form>
+									</div>
+
+									<section class="element product rassurance flex">
+										<div class="ra_livraison">
+											<span class="ra_title">LIVRAISON EN 24H</span>
+											<span>Faites vous livrer
+												                        en 24h ouvrables
+												<strong>pour toute commande passée avant 15h</strong>
+												<a href="#" style="color: #a09f9f">
+													(Voir conditions)</a>
+											</span>
+										</div>
+										<div class="ra_paiement">
+											<span class="ra_title">TRANSPORT OFFERT</span>
+											<span>Livraison offerte en
+												                        point relais &agrave; partir de
+												<strong>40&euro;
+												</strong>
+												d&#039;achats</span>
+										</div>
+									</section>
+
+                  <section id="hook_extra_right">
+                    <script type="text/javascript">
+                      var url_allinone_loyalty = "#";
+                    </script> 
+                    <p id="loyalty" class="align_justify"></p>
+
+                    <script type="text/javascript">
+                      bt_aFancyReviewForm.selector = 'a#bt_btn-review-form';
+                      bt_aFancyReviewForm.hideOnContentClick = false;
+                      bt_aFancyReviewForm.beforeClose = 'https://www.darnashop.fr/fr/chicha/1465-aladin-mvp-360.html?post=1';
+                      bt_aFancyReviewForm.click = false;
+                    </script>
+
+                    <script type="text/javascript"> 
+                      var url_allinone_loyalty = "https://www.darnashop.fr/fr/module/allinone_rewards/loyalty";
+                    </script>
+                    <p id="loyalty" class="align_justify"></p>
+
+                    <script type="text/javascript">
+                      var custom_list_type = 'li';
+                    </script>
+                  </section>
+                </section>
+										<ul id="usefull_link_block" class="clearfix no-print"></ul>
+									</div>
+                  <div id="anchor_details"></div>
+								</div>
+
+								<!-- Section 2 -->
+								<section id="more_info_tabs" class="page-product-box ap5_nav">
+									<ul class="nav nav-tabs">
+										<li class="li_tab li_tab_1 active">
+											<a href="#tab1" data-toggle="tab">
+												<span class="ap5-pack-product-tab-name page-product-heading">Détails
+													<span>produit</span>
+												</span>
+											</a>
+										</li>
+										<li class="li_tab li_tab_2">
+											<a href="#tab2" data-toggle="tab">
+												<span class="ap5-pack-product-tab-name page-product-heading">Disponible
+													<span>en pack</span>
+												</span>
+											</a>
+										</li>
+										<li class="arrows">
+											<span class="prev"></span>
+											<span class="next"></span>
+										</li>
+									</ul>
+									<div class="tab-content clearfix">
+										<div class="tab-pane fade in active" id="tab1">
+											<div class="rte"> {
+												{produit.content}
+											} </div>
+										</div>
+										<div class="tab-pane fade" id="tab2">
+											<section id="ap5-page-product-box" class="page-product-box">
+												<h3 class="page-product-heading" id="#ap5-product-footer-pack-list">Ce produit est aussi
+													                        disponible en pack</h3>
+												<div id="ap5-product-footer-pack-list">
+													<div id="ap5-product-footer-pack-container-1611" class="ap5-product-footer-pack-container">
+														<div id="ap5-product-footer-pack-informations-1611" class="ap5-product-footer-pack-informations clearfix">
+															<div class="ap5-pack-product pack_contenant_produit">
+																<div class="ap5-pack-product-content">
+																	<div class="ap5-pack-product-image">
+																		<a class="no-print fancybox" title="Lorem title" href="#">
+																			<img class="img-responsive" src="images/pack-mvp-360.jpg" alt="Lorem title" title="Lorem title" height="260" width="260" itemprop="image"/>
+																		</a>
+																	</div>
+																	<p class="ap5-pack-product-name title-left">
+																		<a target="_blank" href="#" title="Lorem title" itemprop="url">
+																			Lorem title
+																		</a>
+																	</p>
+																	<div class="ap5-pack-product-price-table-container">
+																		<div class="ap5-pack-product-price-table-cell">
+																			<p class="ap5-pack-product-price text-center our_price_display">
+																				<span id="our_price_display">125,00 €</span>
+																				TTC</p>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div id="ap5-product-footer-pack-container-2076" class="ap5-product-footer-pack-container">
+														<div id="ap5-product-footer-pack-informations-2076" class="ap5-product-footer-pack-informations clearfix">
+															<div class="ap5-pack-product pack_contenant_produit">
+																<div class="ap5-pack-product-content">
+																	<div class="ap5-pack-product-image">
+																		<a class="no-print fancybox" title="Lorem title" href="#">
+																			<img class="img-responsive" src="images/mvp-360-double-tuyau.jpg" alt="Lorem title" title="Lorem title" height="260" width="260" itemprop="image"/>
+																		</a>
+																	</div>
+																	<p class="ap5-pack-product-name title-left">
+																		<a target="_blank" href="#" title="Lorem title" itemprop="url">
+																			Lorem title
+																		</a>
+																	</p>
+																	<div class="ap5-pack-product-price-table-container">
+																		<div class="ap5-pack-product-price-table-cell">
+																			<p class="ap5-pack-product-price text-center our_price_display">
+																				<span id="our_price_display">109,00 €</span>
+																				TTC</p>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</section>
+
+								<script type="text/javascript">
+                  $(document).ready(function () {
+
+                    $('input#quantity_wanted').change(function () {
+                      if ($('input#quantity_wanted').val() > quantityAvailable) {
+                        alert('vous avez atteint la quantité maximum pour ce produit');
+                        $('#add_to_cart').hide();
+                      } else {
+                        $('#add_to_cart').show();
+                      }
+                    });
+
+                  });
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</body>
+	{% endblock %}
+
+{% block script %} 
+  <script type = "text/javascript" async = "" src = "https://eu1-search.doofinder.com/5/script/97d132ad85422b7b4b82b58df6c61e40.js" >
+  </script>
+
+  <script>
+    $('.product_quantity_up').on('click', function () {
+      var last_val = parseInt($('#quantity_wanted').val());
+      $('#quantity_wanted').val(last_val + 1);
+    });
+
+    $('.product_quantity_down').on('click', function () {
+      var last_val = parseInt($('#quantity_wanted').val());
+      if (last_val > 0) 
+      $('#quantity_wanted').val(last_val - 1);
+    });
+
+    function show_image(id) { // alert(id);
+      $("#bigpic").attr('src', $('#' + id).attr('src'))
+    }
+  </script>
+{% endblock %}
