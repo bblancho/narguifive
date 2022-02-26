@@ -63,7 +63,7 @@
 									<div class="just_mobile">
 										<div class="breadcrumb clearfix">
 											<span itemprop="itemListElement">
-												<a itemprop="item" href="{{ path('home')}}" title="Accueil">
+												<a itemprop="item" href="{{ path('admin_gestion')}}" title="Accueil">
 													Accueil
 												</a>
 												<span class="navigation-pipe">•</span>
@@ -79,15 +79,17 @@
 											</span>
 										</div>
 									</div>
+
+									{# Photo #}
 									<div id="image-block" class="clearfix">
 										<span id="view_full_size">
-											<img
-											id="bigpic" itemprop="image" src="{{ produit.image }}" title="Lorem" alt="Lorem" width="800" height="800"/>
-										<!-- <span class="no-print zoom"></span> -->
+											<img id="bigpic" itemprop="image" src="{{ produit.image }}" title="{{ produit.nom }}" alt="{{ produit.nom }}" width="800" height="800"/>
 										</span>
 										<div class="just_mobile prev"></div>
 										<div class="just_mobile next"></div>
 									</div>
+
+									{# Mignature  Photo #}
 									<div id="views_block" class="clearfix ">
 										<span class="view_scroll_spacer">
 											<a id="view_scroll_left" class="" title="Autres vues" href="javascript:{}">
@@ -96,6 +98,16 @@
 										</span>
 										<div id="thumbs_list">
 											<ul id="thumbs_list_frame">
+												<li id="thumbnail_10943">
+													<a data-fancybox-group="other-views" class="fancybox" title="Lorem">
+														<img class="img-responsive" id="thumb_{{produit.id}}" src="{{ produit.image }}" onclick="show_image('thumb_{{produit.id}}')" alt="Lorem" title="Lorem" height="110" width="110" itemprop="image"/>
+													</a>
+												</li>
+												<li id="thumbnail_10943">
+													<a data-fancybox-group="other-views" class="fancybox" title="Lorem">
+														<img class="img-responsive" id="thumb_{{produit.id}}" src="{{ produit.image }}" onclick="show_image('thumb_{{produit.id}}')" alt="Lorem" title="Lorem" height="110" width="110" itemprop="image"/>
+													</a>
+												</li>
 												<li id="thumbnail_10943">
 													<a data-fancybox-group="other-views" class="fancybox" title="Lorem">
 														<img class="img-responsive" id="thumb_{{produit.id}}" src="{{ produit.image }}" onclick="show_image('thumb_{{produit.id}}')" alt="Lorem" title="Lorem" height="110" width="110" itemprop="image"/>
@@ -110,24 +122,6 @@
 								</div>
 
 								<div class="pb-right-column">
-									<div class="breadcrumb clearfix">
-										<span itemprop="itemListElement">
-											<a itemprop="item" href="{{path('home')}}" title="Accueil">
-												Accueil
-											</a>
-											<span class="navigation-pipe">•</span>
-										</span>
-										<span itemprop="itemListElement">
-											<a itemprop="item" href="#" title="Chicha">
-												Chicha
-											</a>
-											<span class="navigation-pipe">•</span>
-										</span>
-										<span itemprop="itemListElement">
-											{{produit.nom}}
-										</span>
-									</div>
-
 									<div class="h1_product">
 										<h1 itemprop="name">{{ produit.nom}}</h1>
 									</div>
@@ -146,7 +140,9 @@
 											<div class="content_prices clearfix">
 												<div>
 													<p class="our_price_display">
-														<span id="our_price_display" class="price" itemprop="price" content="{{produit.price}}">{{produit.price }}€</span>
+														<span id="our_price_display" class="price" itemprop="price" content="{{produit.price}}">
+															{{ (produit.price) | number_format(2, ',', '.') }} €
+														</span>
 														TTC
 													</p>
 													<p id="reduction_percent" style="display:none;">

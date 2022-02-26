@@ -12,7 +12,7 @@
 		{{ include("partials/_breadcrumb.html.twig")}}
 
 		<div class="title-block">
-			<h1 class="text-center title-custom"> {{ produit.id > 0 ? 'Modifier le produit' : 'Nouveau produit' }} </h1>
+			<h1 class="text-center title-custom"> {{ produit.id > 0 ? produit.nom  : 'Nouveau produit' }} </h1>
 		</div>
 
 		{{ form_start(form) }}
