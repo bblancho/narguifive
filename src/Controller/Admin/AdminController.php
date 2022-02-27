@@ -19,10 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-    public function __construct(ManagerRegistry $dotrine,MarqueRepository $marqueRepository, ProductRepository $productRepository, 
+    public function __construct(ManagerRegistry $doctrine,MarqueRepository $marqueRepository, ProductRepository $productRepository, 
         CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
-        $this->dotrine = $dotrine ;
+        $this->doctrine = $doctrine ;
         $this->productRepository = $productRepository ;
         $this->categoryRepository = $categoryRepository ;
         $this->sousCategoryRepository = $sousCategoryRepository;
@@ -113,12 +113,12 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         
         if ( $form->isSubmitted() && $form->isValid() ) {
-            dd( $form->getData() );
+            // dd( $form->getData() );
             $em = $this->doctrine->getManager();
 
             // Création d'un nouveau produit
             if( $new ){
-                // $em->persist($produit);
+                $em->persist($produit);
                 $message = "le produit a bien été créé avec succès.";
             } else{
                 $message = "le produit a bien été mis à jour.";  // MAJ
@@ -126,9 +126,11 @@ class AdminController extends AbstractController
             
             $this->addFlash('success', $message);
            
-            // $em->flush();
+            $em->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('admin_show_produit', array(
+                'id' => $produit->getId(),
+            ) );
         }
 
         return $this->renderForm('admin/product/ajout_product.html.twig', [
@@ -161,10 +163,10 @@ class AdminController extends AbstractController
      * @param Produit $produit
      * @return Response
      */
-    public function deleteProduit(Product $produit = null, ManagerRegistry $doctrine): Response
+    public function deleteProduit(Product $produit = null): Response
     {
         try {
-            $em = $doctrine->getManager() ;
+            $em = $this->doctrine->getManager() ;
             $em->remove($produit) ;
             $em->flush();
 
