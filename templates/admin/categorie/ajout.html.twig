@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% import "macro/form_row.html.twig" as macro %}
+
+{% block title %}
+	Nargui Five 93 - Catégorie Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		{# Breadcrumb #}
+		{{ include("partials/_breadcrumb.html.twig")}}
+
+		<div class="title-block">
+			<h1 class="text-center title-custom"> {{ categorie.id > 0 ? categorie.nom  : 'Nouvelle catégorie' }} </h1>
+		</div>
+
+		{{ form_start(form) }}
+		
+			{# message d'erreur #}
+			{{ include('partials/alert.html.twig') }}
+
+			{% if form.id is defined %}
+				{{ macro.app_form_row(form.id, 'categorie', null, null, true) }}
+			{% endif %}
+
+			<div class='col-md-6'>
+				{{ macro.app_form_row(form.titre, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
+				{{ macro.app_form_row(form.nom, "Introduction" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+				{{ macro.app_form_row(form.content, 'Description' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+			</div>
+
+			<div class="col">
+				<button class="btn btn-primary btn-md mr-5">{{ button_label|default('Enregistrer') }}</button>
+			</div>
+
+		{{ form_end(form) }}
+  
+    </div>
+{% endblock %}

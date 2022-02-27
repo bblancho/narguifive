@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Form\ProductType;
+use App\Form\CategorieType;
 use PHPUnit\Util\Exception;
 use App\Entity\Product\Product;
+use App\Entity\Product\Category;
 use App\Repository\MarqueRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -59,6 +61,53 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/categorie/edit/{id?0}', name: 'admin_categorie_edit', methods: ['POST', 'GET'])]
+    /**
+     *
+     * @param Request $request
+     * @param integer|null $id
+     * @return Response
+     */
+    public function editecategorie(Request $request, int $id = null): Response
+    {
+        $new = true ;
+        $categorie = new Category();
+
+        if ( $id && $id > 0) {
+            $new = false ;
+            $categorie = $this->categoryRepository->find($id) ;
+        }
+
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+        
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            // dd( $form->getData() );
+            $em = $this->doctrine->getManager();
+
+            // Création d'une nouvelle categorie
+            if( $new ){
+                $em->persist($categorie);
+                $message = "La catégorie a bien été créée avec succès.";
+            } else{
+                $message = "La catégorie a bien été mise à jour.";  // MAJ
+            }
+            
+            $this->addFlash('success', $message);
+            
+            $em->flush();
+
+            return $this->redirectToRoute('products_by_categorie', array(
+                'slug' => $categorie->getSlug(),
+            ) );
+        }
+
+        return $this->renderForm('admin/categorie/ajout.html.twig', [
+            'categorie' => $categorie,
+            'form' => $form
+        ]);
+    }
+    
     #[Route('/admin/categorie/{id}', name: 'admin_categorie', methods: ['GET'])]
     public function productsByCategory(Request $request, PaginatorInterface $paginator, $id = 2 ): Response
     {
@@ -91,6 +140,7 @@ class AdminController extends AbstractController
             'limit' => $limit,
         ]);
     }
+
 
     #[Route('/admin/produit/edit/{id?0}', name: 'admin_produit_edit', methods: ['POST', 'GET'])]
     /**
@@ -125,7 +175,7 @@ class AdminController extends AbstractController
             }
             
             $this->addFlash('success', $message);
-           
+
             $em->flush();
 
             return $this->redirectToRoute('admin_show_produit', array(

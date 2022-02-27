@@ -245,6 +245,7 @@ ul.navbar-nav{
     text-transform: uppercase;
     color: #fff;
     margin-bottom: 5px;
+    font-style: italic;
 }
 
 .content-home p{
@@ -499,7 +500,8 @@ div.description-block{
 
 .block-valeur img{
     width: 100%;
-    object-fit:cover;
+    object-fit: cover;
+    height: 198px;
 }
 
 

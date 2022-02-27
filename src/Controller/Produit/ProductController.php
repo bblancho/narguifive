@@ -144,9 +144,9 @@ class ProductController extends AbstractController
     }
 
      /**
-     * @Route("/categorie/{slug}", name="products_by_categorie")
+     * @Route("/categorie/{slug?0}", name="products_by_categorie")
      */
-    public function productsByCategory(Request $request, PaginatorInterface $paginator, $slug): Response
+    public function productsByCategory(Request $request, PaginatorInterface $paginator, $slug=null): Response
     {
         $limit  = 15;
         $mypage = (int)$request->get("page", 1);
@@ -195,7 +195,7 @@ class ProductController extends AbstractController
             9 // limit per page
         );
 
-        $total      = $this->repoCategory->getTotalProductsByCategory( $categorie->getId() );
+        $total      = $this->repoProduct->countProductsPublishByCategory( $categorie->getId() );
         $fabricants = $this->repoMarque->findAll() ;
         $from_fabs  = array();
        
@@ -360,14 +360,14 @@ class ProductController extends AbstractController
             9 // limit per page
         );
 
-        $total      = $this->repoCategory->getTotalProductsByCategory( $categorie->getId() );
+        $total      = $this->repoCategory->countProductsPublishByCategory( $categorie->getId() );
         $fabricants = $this->repoMarque->findAll() ;
         $from_fabs  = array();
        
         //Disponibilité
         $nbre_dispo = array();
-        $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
-        $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
+        $nbre_dispo[0]=$this->repoProduct->countProductsPublishByCategory($filter,0);
+        $nbre_dispo[1]=$this->repoProduct->countProductsPublishByCategory($filter,1);
 
         foreach($fabricants as $fabricant){
             $prods = $this->repoProduct->findBy(array('marque'=>$fabricant) );

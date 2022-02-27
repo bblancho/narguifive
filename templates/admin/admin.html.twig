@@ -11,6 +11,13 @@
 				Administration du site 
 			</h1>
 		</div>
+        
+        {# start button new #}
+		<div class="mb-2 mt-1">
+			<a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Créer une catégorie' | trans | capitalize }}</a>
+            <a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Ajouter un transporteur' | trans | capitalize }}</a>
+		</div>
+	    {# end button new #}
 
         {# Catégories #}
         <div class="bloc-chicha">

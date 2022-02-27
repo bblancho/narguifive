@@ -3,29 +3,31 @@
 		<div class="row">
 			<div class="lab_breadcrumb">
 				<div class="container">
+
 					<!-- Breadcrumb -->
 					<div class="breadcrumb clearfix">
 						<div class="breadcrumb-i">
 							<a class="home" href="/" title="Accueil">
 								<i class="icons-home"></i> Accueil
-              </a>
-	
-              {% if categorie.nom is defined %}
-                <span class="navigation-pipe">&gt;</span>
-                <a class="home" href="{{ path("products_subcategory_show", {slug: categorie.slug}) }}" title="{{ categorie.nom }}">
-								  {{ categorie.nom }}
-                </a>
-              {% endif %}
-              
-              {% if sousCategorie.nom is defined %}
-                <span class="navigation-pipe">&gt;</span>
-                <a class="home" href="{{ path("products_subcategory_show", {slug: sousCategorie.slug}) }}" title="{{ sousCategorie.nom }}">
-								  {{ sousCategorie.nom }}
-                </a>
-              {% endif %}
+              				</a>
+
+							{% if categorie.id is defined %}
+								<span class="navigation-pipe">&gt;</span>
+								<a class="home" href="{{ path("products_by_categorie", {slug: categorie.slug}) }}" title="{{ categorie.nom }}">
+									{{ categorie.nom }}
+								</a>
+							{% endif %}
+							
+							{% if sousCategorie.id is defined %}
+								<span class="navigation-pipe">&gt;</span>
+								<a class="home" href="{{ path("products_subcategory_show", {slug: sousCategorie.slug}) }}" title="{{ sousCategorie.nom }}">
+									{{ sousCategorie.nom }}
+								</a>
+							{% endif %}
 						</div>
 					</div>
 					<!-- /Breadcrumb -->
+
 				</div>
 			</div>
 		</div>
