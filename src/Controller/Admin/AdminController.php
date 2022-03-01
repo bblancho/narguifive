@@ -82,24 +82,26 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         
         if ( $form->isSubmitted() && $form->isValid() ) {
-            // dd( $form->getData() );
+            $data = $form->getData();
+
             $em = $this->doctrine->getManager();
 
             // Création d'une nouvelle categorie
             if( $new ){
+                $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
+                // dd( $slugNom) ;
+                $categorie->setSlug($slugNom);
                 $em->persist($categorie);
-                $message = "La catégorie a bien été créée avec succès.";
+                $message = "La catégorie a bien été créée avec succès." ;
             } else{
-                $message = "La catégorie a bien été mise à jour.";  // MAJ
+                $message = "La catégorie a bien été mise à jour." ;  // MAJ
             }
             
             $this->addFlash('success', $message);
             
             $em->flush();
 
-            return $this->redirectToRoute('products_by_categorie', array(
-                'slug' => $categorie->getSlug(),
-            ) );
+            return $this->redirectToRoute('admin_gestion') ;
         }
 
         return $this->renderForm('admin/categorie/ajout.html.twig', [

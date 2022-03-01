@@ -25,8 +25,8 @@
 			{% endif %}
 
 			<div class='col-md-6'>
-				{{ macro.app_form_row(form.titre, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
-				{{ macro.app_form_row(form.nom, "Introduction" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+				{{ macro.app_form_row(form.nom, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
+				{{ macro.app_form_row(form.titre, "Introduction" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
 				{{ macro.app_form_row(form.content, 'Description' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
 			</div>
 

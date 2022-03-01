@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -30,12 +31,17 @@ class Category
     private $nom;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titre;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=false)
      */
     private $slug;
 
@@ -46,13 +52,9 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
+     * 
      */
     private $products;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $titre;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -155,9 +157,9 @@ class Category
     }
 
     /**
-     * @return Collection|Product[]
+     * @return Collection|null
      */
-    public function getProducts(): Collection
+    public function getProducts(): ?Collection
     {
         return $this->products;
     }

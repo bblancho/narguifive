@@ -4,10 +4,11 @@ namespace App\Form;
 
 use App\Entity\Product\Category;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CategorieType extends AbstractType
 {
@@ -15,10 +16,11 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('content', TextareaType::class,[
-                'attr' => ['class' => 'tinymce'],
+            ->add('titre', TextareaType::class)
+            ->add('content',CKEditorType::class, [
+                'config_name' => 'my_config',
+                'config'      => array('uiColor' => '#ffffff'),
             ])
-            ->add('titre', TextType::class)
             ->add('image')
         ;
     }

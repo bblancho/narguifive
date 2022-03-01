@@ -162,26 +162,10 @@ class ProductController extends AbstractController
         $form->handleRequest($request) ;
 
         if ( $form->isSubmitted() && $form->isValid() ) {
-
             $produits = $this->repoProduct->findBySearch($search);
-
-            // Paginate the results of the query
-                $produits = $paginator->paginate(
-                $produits,
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                9 // Items per page
-            );
-
         } else {
             $produits = $categorie->getProducts() ;
             $total= count($produits);
-
-            // Paginate the results of the query
-                $produits = $paginator->paginate(
-                $produits,
-                $request->query->getInt('page', 1), // numéro de la page en cours
-                9 // Items per page
-            );
 
             $produits_best = $this->repoProduct->findByIsBest(1);
         }
