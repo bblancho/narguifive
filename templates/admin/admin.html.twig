@@ -11,10 +11,15 @@
 				Administration du site 
 			</h1>
 		</div>
+
+        {# message d'erreur #}
+		{{ include('partials/alert.html.twig') }}
         
         {# start button new #}
 		<div class="mb-2 mt-1">
 			<a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Créer une catégorie' | trans | capitalize }}</a>
+            <a href="{{ path('admin_sousCat') }}" class="btn btn-primary btn-lg">{{ 'Les sous-catégories' | trans | capitalize }}</a>
+            <a href="{{ path('admin_souCat_edit') }}" class="btn btn-primary btn-lg">{{ 'Créer une sous-catégorie' | trans | capitalize }}</a>
             <a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Ajouter un transporteur' | trans | capitalize }}</a>
 		</div>
 	    {# end button new #}
@@ -25,7 +30,7 @@
                 <div class="hover01 column">
                     <div class="chicha-home">
                         <figure>
-                            <a href="/admin/categorie/1">
+                            <a href="{{ path('admin_categorie_produits',{ id:1 }) }}">
                                 <img src="{{ asset('assets/images/chicha-home/chicha-6.jpg') }}"/>
                             </a>
                         </figure>
@@ -33,15 +38,20 @@
                             <h3>
                                 Nos chichas de luxe
                             </h3>
-                            <a class="btn " href="/admin/categorie/1">
+                            <a class="btn " href="{{ path('admin_categorie_produits',{ id:1 }) }}">
                                 Découvrez
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:1 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="/admin/categorie/3">
+                            <a href="{{ path('admin_categorie_produits',{ id:3 }) }}">
                                 <img src="{{ asset('assets/images/chicha-home/chicha-4.jpg') }}"/>
                             </a>
                         </figure>
@@ -49,39 +59,56 @@
                             <h3>
                                 Charbons chichas
                             </h3>
-                            <a class="btn  " href="/admin/categorie/3">
+                            <a class="btn  " href="{{ path('admin_categorie_produits',{ id:3 }) }}">
                                 Découvrez
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:3 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="/admin/categorie/2">
-                                <img src="{{ asset('assets/images/chicha-home/gout.jpg') }}"/></a>
+                            <a href="{{ path('admin_categorie_produits',{ id:2 }) }}">
+                                <img src="{{ asset('assets/images/chicha-home/gout.jpg') }}"/>
+                            </a>
                         </figure>
                         <div class="description-block">
                             <h3>
                                 Plus de Goûts chichas
                             </h3>
-                            <a class="btn " href="/admin/categorie/2">
+                            <a class="btn " href="{{ path('admin_categorie_produits',{ id:2 }) }}">
                                 Découvrire
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:2 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="/admin/categorie/4">
-                                <img src="{{ asset('assets/images/chicha-home/tuyaux.jpg') }}"/></a>
+                            <a href="{{ path('admin_categorie_produits', { id:4 }) }}">
+                                <img src="{{ asset('assets/images/chicha-home/tuyaux.jpg') }}"/>
+                            </a>
                         </figure>
                         <div class="description-block">
                             <h3>
                                 TUYAUX
                             </h3>
-                            <a class="btn " href="/admin/categorie/4">
+                            <a class="btn " href="{{ path('admin_categorie_produits', { id:4 }) }}">
                                 Découvrire
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:4 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
@@ -89,7 +116,7 @@
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="">
+                            <a href="{{ path('admin_categorie_produits',{ id:7 }) }}">
                                 <img src="{{ asset('assets/images/chicha-home/electronique.png') }}"/>
                             </a>
                         </figure>
@@ -97,15 +124,20 @@
                             <h3>
                                 C.Electronique
                             </h3>
-                            <a class="btn " href="">
+                            <a class="btn " href="{{ path('admin_categorie_produits',{ id:7 }) }}">
                                 Découvrez
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:7 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="">
+                            <a href="{{ path('admin_categorie_produits',{ id:7 }) }}">
                                 <img src="{{ asset('assets/images/chicha-home/e-liquide.png') }}"/>
                             </a>
                         </figure>
@@ -113,43 +145,58 @@
                             <h3>
                                 E-Liquide
                             </h3>
-                            <a class="btn  " href="">
+                            <a class="btn  " href="{{ path('admin_categorie_produits',{ id:7 }) }}">
                                 Découvrez
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:7 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="">
-                                <img src="{{ asset('assets/images/chicha-home/cbd-2.png') }}"/></a>
+                            <a href="{{ path('admin_categorie_produits',{ id:8 }) }}"> <img src="{{ asset('assets/images/chicha-home/cbd-2.png') }}"/> </a>
                         </figure>
                         <div class="description-block">
                             <h3>
                                 CBD
                             </h3>
-                            <a class="btn " href="">
+                            <a class="btn " href="{{ path('admin_categorie_produits',{ id:8 }) }}">
                                 Découvrire
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{id:8}) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
 
                     <div class="chicha-home">
                         <figure>
-                            <a href="">
+                            <a href="{{ path('admin_categorie_produits',{ id:6 }) }}">
                                 <img src="{{ asset('assets/images/chicha-home/accessoire.png') }}"/></a>
                         </figure>
                         <div class="description-block">
                             <h3>
                                 Accessoires
                             </h3>
-                            <a class="btn " href="">
+                            <a class="btn " href="{{ path('admin_categorie_produits',{ id:6 }) }}">
                                 Découvrire
                             </a>
+                            <p>
+                                <a class="btn btn-info " href="{{ path('admin_categorie_edit',{ id:6 }) }}">
+                                    Modifier
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    </div>{# Fin #}
 {% endblock %}

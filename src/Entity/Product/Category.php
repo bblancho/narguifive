@@ -27,21 +27,29 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(min=2, minMessage="Votre texte doit faire au minimum  2 caractères.")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(min=2, minMessage="Votre texte doit faire au minimum  2 caractères.")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(min=2, minMessage="Votre texte doit faire au minimum  2 caractères.")
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false, unique=false)
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(min=2, minMessage="Votre texte doit faire au minimum  2 caractères.")
      */
     private $slug;
 
@@ -65,14 +73,19 @@ class Category
     /**
      * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
      * @Assert\File(
-     *     maxSize = "1024k",
+     *     maxSize = "2M",
      *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
-     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     *     mimeTypesMessage = "Veuillez sélectionner une image valide"
      * )
      * @var File|null
      */
     private $imageFile;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * 
+     */
+    private $imageCate;
 
     public function __construct()
     {
@@ -88,6 +101,18 @@ class Category
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getImageCate()
+    {
+        return $this->imageCate;
+    }
+
+    public function setImageCate($imageCate)
+    {
+        $this->imageCate = $imageCate;
+
+        return $this;
     }
 
     public function getNom(): ?string

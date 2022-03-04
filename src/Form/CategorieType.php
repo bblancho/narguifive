@@ -7,8 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\File;
 
 class CategorieType extends AbstractType
 {
@@ -21,7 +23,21 @@ class CategorieType extends AbstractType
                 'config_name' => 'my_config',
                 'config'      => array('uiColor' => '#ffffff'),
             ])
-            ->add('image')
+            ->add('photo', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg', 
+                            "image/jpg",
+                        ],
+                        'mimeTypesMessage' => "Le fichier envoyé n'est pas une image valide.",
+                    ])
+                ],
+            ])
         ;
     }
 

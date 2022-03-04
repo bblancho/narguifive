@@ -7,12 +7,15 @@ parameters:
     app.path.products_images: /assets/images/produits
     app.path.header_images:   /assets/images/header
     app.path.category_images: /assets/images/categories
+    categorie_image: '%kernel.project_dir%/public/assets/images/categories'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    # App\Service\Upload:
+    #     arguments: ['%categorie_image%']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

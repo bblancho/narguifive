@@ -2,11 +2,13 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
+
 		<title>
 			{% block title %}
 				Nargui Five 93 - Made in France
 			{% endblock %}
 		</title>
+
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content=" Nargui Five La boutique qui vous vends des chichas / CBD .">
 		<meta name="author" content="Banyingela Blanchard">
@@ -23,12 +25,15 @@
 		<!-- fontawesome icone -->
 		<script src="https://kit.fontawesome.com/3b962b3bc8.js" crossorigin="anonymous"></script>
 
-		<!-- Bootstrap JS + jquery -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 		<!-- Custom styles for this template -->
 		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+
+		<!-- Nargui CSS -->
+		<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
+		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
@@ -38,13 +43,9 @@
 			{# {{ encore_entry_script_tags('app') }} #}
 		{% endblock %}
 
-		<!-- Nargui CSS -->
-		<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
-		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 	</head>
 
 	<body>
-
 		{# {% include "partials/_nav.html.twig" %} #}
 
 		{{ render( controller('App\\Controller\\MenuController::index' ) ) }}
@@ -62,7 +63,14 @@
 			{% include "partials/_footer.html.twig" %}
 		</main>
 
-		<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+		{# <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script> #}
+		<!-- Bootstrap JS + jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+		
+		{# Select 2 #}
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+		
 		<script src="{{ asset('assets/js/javascript.js') }}"></script>
 		<script src="{{ asset('assets/js/myjs.js') }}"></script>
 		<script src="{{ asset('assets/js/filter.js') }}"></script>
@@ -72,5 +80,5 @@
 		{% block script %}
 		{% endblock %}
 
-</body>
+	</body>
 </html>

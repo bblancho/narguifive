@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% import "macro/form_row.html.twig" as macro %}
+
+{% block title %}
+	Nargui Five 93 - Catégorie Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		<div class="title-block">
+			<h1 class="text-center title-custom"> Admin - {{ sousCategorie.id > 0 ? sousCategorie.nom  : 'Nouvelle Sous-catégorie' }} </h1>
+		</div>
+
+		{{ form_start(form) }}
+		
+			{# message d'erreur #}
+			{{ include('partials/alert.html.twig') }}
+
+			{% if form.id is defined %}
+				{{ macro.app_form_row(form.id, 'sousCategorie', null, null, true) }}
+			{% endif %}
+
+			<div class='col'>
+				{{ macro.app_form_row(form.nom, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
+				{{ macro.app_form_row(form.content, "Description" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
+				{{ macro.app_form_row(form.category, "Catégorie parent" | trans | capitalize, {}, { 'attr': {'class': 'form-control my-3 select2'}}, true) }}
+			
+				<div class="col">
+					<div class="pull-right">
+						<button class="btn btn-primary btn-md mr-5 ">{{ button_label|default('Enregistrer') }}</button>
+					</div>
+				</div>
+			</div>
+
+		{{ form_end(form) }}
+  
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Nos produits Admin
+{% endblock %}
+
+{% block body %}
+	
+	{# Breadcrumb #}
+	{{ include("partials/_breadcrumb.html.twig")}}
+
+	<div class="container">
+		<div class="title-block">
+			<h1 class="text-center title-custom">
+				Admin -Catégorie {{ categorie.nom }} - <br> total produits : {{ total }}
+			</h1>
+		</div>
+
+        {# Catégories #}
+        <div class="bloc-chicha">
+            <div class="container">
+
+                <div id="center_column">
+                    {% include "admin/product/liste_produits.html.twig" with {'produits':produits} %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

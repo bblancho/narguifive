@@ -1,6 +1,6 @@
 {% for label, messages in app.flashes(['success', 'danger', 'warning', 'info']) %}
 	{% for message in messages %}
-		<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+		<div class="alert alert-{{ label }} alert-dismissible show" role="alert">
 			<span>
 				{% if label == 'success' %}
 					<strong>Succès !</strong>

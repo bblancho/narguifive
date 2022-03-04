@@ -464,6 +464,16 @@ div.description-block{
     display: block;
     margin: 7px 0px;
 }
+p a.btn-info {
+    color: #fff;
+    background-color: #5192f3 !important;
+    border-color: #3983f1;
+}
+
+p a.btn-info:hover{
+    color: #000;
+    background: #fff;
+}
 
 .description-block a:hover{
     color: #fff;

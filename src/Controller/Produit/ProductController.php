@@ -227,8 +227,8 @@ class ProductController extends AbstractController
      */
     public function subcategory(Request $request, PaginatorInterface $paginator,$slug)
     {
-        $sousCats=$this->sousCategoryRepo->findBy(array(),array(), $limit=4);
-        $sousCat=$this->sousCategoryRepo->findOneBy(array('slug'=>$slug));
+        $sousCats = $this->sousCategoryRepo->findBy(array(),array(), $limit=4);
+        $sousCat  = $this->sousCategoryRepo->findOneBy(array('slug'=>$slug));
 
         $limit=15;
         $mypage=(int)$request->get("page", 1);

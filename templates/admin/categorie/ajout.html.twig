@@ -15,6 +15,8 @@
 			<h1 class="text-center title-custom"> {{ categorie.id > 0 ? categorie.nom  : 'Nouvelle catégorie' }} </h1>
 		</div>
 
+		{% set urlImg = categorie.imageCate %}
+
 		{{ form_start(form) }}
 		
 			{# message d'erreur #}
@@ -24,14 +26,29 @@
 				{{ macro.app_form_row(form.id, 'categorie', null, null, true) }}
 			{% endif %}
 
-			<div class='col-md-6'>
+			<div class='col'>
 				{{ macro.app_form_row(form.nom, 'Nom' | trans | capitalize, {}, { 'attr': {'class': 'form-control'} }) }}
 				{{ macro.app_form_row(form.titre, "Introduction" | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
 				{{ macro.app_form_row(form.content, 'Description' | trans | capitalize, {}, { 'attr': {'class': 'form-control'}}) }}
-			</div>
+				{{ macro.app_form_row(form.photo, 'Choisir une image' | trans | capitalize, {}, { 'attr': {'class': 'form-control my-3'}}) }}
+				
+				{% if categorie.imageCate is not null and categorie.imageCate is defined %}
+					<div class="row mb-2">
+						<div class="row ">
+							<label class="col-3"> Image de la catégorie </label>
+						
+							<div class="col-9">
+								<img  style="width:200px" class="card-img-top" src="{{ asset('/assets/images/categories/'~urlImg)  }}" alt="{{ categorie.nom }}">
+							</div>
+						</div>
+					</div>
+				{% endif  %}
 
-			<div class="col">
-				<button class="btn btn-primary btn-md mr-5">{{ button_label|default('Enregistrer') }}</button>
+				<div class="col">
+					<div class="pull-right">
+						<button class="btn btn-primary btn-md mr-5 ">{{ button_label|default('Enregistrer') }}</button>
+					</div>
+				</div>
 			</div>
 
 		{{ form_end(form) }}

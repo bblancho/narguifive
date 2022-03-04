@@ -15,7 +15,7 @@
 
 					<div class="left-block">
 						<div class="product-image-container">
-							<a class="product_image" href="{{ path('admin_show_produit', {id: produit.id}) }}" title="LOREM IPSUM DOLOR TITLE">
+							<a class="product_image" href="{{ path('admin_produit_show', {id: produit.id}) }}" title="LOREM IPSUM DOLOR TITLE">
 								<img class="img-responsive img1" src="{{produit.image}}" alt="{{produit.nom}}"/>
 							</a>
 
@@ -34,7 +34,7 @@
 										</a>
 									</li>
 									<li class="lab-quick-view">
-										<a class="" href="{{ path('admin_show_produit', {id: produit.id}) }}" data-id-product="812" title="Aper&ccedil;u rapide">
+										<a class="" href="{{ path('admin_produit_show', {id: produit.id}) }}" data-id-product="812" title="Aper&ccedil;u rapide">
 											<i class="mdi mdi-eye"></i>
 											<span>Aper&ccedil;u rapide</span>
 										</a>
@@ -52,7 +52,7 @@
 
 					<div class="right-block">
 						<div class="product-name" itemprop="name">
-							<a href="{{ path('admin_show_produit',{id:produit.id}) }}" title="{{ produit.nom }}" itemprop="url">
+							<a href="{{ path('admin_produit_show',{id:produit.id}) }}" title="{{ produit.nom }}" itemprop="url">
 								{{produit.nom}}
 							</a>
 						</div>
