@@ -14,11 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderController extends AbstractController
 {
-    private $manager;
+    private $doctrine;
 
-    public function __construct(ManagerRegistry $manager)
+    public function __construct(ManagerRegistry $doctrine)
     {
-        $this->manager = $manager;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -68,7 +68,7 @@ class OrderController extends AbstractController
             $delivry_content .= '<br/>'.$delivry->getPostal().' '.$delivry->getVille() ;
             $delivry_content .= '<br/>'.$delivry->getPays() ;
 
-            $em = $this->manager->getManager();
+            $em = $this->doctrine->getManager();
 
             // Enregistrement de ma commande
                 $order = new Order();

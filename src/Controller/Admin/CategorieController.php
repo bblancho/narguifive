@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\Upload\UploadService ;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategorieController extends AbstractController
@@ -25,6 +27,23 @@ class CategorieController extends AbstractController
         $this->categoryRepository = $categoryRepository ;
         $this->slugger = $slugger ;
     }
+
+    #[Route('/admin/categorie', name: 'admin_categorie', methods: ['GET'])]
+    public function index(Request $request, PaginatorInterface $paginator): Response
+    {
+        $categorie = $this->categoryRepository->findAll();
+
+        // Paginate the results of the query
+        $categorie = $paginator->paginate(
+            $categorie, // Doctrine Query, not results
+            $request->query->getInt('page', 1), /** page number */
+            10 // limit per page
+        );
+
+        return $this->render('admin/categorie/liste.html.twig', [
+            'categorie'   => $categorie, 
+        ]);
+    }
     
     #[Route('/admin/categorie/edit/{id?0}', name: 'admin_categorie_edit', methods: ['POST', 'GET'])]
     /**
@@ -32,59 +51,42 @@ class CategorieController extends AbstractController
      * @param integer|null $id
      * @return Response
      */
-    public function editecategorie(Request $request, int $id = null): Response
+    public function editecategorie(Request $request, UploadService $fileService ,int $id = null): Response
     {
-        $new = true ;
         $categorie = new Category();
 
         if ( $id && $id > 0) {
-            $new = false ;
             $categorie = $this->categoryRepository->find($id) ;
         }
 
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
-        
+ 
         if ( $form->isSubmitted() && $form->isValid() ) {
-       
             $em = $this->doctrine->getManager() ;
 
             //  Traitemanet de l'image
             $image = $form->get('photo')->getData() ;
-            
+
             if( $image ) {
-                
-                $originalFilename = pathinfo( $image->getClientOriginalName() , PATHINFO_FILENAME );
-                
-                $safeFilename = $this->slugger->slug($originalFilename) ;
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension() ;
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $image->move( $this->getParameter('categorie_image'), $newFilename );
-                } catch (Exception $e) {
-                    $this->addFlash('danger', $e);
-
-                    return $this->redirectToRoute('admin_gestion');
-                }
-                
-                $categorie->setImageCate($newFilename) ;
+                $repertoire = $this->getParameter('categorie_image') ;
+                //  Upload de l'image
+                $categorie->setImageCate( $fileService->uploadFile( $image, $repertoire) ) ;
             }
 
-            // Création d'une nouvelle categorie
-            if( $new ){
-                $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
-                $categorie->setSlug($slugNom);
-                $message = "La catégorie ".$categorie->getNom()." a bien été créée avec succès." ;
+            $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
+            $categorie->setSlug($slugNom);
 
+            // Création d'une nouvelle categorie
+            if( $id == 0 ){
+                $message = "La catégorie ".$categorie->getNom()." a bien été créée avec succès." ;
                 $em->persist($categorie);
-               
             } else{
                 $message = "La catégorie ".$categorie->getNom()." a bien été mise à jour." ;  // MAJ
             }
             
             $this->addFlash('success', $message);
-            
+            // dd($categorie);
             $em->flush();
 
             return $this->redirectToRoute('admin_gestion') ;
@@ -143,7 +145,7 @@ class CategorieController extends AbstractController
 
         } catch (Exception $e) {
             $this->addFlash('danger', $e);
-
+            
             return $this->redirectToRoute('admin_gestion');
         }
 

@@ -100,12 +100,12 @@ class SousCategorieController extends AbstractController
        
             $em = $this->doctrine->getManager() ;
 
+            $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
+            $sousCategorie->setSlug($slugNom);
+
             // Création d'une nouvelle sous-categorie
             if( $id == 0 ){
-                $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
-                $sousCategorie->setSlug($slugNom);
                 $message = "La sous-catégorie ".$sousCategorie->getNom()." a bien été créée avec succès." ;
-
                 $em->persist($sousCategorie);
                
             } else{

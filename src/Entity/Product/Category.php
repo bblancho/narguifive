@@ -48,7 +48,6 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false, unique=false)
-     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
      * @Assert\Length(min=2, minMessage="Votre texte doit faire au minimum  2 caractères.")
      */
     private $slug;
@@ -74,7 +73,6 @@ class Category
      * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
      * @Assert\File(
      *     maxSize = "2M",
-     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
      *     mimeTypesMessage = "Veuillez sélectionner une image valide"
      * )
      * @var File|null

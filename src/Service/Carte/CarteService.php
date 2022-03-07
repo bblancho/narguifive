@@ -11,12 +11,14 @@ class CarteService
     protected $session ;
     protected $produitRepo;
 
-    public function __construct( RequestStack $requestStack,  ProductRepository $produitRepo){
+    public function __construct( RequestStack $requestStack,  ProductRepository $produitRepo)
+    {
         $this->session = $requestStack;
         $this->produitRepo = $produitRepo;
     }
 
-    public function get(){
+    public function get()
+    {
         $session = $this->session
                     ->getSession() // recup session current
                     ->get('panier');
@@ -38,7 +40,8 @@ class CarteService
         $session->set('panier', $panier) ; // on rajoute la valeur dans le tableau de session
     }
 
-    public function decrease(int $id){
+    public function decrease(int $id)
+    {
         $session = $this->session->getSession();
         $panier  = $session->get('panier', []) ;
 

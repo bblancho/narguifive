@@ -17,7 +17,8 @@
         
         {# start button new #}
 		<div class="mb-2 mt-1">
-			<a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Créer une catégorie' | trans | capitalize }}</a>
+            <a href="{{ path('admin_categorie') }}" class="btn btn-info btn-lg">{{ 'Toute les catégories' | trans | capitalize }}</a>
+			<a href="{{ path('admin_categorie_edit') }}" class="btn btn-info btn-lg">{{ 'Créer une catégorie' | trans | capitalize }}</a>
             <a href="{{ path('admin_sousCat') }}" class="btn btn-primary btn-lg">{{ 'Les sous-catégories' | trans | capitalize }}</a>
             <a href="{{ path('admin_souCat_edit') }}" class="btn btn-primary btn-lg">{{ 'Créer une sous-catégorie' | trans | capitalize }}</a>
             <a href="{{ path('admin_categorie_edit') }}" class="btn btn-primary btn-lg">{{ 'Ajouter un transporteur' | trans | capitalize }}</a>

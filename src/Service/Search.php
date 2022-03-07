@@ -4,7 +4,8 @@ namespace App\Service;
 
 use App\Entity\Product\Category;
 
-class Search{
+class Search
+{
     /**
      * Undocumented variable
      *

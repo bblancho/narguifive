@@ -19,6 +19,9 @@ class CategorieType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('titre', TextareaType::class)
+            // ->add('slug', TextareaType::class,[
+            //     'required' => false,
+            // ])
             ->add('content',CKEditorType::class, [
                 'config_name' => 'my_config',
                 'config'      => array('uiColor' => '#ffffff'),
@@ -28,11 +31,11 @@ class CategorieType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '2M',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg', 
-                            "image/jpg",
+                            'image/jpg',
                         ],
                         'mimeTypesMessage' => "Le fichier envoyé n'est pas une image valide.",
                     ])

@@ -141,7 +141,6 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function countTotalProduct()
     {
-
         return $this->createQueryBuilder('p')
             ->select( " COUNT(p.id) " )
             ->getQuery()

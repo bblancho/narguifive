@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nargui Five 93 - Admin - Sous Catégorie
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <div class="title-block">
+        <h1 class="text-center title-custom"> Admin - Les catégories </h1>
+    </div>
+
+    <table class="table table-hover">
+        
+        <thead>
+            <tr>
+                <th scope="col"> Id </th>
+                <th scope="col"> Nom </th>
+                <th scope="col"> Catégorie </th>
+                <th scope="col"> Action </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in categorie %}
+            <tr>
+                <th scope="row"> {{ item.id }} </th>
+                <td>{{ item.nom }}</td>
+                <td>    
+                    <a class="btn btn-primary btn-sm " href="#">
+                        {{ item.nom }}
+                    </a>
+                </td>
+                <td> 
+                    <div>
+                        <a href="{{ path('admin_categorie_edit', {'id': item.id}) }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"> MOdifier </i>
+                        </a>
+                        <a name="delete" data-href="{{ path('admin_categorie_delete', {'id': item.id}) }}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"> Supprimer </i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+                Aucune catégorie trouvé
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    {# display navigation #}
+	<div class="row">
+		<div class="col-sm-1 d-flex justify-content-start mb-3">
+			<a href="#">
+				<span class="badge rounded-pill bg-primary p-2">
+					<i class="bi bi-chevron-double-up"></i>
+				</span>
+			</a>
+		</div>
+		<div class="d-flex justify-content-center">
+			{{ knp_pagination_render(categorie, 'partials/_pagination.html.twig') }}
+		</div>
+	</div>
+	{# end display navigation #}
+	<br>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a[name=delete]').on('click', async function () {
+            let url = $(this).attr('data-href');
+            let confirm = await window.confirm('Êtes-vous sûr(e) de vouloir supprimer cette catégorie ?');
+            
+            if (! confirm) {
+                return false;
+            }
+
+            $.get(url).done(function (response, textStatus, xhr) 
+                {
+                    window.location.reload();
+                }).fail(function () { 
+                    // Fail
+                }
+            );
+        })
+    });
+</script>
+{% endblock %}
