@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Form\ContactType;
 use voku\helper\HtmlDomParser;
 use App\Entity\Product\Product;
+use App\Service\Mail\MailService;
 use App\Repository\MarqueRepository;
 use App\Service\Mail\MailjetService;
 use App\Repository\ProductRepository;
@@ -80,7 +81,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact", name="home_contact")
      */
-    public function contact(Request $request): Response
+    public function contact(Request $request, MailService $mailer): Response
     {
 
         $form = $this->createForm(ContactType::class, null) ;
@@ -90,11 +91,10 @@ class HomeController extends AbstractController
         if ( $form->isSubmitted() && $form->isValid() ) {
             // dd( $form->getData() ) ;
 
-            $this->addFlash('notice', "Merci d'avoir contacté l'équipe NarguiFive .") ;
-            // Envoi de l'email
-                $content ="Bonjour <br/> Merci pour votre commande.  <br/>";
-                $mail = new MailjetService();
-                $mail->send( $form->get('email')->getData(), $form->get('nom')->getData().' '.$form->get('prenom')->getData(), $form->get('sujet')->getData(), $content) ;
+            $this->addFlash('success', "Merci d'avoir contacté l'équipe NarguiFive .") ;
+            
+            // Envoi de l'email    
+            $mailer->sendEmail( $form->get('email')->getData(), $form->get('sujet')->getData(), $form->get('content')->getData()) ;
 
         }
 

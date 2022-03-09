@@ -45,7 +45,8 @@ class ContactType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => "Votre message",
                 'attr'  => [
-                    'placeholder' => "En quoi pouvous-nous vous aider ?"
+                    'placeholder' => "En quoi pouvous-nous vous aider ?",
+                    'rows'=> 5,
                 ]
             ])
         ;
