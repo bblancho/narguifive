@@ -24,9 +24,7 @@ class HomeController extends AbstractController
     private $manager;
     private $productRepository;
     private $categoryRepository;
-    private $slugger ;
-    private $sousCategoryRepository;
-    private $marqueRepository;
+ 
 
     public function __construct(ManagerRegistry $manager,MarqueRepository $marqueRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
@@ -83,7 +81,6 @@ class HomeController extends AbstractController
      */
     public function contact(Request $request, MailService $mailer): Response
     {
-
         $form = $this->createForm(ContactType::class, null) ;
 
         $form->handleRequest($request) ;
@@ -92,10 +89,9 @@ class HomeController extends AbstractController
             // dd( $form->getData() ) ;
 
             $this->addFlash('success', "Merci d'avoir contacté l'équipe NarguiFive .") ;
-            
-            // Envoi de l'email    
-            $mailer->sendEmail( $form->get('email')->getData(), $form->get('sujet')->getData(), $form->get('content')->getData()) ;
 
+            // Envoi de l'email    
+            $mailer->sendEmail( $form->get('email')->getData(), $form->get('sujet')->getData(), $form->get('content')->getData() ) ;
         }
 
         return $this->render('home/contact.html.twig', [
