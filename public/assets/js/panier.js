@@ -104,4 +104,3 @@ function mara(object) {
 
     }).catch(e => console.log(e));
 }
-

@@ -35,6 +35,10 @@
 		<link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet">
 		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+		<!-- Bootstrap JS + jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+		
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
 		{% endblock %}
@@ -63,11 +67,6 @@
 			{% include "partials/_footer.html.twig" %}
 		</main>
 
-		
-		<!-- Bootstrap JS + jquery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-		
 		{# Select 2 #}
 		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 		<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>

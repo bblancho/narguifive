@@ -35,10 +35,6 @@ window.onload=()=>{
                 const Quant0 = document.querySelector("#quantity_0");
                 const Quant1= document.querySelector("#quantity_1");
 
-
-                
-
-
                 nombre=Object.keys(data.fabs).length;
                 var text="";
                 for (var i=0;i<nombre;i++){
@@ -61,7 +57,6 @@ window.onload=()=>{
                         "<a  role =\"button\" data-rel=\"layered_quantity_1 \" title=\"Annuler\"><i class=\"icon-remove\" id=\"disp_actif_1\" onclick=\"mara(this)\"></i></a>"+	
                             "Disponibilité : En stock</li>";
                     }
-
                 }
 
                 Quant0.innerHTML= " ("+ data.nbre_dispo[0] +")";
@@ -73,27 +68,7 @@ window.onload=()=>{
                 history.pushState({},null,url.pathname+"?"+ Params.toString());
 
             }).catch(e=>console.log(e));
-
-
-           
-            
-
-
-           
-        
         });
-
-        
-        
-        
-
-
-        
     });
 
-
-    
-
-
-    
 }
