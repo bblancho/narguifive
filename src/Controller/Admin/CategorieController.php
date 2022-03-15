@@ -7,6 +7,7 @@ use PHPUnit\Util\Exception;
 use App\Entity\Product\Category;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Service\Upload\UploadService ;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Service\Upload\UploadService ;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_ADMIN", message="Vous n'avez pas le droit d'accéder à cette ressourece.")
  */
 class CategorieController extends AbstractController
 {
