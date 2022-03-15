@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\Upload\UploadService ;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class CategorieController extends AbstractController
 {
     public function __construct(ManagerRegistry $doctrine, ProductRepository $productRepository, 

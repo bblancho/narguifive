@@ -15,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class ProduitController extends AbstractController
 {
     public function __construct(ManagerRegistry $doctrine, ProductRepository $productRepository, SluggerInterface $slugger)

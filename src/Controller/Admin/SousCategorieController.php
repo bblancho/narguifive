@@ -15,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class SousCategorieController extends AbstractController
 {
     public function __construct(ManagerRegistry $doctrine,ProductRepository $productRepository, 
@@ -148,4 +151,5 @@ class SousCategorieController extends AbstractController
         
         return $this->redirectToRoute('admin_gestion');
     }
+    
 }

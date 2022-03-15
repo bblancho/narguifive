@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class AdminController extends AbstractController
 {
     public function __construct(ManagerRegistry $doctrine, ProductRepository $productRepository, CategoryRepository $categoryRepository, )
