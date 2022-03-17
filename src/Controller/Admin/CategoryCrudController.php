@@ -33,7 +33,7 @@ class CategoryCrudController extends AbstractCrudController
         return [
             TextField::new('nom'),
             TextField::new('Titre'),
-            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnForms(),
             TextareaField::new('content'),
             ImageField::new('image', 'photo')
                 ->setBasePath( $this->getParameter('app.path.category_images') )

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product\Order;
+use App\Service\Mail\MailService;
 use App\Service\Mail\MailjetService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -18,9 +19,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
 class OrderCrudController extends AbstractCrudController
 {
@@ -50,7 +51,7 @@ class OrderCrudController extends AbstractCrudController
         ;
     }
 
-    public function updatePreparation(AdminContext $context) // création de page dans le back office
+    public function updatePreparation(AdminContext $context, MailService $mailer) // création de page dans le back office
     {
         $order= $context->getEntity()->getInstance();
         $order->setStatut(3) ; // statut en cours de préparation
@@ -66,13 +67,14 @@ class OrderCrudController extends AbstractCrudController
 
         // Envoi de l'email
             $content ="Bonjour ".$order->getUser()->getFullName()."<br/> Votre commande vient de passer à l'état de en cours de préparation.  <br/>";
-            $mail = new MailjetService();
-            $mail->send( $order->getUser()->getEmail(), $order->getUser()->getNom(), 'Commande en cours préparation.', $content) ;
+            
+            // Envoi de l'email    
+            $mailer->sendEmail( $order->getUser()->getEmail(), "Préparation de la commande",  $content ) ;
 
         return $this->redirect($url) ;
     }
 
-    public function updateLivraison(AdminContext $context) // création de page dans le back office
+    public function updateLivraison(AdminContext $context, MailService $mailer) // création de page dans le back office
     {
         $order= $context->getEntity()->getInstance();
         $order->setStatut(4) ; // statut en cours de préparation
@@ -88,8 +90,8 @@ class OrderCrudController extends AbstractCrudController
 
         // Envoi de l'email
             $content ="Bonjour ".$order->getUser()->getFullName()."<br/> Votre commande vient de passer à l'état de en cours de livraison.  <br/>";
-            $mail = new MailjetService();
-            $mail->send( $order->getUser()->getEmail(), $order->getUser()->getNom(), 'Commande en cours livraison.', $content) ;
+
+            $mailer->sendEmail( $order->getUser()->getEmail(), "Commande en cours livraison",  $content ) ;
             
         return $this->redirect($url) ;
     }

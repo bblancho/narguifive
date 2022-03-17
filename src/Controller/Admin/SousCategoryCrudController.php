@@ -20,7 +20,7 @@ class SousCategoryCrudController extends AbstractCrudController
     {
         return [
             TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom'),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnForm(),
             TextareaField::new('content'),
             AssociationField::new('category') ,
         ];
