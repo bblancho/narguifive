@@ -73,7 +73,7 @@ class CategorieController extends AbstractController
             $image = $form->get('photo')->getData() ;
 
             if( $image ) {
-                $repertoire = $this->getParameter('categorie_image') ;
+                $repertoire = $this->getParameter('categorie_image') ; // service.yaml
                 //  Upload de l'image
                 $categorie->setImageCate( $fileService->uploadFile( $image, $repertoire) ) ;
             }

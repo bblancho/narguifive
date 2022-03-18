@@ -23,6 +23,10 @@ div.footer{
     margin: 10px 0;
 }
 
+.etoile>img{
+    height: 30px;
+}
+
 .custom-btn{
     min-width: 125px !important;
     margin-bottom: 4% !important;
@@ -127,8 +131,8 @@ h1,h2{
 }
 
 .lien_logo{
-    display: block;
-    width: 100%;
+    /* display: block;
+    width: 100%; */
 }
 .lien_logo img{
     width: 147.15px;
