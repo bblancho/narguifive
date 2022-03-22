@@ -75,7 +75,7 @@ class CategorieController extends AbstractController
             if( $image ) {
                 $repertoire = $this->getParameter('categorie_image') ; // service.yaml
                 //  Upload de l'image
-                $categorie->setImageCate( $fileService->uploadFile( $image, $repertoire) ) ;
+                $categorie->setImage( $fileService->uploadFile( $image, $repertoire) ) ;
             }
 
             $slugNom = $this->slugger->slug( strtolower( $form->get('nom')->getData() ) ) ;
@@ -84,6 +84,7 @@ class CategorieController extends AbstractController
             // Création d'une nouvelle categorie
             if( $id == 0 ){
                 $message = "La catégorie ".$categorie->getNom()." a bien été créée avec succès." ;
+
                 $em->persist($categorie);
             } else{
                 $message = "La catégorie ".$categorie->getNom()." a bien été mise à jour." ;  // MAJ

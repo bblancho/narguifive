@@ -18,10 +18,6 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('titre', TextareaType::class)
-            // ->add('slug', TextareaType::class,[
-            //     'required' => false,
-            // ])
             ->add('content',CKEditorType::class, [
                 'config_name' => 'my_config',
                 'config'      => array('uiColor' => '#ffffff'),
