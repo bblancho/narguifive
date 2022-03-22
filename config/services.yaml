@@ -6,7 +6,7 @@
 parameters:
     app.path.products_images: /assets/images/produits
     app.path.header_images:   /assets/images/header
-    app.path.category_images: /assets/images/categories
+    category_images: /assets/images/categories
     categorie_image: '%kernel.project_dir%/public/assets/images/categories'
 
 services:

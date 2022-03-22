@@ -31,14 +31,13 @@ class CategoryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->onlyOnForms(),
-            TextareaField::new('content'),
-            ImageField::new('image', 'photo')
-                ->setBasePath( $this->getParameter('app.path.category_images') )
-                ->setUploadDir( '/public/assets/images/categories' )
+            TextField::new('nom','Titre'),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            TextareaField::new('content','Description'),
+            TextField::new('imageFile')->setFormType(VichImageType::class),
+            ImageField::new('image', 'photo') // On affiche la mignature dans l'index
+                ->setBasePath( $this->getParameter('category_images') )
                 ->setRequired(false)->onlyOnIndex(),
-            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
         ];
     }
 
