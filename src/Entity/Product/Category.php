@@ -71,6 +71,12 @@ class Category
      * @var File|null
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
     
 
     public function __construct()
@@ -213,10 +219,15 @@ class Category
         $this->imageFile = $imageFile;
 
         if (null !== $imageFile) {
-            $this->updated_at = new \DateTime('now');
+            $this->updatedAt = new \DateTime('now');
         }
 
         return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
 
