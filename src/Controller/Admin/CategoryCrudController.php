@@ -34,10 +34,10 @@ class CategoryCrudController extends AbstractCrudController
             TextField::new('nom','Titre'),
             SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
             TextareaField::new('content','Description'),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('image', 'photo') // On affiche la mignature dans l'index
                 ->setBasePath( $this->getParameter('category_images') )
-                ->setRequired(false)->onlyOnIndex(),
+                ->setRequired(false),
         ];
     }
 

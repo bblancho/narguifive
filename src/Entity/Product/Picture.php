@@ -20,12 +20,6 @@ class Picture
      */
     private $id;
 
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image_size;
-
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="pictures")
      * @ORM\JoinColumn(nullable=true)
@@ -33,23 +27,23 @@ class Picture
     private $produit;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private $image_name;
+    private $image;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
-     * @Vich\UploadableField(mapping="products_images", fileNameProperty="image_name", size="image_size")
-     *
-     * @var File
+     * @Vich\UploadableField(mapping="products_images", fileNameProperty="image")
+     * @Assert\File(
+     *     maxSize = "1M",
+     *     mimeTypesMessage = "Veuillez sélectionner une image valide"
+     * )
+     * @var File|null
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="datetime")
-     *
      * @var \DateTime
      */
     private $updatedAt;
@@ -64,18 +58,6 @@ class Picture
         return $this->id;
     }
 
-    public function getImageName(): ?string
-    {
-        return $this->image_name;
-    }
-
-    public function setImageName(?string $image_name): self
-    {
-        $this->image_name = $image_name;
-
-        return $this;
-    }
-
     public function getProduit(): ?Product
     {
         return $this->produit;
@@ -88,44 +70,43 @@ class Picture
         return $this;
     }
 
-    public function getImageSize(): ?string
+    public function getImage(): ?string
     {
-        return $this->image_size;
+        return $this->image;
     }
 
-    public function setImageSize(?string $image_size): self
+    public function setImage(?string $image): self
     {
-        $this->image_size = $image_size;
+        $this->image = $image;
 
         return $this;
     }
 
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime();
-        }
-    }
-
+    /**
+     * @return File|null
+     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile( ?File $imageFile = null): self
     {
-        return $this->updatedAt;
-    }
+        $this->imageFile = $imageFile;
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
 
         return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
 }
