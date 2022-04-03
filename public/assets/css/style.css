@@ -13,6 +13,17 @@ div.footer{
     padding: 0px 180px;
 }
 
+.label{
+    color: #000;
+}
+.label-success{
+    color: #5cb85c;
+}
+
+.label-error{
+    color: #f0ad4e;
+}
+
 .separation{
     width: 100%;
     position: relative;

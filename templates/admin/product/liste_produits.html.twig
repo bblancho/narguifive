@@ -15,8 +15,8 @@
 
 					<div class="left-block">
 						<div class="product-image-container">
-							<a class="product_image" href="{{ path('admin_produit_show', {id: produit.id}) }}" title="LOREM IPSUM DOLOR TITLE">
-								<img class="img-responsive img1" src="{{produit.image}}" alt="{{produit.nom}}"/>
+							<a class="product_image" href="{{ path('admin_produit_show', { id: produit.id } ) }}" title="{{ produit.nom }}">
+								<img class="img-responsive img1" src="{{ produit.image }}" alt="{{ produit.nom }}"/>
 							</a>
 
 							<div class="actions">
@@ -43,9 +43,15 @@
 							</div>
 
 							<span class="availability">
-								<span class=" label-success">
-									Disponible
-								</span>
+								{% if produit.quantite > 0 %}
+									<span class="label  label-success">
+										Disponible
+									</span>
+								{% else  %}
+									<span class="label  label-warning">
+										Non isponible
+									</span>
+								{% endif  %}
 							</span>
 						</div>
 					</div>
@@ -58,11 +64,12 @@
 						</div>
 
 						<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-							<span class="price product-price" itemprop="price"> {{ (produit.price) | number_format(2, ',', '.') }} €</span> 
+							<span class="price product-price" itemprop="price"> {{ (produit.price) | number_format(2, ',', '.') }} € </span> 
+							<meta itemprop="priceCurrency" content="EUR"/>
 						</div>
 
 						<div class="lab-cart">
-							<a href="{{ path('admin_produit_edit', {id: produit.id}) }}" data-id-product="{{produit.id}}" class="btn btn-primary btn-sm">
+							<a href="{{ path('admin_produit_edit', { id: produit.id }) }}" data-id-product="{{ produit.id }}" class="btn btn-primary btn-sm">
 								<i class="bi bi-pencil"></i>
 								<span> Modifier </span>
 							</a>

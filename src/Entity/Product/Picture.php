@@ -2,10 +2,10 @@
 
 namespace App\Entity\Product;
 
-use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Entity\File;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)

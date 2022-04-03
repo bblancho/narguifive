@@ -69,6 +69,12 @@ class Product
     private $imageFile;
 
     /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $pictures;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $price;
@@ -154,12 +160,6 @@ class Product
      * @ORM\Column(type="integer", nullable=true)
      */
     private $gramme = self::DEFAULT_QTE_GRAMME ;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="produit", orphanRemoval=true, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $pictures;
 
     /**
      * @ORM\Column(type="boolean")

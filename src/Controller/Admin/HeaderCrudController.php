@@ -32,11 +32,15 @@ class HeaderCrudController extends AbstractCrudController
             TextareaField::new('content',"Description"),
             TextField::new('btnTitle', "Titre du bouton"),
             TextField::new('btnUrl', "Url de destination du bouton"),
-            ImageField::new('image')
-                ->setBasePath( $this->params->get('app.path.products_images') )
-                ->setUploadDir("public/assets/images/header")
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
+            // ImageField::new('image')
+            //     ->setBasePath( $this->params->get('header_images') )
+            //     ->setUploadDir("public/assets/images/header")
+            //     ->setUploadedFileNamePattern('[randomhash].[extension]')
+            //     ->setRequired(false),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('image', 'photo') // On affiche la mignature dans l'index
+                    ->setBasePath( $this->getParameter('header_images') )
+                    ->setRequired(false)->onlyOnIndex(),
         ];
     }
 

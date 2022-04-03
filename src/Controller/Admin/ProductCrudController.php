@@ -39,39 +39,20 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $image = ImageField::new('image', 'photo')
-                ->setBasePath( $this->getParameter('app.path.products_images') )
-                ->setUploadDir( 'public/assets/images/produits' )
-                ->setRequired(false)->onlyOnIndex() ;
-
-        $imageFile = TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms() ;
 
         $fields = [
             TextField::new('nom'),
-            SlugField::new('slug')->setTargetFieldName('nom')->hideOnForm(),
+            SlugField::new('slug')->setTargetFieldName('nom')->hideOnIndex(),
+            AssociationField::new('category','Catégorie') ,
+            AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
             TextField::new('intro')->onlyOnForms()->setRequired(false),
             TextareaField::new('content')->onlyOnForms(),
             BooleanField::new('en_stock', 'En stock'),
             IntegerField::new('quantite', 'Quantité'),
-            AssociationField::new('category','Catégorie') ,
-            AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
+            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             AssociationField::new('marque',"Fabriquant")->onlyOnForms() ,
-            BooleanField::new('isBest',"A la une"),
-            BooleanField::new('nouveaute'),
-            MoneyField::new('price')->setCurrency('EUR'),
+            BooleanField::new('isBest',"A la une")->hideOnIndex(),
             MoneyField::new('priceHT')->setCurrency('EUR')->onlyOnForms() ,
-
-            // CollectionField::new('pictures','Les photos')
-            //     ->setEntryType(PictureType::class)
-            //     ->setFormTypeOption('by_reference', false)
-            //     ->onlyOnForms()
-            // ,
-
-            // ImageField::new('image', 'photo')
-            //     ->setBasePath( $this->getParameter('app.path.products_images') )
-            //     ->setUploadDir( 'public/assets/images/produits' )
-            //     ->setRequired(false)->onlyOnIndex(),
-            // TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
 
             AssociationField::new('color')->autocomplete()->onlyOnForms() ,
             IntegerField::new('taille')->onlyOnForms()->setRequired(false) ,
@@ -82,14 +63,17 @@ class ProductCrudController extends AbstractCrudController
             BooleanField::new('promotion')->onlyOnIndex() ,
             BooleanField::new('nouveaute')->setRequired(false) ,
             BooleanField::new('publie', "Publié") ,
-        ];
 
-        
-        if ($pageName == Crud::PAGE_INDEX ||  $pageName == Crud::PAGE_DETAIL) {
-            $fields[] = $image ; 
-        } else {
-            $fields[] = $imageFile ; 
-        }
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('image', 'photo') // On affiche la mignature dans l'index
+                ->setBasePath( $this->getParameter('products_images') )
+                ->setRequired(false)->onlyOnIndex(),
+            CollectionField::new('pictures','Les photos') // Les images du produit
+                ->setEntryType(PictureType::class)
+                ->setFormTypeOption('by_reference', false)
+                ->onlyOnForms()
+            ,
+        ];
 
         return $fields ;
     }
