@@ -64,15 +64,16 @@ class ProductCrudController extends AbstractCrudController
             BooleanField::new('nouveaute')->setRequired(false) ,
             BooleanField::new('publie', "Publié") ,
 
-            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
             ImageField::new('image', 'photo') // On affiche la mignature dans l'index
                 ->setBasePath( $this->getParameter('products_images') )
-                ->setRequired(false),
+                ->setRequired(false)
+                ->hideOnForm(),
             CollectionField::new('pictures','Mignatures') // Les images du produit
                 ->setEntryType(PictureType::class)
                 ->setFormTypeOption('by_reference', false)
                 ->setTemplatePath('admin/easyadmin.html.twig')
-                
+                ->hideOnIndex()
             ,
         ];
 
