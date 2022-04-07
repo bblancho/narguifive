@@ -39,16 +39,44 @@ class OrderCrudController extends AbstractCrudController
         return Order::class;
     }
 
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            DateTimeField::new("createdAt", "Passé le")->setFormat('Y-MM-dd à HH:mm')->renderAsNativeWidget(), 
+            TextField::new('user.getFullName',"Client"),
+            TextEditorField::new('delivry', "Adresse de livraison")->onlyOnDetail(),
+            MoneyField::new('total', 'Total produit')->setCurrency('EUR'),
+            TextField::new('transpoteurNom',"Transporteur")->hideOnIndex(),
+            MoneyField::new('transporteurPrix', 'Frais de port')->setCurrency('EUR')->hideOnIndex(),
+            BooleanField::new('isPaid', "Payée"),
+            ChoiceField::new('statut',"Statut de la livraison")->setChoices([
+                "Non validée" => 1,
+                "Payée" => 2,
+                "En cours de préparation" => 3,
+                "En cours de livraison" => 4,
+                "Livrée" => 5,
+                "Non valide" => 0
+            ]) ,
+            ArrayField::new('orderDetails', 'Produits achetés')->hideOnIndex(),
+            
+        ];
+    }
+
     public function configureActions(Actions $actions): Actions
     {
         $updatePreparation = Action::new('updatePreparation', 'Préparation en cours', 'fas fa-box-open')->linkToCrudAction('updatePreparation') ;
         $updateLivraison = Action::new('updateLivraison', 'Livraison en cours', 'fas fa-truck')->linkToCrudAction('updateLivraison') ;
 
         return $actions
-            ->add('detail', $updatePreparation) // dans la vue détail on rajoute une action
-            ->add('detail', $updateLivraison) 
             ->add(Crud::PAGE_INDEX, Action::DETAIL) // on configure la page d'accueil de /admin
+            ->add('detail', $updatePreparation)     // dans la vue détail on rajoute une action
+            ->add('detail', $updateLivraison) 
         ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setDefaultSort(['id' => "DESC"]) ;
     }
 
     public function updatePreparation(AdminContext $context, MailService $mailer) // création de page dans le back office
@@ -58,7 +86,7 @@ class OrderCrudController extends AbstractCrudController
 
         $this->manager->flush() ;
 
-        $this->addFlash('notice', "<span class='alert alert-info'><strong> La commande ".$order->getReference() ." est bien <u>en cours de préparation</u>. </strong></span>") ;
+        $this->addFlash('notice', "<span class='alert alert-info'><strong> La commande ".$order->getReference() ." est bien <u> en cours de préparation </u>. </strong></span>") ;
 
         $url = $this->adminUrlGenerator
             ->setController(OrderCrudController::class)
@@ -77,7 +105,7 @@ class OrderCrudController extends AbstractCrudController
     public function updateLivraison(AdminContext $context, MailService $mailer) // création de page dans le back office
     {
         $order= $context->getEntity()->getInstance();
-        $order->setStatut(4) ; // statut en cours de préparation
+        $order->setStatut(4) ; // statut en cours de livraison
 
         $this->manager->flush() ;
 
@@ -94,34 +122,6 @@ class OrderCrudController extends AbstractCrudController
             $mailer->sendEmail( $order->getUser()->getEmail(), "Commande en cours livraison",  $content ) ;
             
         return $this->redirect($url) ;
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud->setDefaultSort(['id' => "DESC"]) ;
-    }
-
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            DateTimeField::new("createdAt", "Passé le")->setFormat('Y-MM-dd à HH:mm')->renderAsNativeWidget(), 
-            TextField::new('user.getFullName',"Client"),
-            TextEditorField::new('delivry', "Adresse de livraison")->onlyOnDetail(),
-            MoneyField::new('total', 'Total produit')->setCurrency('EUR'),
-            TextField::new('transpoteurNom',"Transporteur"),
-            MoneyField::new('transporteurPrix', 'Frais de port')->setCurrency('EUR'),
-            BooleanField::new('isPaid', "Payée"),
-            ChoiceField::new('statut',"Statut de la livraison")->setChoices([
-                "Non validée" => 1,
-                "Payée" => 2,
-                "En cours de préparation" => 3,
-                "En cours de livraison" => 4,
-                "Livrée" => 5,
-                "Non valide" => 0
-            ]) ,
-            ArrayField::new('orderDetails', 'Produits achetés')->hideOnIndex(),
-            
-        ];
     }
 
 }

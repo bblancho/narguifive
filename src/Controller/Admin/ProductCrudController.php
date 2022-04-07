@@ -46,7 +46,7 @@ class ProductCrudController extends AbstractCrudController
             AssociationField::new('category','Catégorie') ,
             AssociationField::new('sousCategory',"Sous-catégorie")->onlyOnForms() ,
             TextField::new('intro')->onlyOnForms()->setRequired(false),
-            TextareaField::new('content')->onlyOnForms(),
+            TextareaField::new('content','Description')->hideOnIndex(),
             BooleanField::new('en_stock', 'En stock'),
             IntegerField::new('quantite', 'Quantité'),
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
@@ -67,11 +67,12 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('image', 'photo') // On affiche la mignature dans l'index
                 ->setBasePath( $this->getParameter('products_images') )
-                ->setRequired(false)->onlyOnIndex(),
-            CollectionField::new('pictures','Les photos') // Les images du produit
+                ->setRequired(false),
+            CollectionField::new('pictures','Mignatures') // Les images du produit
                 ->setEntryType(PictureType::class)
                 ->setFormTypeOption('by_reference', false)
-                ->onlyOnForms()
+                ->setTemplatePath('admin/easyadmin.html.twig')
+                
             ,
         ];
 
@@ -80,7 +81,7 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-       return $actions
+        return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::DELETE, Action::EDIT])
         ;

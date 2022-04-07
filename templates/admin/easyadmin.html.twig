@@ -1,0 +1,13 @@
+<div class="form-widget"> 
+
+    {% for image in field.value %}
+        <a href="#" class="ea-lightbox-thumbnail" data-ea-lightbox-content-selector="#ea-lightbox-{{ image.id }}" data-featherlight-close-on-click="anaywhere">
+            <img src="{{ vich_uploader_asset(image, 'imageFile') }}" class="img-thumbnail" style="width:20%" >
+        </a>
+
+        <div id="ea-lightbox-{{ image.id }}" class="ea-lightbox">
+            <img src="{{ vich_uploader_asset(image, 'imageFile') }}" class="img-thumbnail" >
+        </div>
+    {% endfor %}
+
+</div>
