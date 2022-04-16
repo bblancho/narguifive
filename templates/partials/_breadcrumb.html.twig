@@ -1,5 +1,5 @@
 <div class="columns-container">
-	<div id="column" class="container">
+	<div id="column">
 		<div class="row">
 			<div class="lab_breadcrumb">
 				<div class="container">
@@ -7,8 +7,8 @@
 					<!-- Breadcrumb -->
 					<div class="breadcrumb clearfix">
 						<div class="breadcrumb-i">
-							<a class="home" href="/" title="Accueil">
-								<i class="icons-home"></i> Accueil
+							<a class="home" href="{{ path('home') }}" title="Accueil">
+								<i class="fa-solid fa-house"></i> Accueil
               				</a>
 
 							{% if categorie.id is defined %}

@@ -129,11 +129,6 @@
   display: inline;
 }
 
-/* breadcrumb **/
-.breadcrumb{
-  z-index: 0 !important;
-}
-
 .navbar-nav > li > .dropdown-menu {
 margin-top: 6px !important;
 }
