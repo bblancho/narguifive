@@ -40,6 +40,12 @@ ol, ul {
     margin-bottom: 50px;
 }
 
+/**** video ***/
+video {
+    width: 400px;
+    height: auto
+}
+
 /************ Pagination *********/
 .navigation{
     display: block;
