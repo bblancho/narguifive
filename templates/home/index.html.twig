@@ -66,7 +66,7 @@
 			<div class="tab-pane fade" id="promos" role="tabpanel" aria-labelledby="promos-tab">Promos</div>
 			<div class="tab-pane fade" id="chichas" role="tabpanel" aria-labelledby="chichas-tab">
 				<div> Nombre de produits {{ nb_produits_total }} </div>
-				{% include "admin/product/liste_produits.html.twig" with {'produits':produits, 'total':nb_produits_total, 'limit':12} %}	
+				{% include "product/liste_produits.html.twig" with {'produits':produits, 'total':nb_produits_total, 'limit':12} %}	
 				{# {% include "product/liste_produits.html.twig" with {'produits':produits} %} #}
 			</div>
 			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">Goûts</div>

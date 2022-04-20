@@ -53,9 +53,9 @@
 		{% include "modal/video.html.twig" %}
 
 		<main role="main">
-			{% if block('carousel') is defined %}
+			{# {% if block('carousel') is defined %} #}
 				{% include "partials/_carousel.html.twig" %}
-			{% endif %}
+			{# {% endif %} #}
 
 			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
 				
