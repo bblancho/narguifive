@@ -273,17 +273,84 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/categorie/{slugCategory}/{slug}", name="products_by_sous_categorie")
+     * @Route("/categorie/{slugCategory}/{slugSousCategory}", name="products_by_sous_categorie")
      */
-    public function sousCategorie($slugCategory,$slug): Response
+    public function sousCategorie(Request $request, PaginatorInterface $paginator, $slugCategory ,$slugSousCategory): Response
     {
-        $categorie    = $this->categoryRepo->findOneBySlug($slugCategory);
-        $sousCategory = $this->sousCategoryRepo->findOneBySlug($slug);
+        $limit  = 15;
+        $mypage = (int)$request->get("page", 1);
+
+        $filter = $request->get("layered_manufacturer"); 
+        $disponibilite = $request->get("layered_quantity"); 
+        $tri = $request->get("tri");
+
+        $search = new Search();
+        $form = $this->createForm(SearchType::class, $search) ;
+
+        $form->handleRequest($request) ;
+        $categorie    = $this->repoCategory->findOneBySlug($slugCategory);
+        $sousCategory = $this->sousCategoryRepo->findOneBySlug($slugSousCategory);
+        $sousCats   = $categorie->getSousCategory() ;
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            $produits = $this->repoProduct->findBySearch($search);
+        } else {
+            $produits = $sousCategory->getProducts() ;
+            $total= count($produits);
+            $produits_best = $this->repoProduct->findByIsBest(1);
+        }
+
+        $produits   = $sousCategory->getProducts() ;
+
+        $produits = $paginator->paginate(
+            $produits, // Doctrine Query, not results
+            $request->query->getInt('page', 1), /** page number */
+            9 // limit per page
+        );
+
+        $total      = $this->repoProduct->countProductsPublishByCategory( $categorie->getId() );
+        $fabricants = $this->repoMarque->findAll() ;
+        $from_fabs  = array();
+
+        //Disponibilité
+            $nbre_dispo = array();
+            $nbre_dispo[0]=$this->repoProduct->getTotalProducts($filter,0);
+            $nbre_dispo[1]=$this->repoProduct->getTotalProducts($filter,1);
+            $nbre_dispo[2]=$this->repoProduct->getTotalProducts($filter,2);
+ 
+        foreach($fabricants as $fabricant){
+            $prods = $this->repoProduct->findBy(array('marque'=>$fabricant) );
+            $from_fabs[$fabricant->getNom()]=$prods;
+        }
+         
+        if($request->get("ajax")){
+            $filter=$request->get("layered_manufacturer");
+
+            $fabs=$this->repoMarque->findBy(array('id'=>$filter));
+            $actifs=array();
+            $actif=array();
+            foreach($fabs as $fab){
+                $actif["id"]=$fab->getId();
+                $actif["nom"]=$fab->getNom();
+                array_push($actifs,$actif);
+            }
+            
+            return new JsonResponse(['content'=> $this->renderView('product/liste_produits.html.twig', compact('produits','mypage','total','limit')), 'fabs'=>$actifs, 'total'=>$total, 'nbre_dispo'=>$nbre_dispo]);
+        }
+        
 
         if( $categorie && $sousCategory ) {
-            return $this->render('home/category.html.twig',[
-                'sousCategory' => $sousCategory,
-                'categorie' => '',
+            return $this->render('product/category.html.twig', [
+                'produits'  => $produits,
+                'sousCats'  => $sousCats,
+                'categorie' => $categorie,
+                'fabricants'=>  $fabricants,
+                'nbre_dispo'=>  $nbre_dispo,
+                'from_fabs' =>  $from_fabs,
+                'total'     =>  $total,
+                'limit'     =>  $limit,
+                'mypage'    =>  $mypage,
+                'form'      => $form->createView()
             ]);
         }
         

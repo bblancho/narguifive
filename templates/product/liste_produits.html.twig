@@ -1,94 +1,49 @@
 <!-- Products list -->
 <div id="products_filter">
 
-	<ul class="lablistproducts product_list grid row">
+	<div class="row">
 		{% for produit in produits %}
-			<li class="ajax_block_product item-inner  col-xs-6 col-sm-6 col-md-3 first-in-line first-item-of-tablet-line first-item-of-mobile-line ">
-				<div class="product-container item" itemscope itemtype="https://schema.org/Product">
+			<div class="card col-md-4 mb-3">
+				<a class="product_image" href="{{ path('product_show', { slug: produit.slug }) }}" title="{{ produit.nom }}">
+					{% if "https" in produit.image  %}
+						<img class="img-responsive img1" src="{{ produit.image }}" alt="{{ produit.nom }}"/>	
+					{% else %}
+						<img class="img-responsive img1" src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.nom }}"/>
+					{% endif %}
+				</a>
 
-					<div class="left-block">
-						<div class="product-image-container">
-							<a class="product_image" href="{{ path('product_show', { slug: produit.slug }) }}" title="{{ produit.nom }}">
-								{% if "https" in produit.image  %}
-									<img class="img-responsive img1" src="{{ produit.image }}" alt="{{ produit.nom }}"/>	
-								{% else %}
-									<img class="img-responsive img1" src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.nom }}"/>
-								{% endif %}
-							</a>
+				<div class="card-body">
+					<h5 class="card-title"> <a href="{{ path('product_show', { slug: produit.slug }) }}"> {{ produit.nom }} </a> </h5>
 
-							<div class="actions">
-								<ul class="add-to-links">
-									<li class="lab-Wishlist">
-										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; la liste de souhaits">
-											<i class="mdi mdi-heart-outline"></i>
-											<span>Ajouter &agrave; la liste de souhaits</span>
-										</a>
-									</li>
-									<li class="lab-Wishlist">
-										<a onclick="WishlistCart('wishlist_block_list', 'add', '812', $('#idCombination').val(), 1,'tabproduct'); return false;" class="add-wishlist wishlist_button" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="812" title="Ajouter &agrave; au panier">
-											<i class="mdi mdi-shopping"></i>
-											<span>Ajouter &agrave; au panier</span>
-										</a>
-									</li>
-									<li class="lab-quick-view">
-										<a class="" href="{{ path('admin_produit_show', {id: produit.id}) }}" data-id-product="812" title="Aper&ccedil;u rapide">
-											<i class="mdi mdi-eye"></i>
-											<span>Aper&ccedil;u rapide</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
+					<div class="content_price">
+						<span class="price product-price" itemprop="price"> {{ (produit.price) | number_format(2, ',', '.') }} € </span> 
+						<meta itemprop="priceCurrency" content="EUR"/>
 					</div>
 
-					<div class="right-block">
-						<div class="product-name" itemprop="name">
-							<a href="{{ path('product_show',{ slug: produit.slug }) }}" title="{{ produit.nom }}" itemprop="url">
-								{{ produit.nom }}
-							</a>
-							
-							<div class="content_price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-								<span class="price product-price" itemprop="price"> {{ (produit.price) | number_format(2, ',', '.') }} € </span> 
-								<meta itemprop="priceCurrency" content="EUR"/>
-							</div>
-
-							<span>
-								{% if produit.quantite > 0 %}
-									<span class="label label-success">
-										En stock
-									</span>
-								{% else  %}
-									<span class="label label-error">
-										Indisponible
-									</span>
-								{% endif  %}
-							</span>
-						</div>
-
-						<div class="color-list-container"></div>
-						<div class="flags"></div>
-
-						<div class="lab-cart">
-							<a class="button  btn btn-default" href="{{ path('product_show', {slug: produit.slug}) }}" data-id-product="{{produit.id}}" title="Ajouter au panier">
-								<span>Voir le produit</span>
-							</a>
-						</div>
-					</div>
-
+					<button class="btn btn-success mb-2" onclick="WishlistCart('wishlist_block_list', 'add', '{{produit.id}}', $('#idCombination').val(), 1,'tabproduct'); return false;" data-id-product="{{produit.id}}" title="Ajouter au panier"> <i class="mdi mdi-cart"></i> <span> Ajouter au panier </span> </button>
+					<a href="{{ path('product_show', { slug: produit.slug }) }}"  class="btn btn-info"  title="{{ produit.nom }}"> Détails </a>
+					
+					{% if produit.quantite > 0 %}
+						<span class="label label-success">
+							<i class="fa-solid fa-circle-check"></i> En stock
+						</span>
+					{% else  %}
+						<span class="label label-error">
+							<i class="fa-solid fa-xmark"></i> Rupture de stock
+						</span>
+					{% endif  %}
 				</div>
-				<!-- .product-container> -->
-			</li>
+			</div>
 		{% endfor %}
-	</ul>
+	</div>
 
 	{% set queryParams = app.request.query.all %}
 	{% set queryString = queryParams|filter((v,k) => k != 'page' and k !='ajax')|url_encode %}
 
 	<div class="content_sortPagiBar">
 		<div class="bottom-pagination-content clearfix">
-
-			<div id="pagination_bottom" class="pagination clearfix">
-				<form class="showall" action="#" method="get">
+		
+				{# <form class="showall" action="#" method="get">
 					<div>
 						<button type="submit" class="btn btn-default button exclusive-medium">
 							<span>Afficher tout</span>
@@ -96,24 +51,25 @@
 						<input type="hidden" name="id_category" value="97"/>
 						<input name="n" id="nb_item" class="hidden" value="323"/>
 					</div>
-				</form>
+				</form> #}
 
 				{# display navigation #}
 					<div class="row">
-						<div class="col-sm-1 d-flex justify-content-start mb-3">
+						{# <div class="col-sm-1 d-flex justify-content-start mb-3">
+							
+						</div> #}
+						<div class="d-flex justify-content-center">
+							{{ knp_pagination_render(produits, 'partials/_pagination.html.twig') }}
 							<a href="#">
 								<span class="badge rounded-pill bg-primary p-2">
 									<i class="bi bi-chevron-double-up"></i>
 								</span>
 							</a>
 						</div>
-						<div class="d-flex justify-content-center">
-							{{ knp_pagination_render(produits, 'partials/_pagination.html.twig') }}
-						</div>
 					</div>
 				{# end display navigation #}
 				<br>
-			</div>
+			
 		</div>
 	</div>
 	

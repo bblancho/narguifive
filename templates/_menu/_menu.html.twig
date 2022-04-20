@@ -81,7 +81,7 @@
 								<div class="dropdown-menu">
 									<a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
 									{% for cat in category.sousCategory %}
-										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slug:cat.slug } )}}">
+										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
 											{{ cat.nom }}
 										</a>
 									{% endfor %}

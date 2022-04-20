@@ -18,6 +18,15 @@ body{
     color: #000;
 }
 
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.pull-right {
+    float: right !important;
+}
+
 ol, ul {
     list-style: none;
 }
@@ -39,7 +48,7 @@ ol, ul {
 }
 
 .pagination{
-    display: block !important;
+    /* display: block !important; */
     padding: 15px 0px;
 }
 
@@ -60,13 +69,18 @@ div.footer{
 .label{
     color: #000;
 }
-.label-success{
+.label-success, .fa-circle-check{
     color: #5cb85c;
 }
 
-.label-error{
-    color: #f0ad4e;
+.label-error, .fa-circle-exclamation, .fa-xmark{
+    color: red;
 }
+
+.dropdown-item:active{
+    background-color: none;
+}
+
 #pagination_site{
     margin: 10px 0;
 }
@@ -345,6 +359,10 @@ nav.sticky{
     text-transform: capitalize;
     text-decoration: none;
 }
+#categories_block_left li a:hover{
+    color: #f0ad4e;
+    font-weight: 600;
+}
 
 #enabled_filters {
     margin: 0 0 10px 0;
@@ -389,19 +407,547 @@ nav.sticky{
     width: auto;
     list-style-type: none;
     padding: 2px 0;
+    font-size: 17px;
 }
 
 #layered_block_left .nomargin a {
     color: #868686;
     display: inline;
     font-family: Roboto,serif;
-    font-size: 13px;
     font-style: italic;
     font-weight: 500;
     text-decoration: none;
+    font-size: 17px;
+}
+
+#layered_block_left .nomargin a:hover{
+    color: #f0ad4e;
+}
+
+/** Contenu central **/
+.content_scene_cat {
+    margin-bottom: 30px;
+}
+
+.content_sortPagiBar .sortPagiBar label, .content_sortPagiBar .sortPagiBar select {
+    float: left;
+}
+.content_sortPagiBar .sortPagiBar {
+    margin-bottom: 5px;
+    clear: both;
+}
+
+.content_sortPagiBar .sortPagiBar label {
+    font-family: Roboto, sans-serif;
+    font-style: italic;
+    padding: 3px 6px 0 0;
+}
+
+.content_scene_cat p {
+    color: #000;
+    font-weight: 300;
+    line-height: 25px;
+    margin-bottom: 0;
+    width: 60%;
+    vertical-align: middle;
+    padding: 15px;
+    text-align: justify;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.content_scene_cat .content_scene_cat_bg {
+    padding: 15px;
+    background-color: #464646 !important;
+    background: url(https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../img/theme/categories.jpg) right center no-repeat;
+    background-size: cover;
+}
+
+.content_sortPagiBar .sortPagiBar #productsSortForm .selector {
+    float: left;
+}
+
+.content_sortPagiBar .sortPagiBar #productsSortForm select {
+    max-width: 192px;
+    float: left;
+}
+
+.cat_desc h1{
+    color: #fff;
+}
+
+/** Produit list*/
+ul.product_list.grid>li .product-container{
+    background: #FFF;
+    padding: 0;
+    position: relative;
+}
+
+.lablistproducts .left-block {
+    border: 1px solid #F1A212;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
+    padding: 0;
+}
+
+.lablistproducts .right-block {
+    position: relative;
+    text-align: center;
+}
+
+ul.product_list .product-image-container {
+    text-align: center;
+}
+
+.product-image-container .product_image {
+    position: relative;
+    margin-bottom: 0;
+    width: 100%;
+    display: block;
+}
+
+.lablistproducts .actions {
+    left: 0;
+    margin: 0 auto;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 45%;
+    transition: all 300ms ease 0s;
+    z-index: 10;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
+}
+
+.lablistproducts .item:hover .actions {
+    opacity: 1
+}
+
+.lablistproducts .actions ul {
+    display: inline-block;
+    margin: 0
+}
+
+.lablistproducts .actions li {
+    float: left;
+    margin: 0 5px
+}
+
+.lablistproducts .actions li a {
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    display: block;
+    font-size: 18px;
+    height: 43px;
+    line-height: 43px;
+    text-align: center;
+    text-shadow: 0 0 0;
+    width: 43px
+}
+
+.lablistproducts .actions li a.active,
+.lablistproducts .actions li a.checked,
+.lablistproducts .actions li a:hover {
+    background: #F1A212;
+    border-color: #F1A212;
+    border-radius: 3px
+}
+
+.lab-button-container li span,
+.lablistproducts .actions li span {
+    display: none
+}
+
+.lab-countdown .item .right-block .actions li a {
+    color: #333333;
+    display: block;
+    font-size: 22px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    text-shadow: 0 0 0;
+    width: 50px
+}
+
+.lab-countdown .item .right-block .actions li a:hover {
+    color: #F1A212
+}
+
+.lab-countdown .item .right-block .actions li.lab-cart {
+    margin-bottom: 15px
+}
+
+.lab-countdown .item .right-block .actions li.lab-cart a {
+    background: #F1A212;
+    line-height: 45px;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    padding: 0 20px;
+    text-transform: uppercase;
+    width: auto
+}
+
+.lab-countdown .item .right-block .actions li.lab-cart a:hover {
+    background-color: #333333
+}
+
+.lab-countdown .item .right-block .actions li.lab-cart a span {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    display: inline;
+    padding: 0;
+    border: none;
+    font-size: 14px;
+    text-shadow: 0 0 0
+}
+
+.labcolumn .right-block .actions ul {
+    margin: 0
+}
+
+.labcolumn .right-block .actions ul li {
+    float: left
+}
+
+.labcolumn .right-block .actions ul li.lab-Wishlist {
+    margin: 0 12px
+}
+
+.labcolumn .right-block .actions ul li a {
+    border: 2px solid #464646;
+    color: #464646;
+    display: block;
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    width: 35px
+}
+
+.labcolumn .right-block .actions ul li a:hover,
+.labcolumn .right-block .lab-cart a:hover {
+    border-color: #F1A212;
+    background: #F1A212;
+    color: #ffffff;
+    border-radius: 3px
+}
+.labcolumn .right-block .actions ul li.lab-Wishlist {
+    margin: 0 1px
+}
+
+.lablistproducts .actions {
+    bottom: 90px
+}
+
+.lablistproducts .actions li a:hover {
+    color: #FFF
+}
+
+ul.product_list.list>li .product-image-container .actions .lab-compare,
+ul.product_list.list>li .product-image-container .actions .lab-Wishlist,
+ul.product_list.list>li .product-image-container .actions .lab-quick-view {
+    display: none
+}
+
+ul.product_list.column>li .left-block .countdown,
+ul.product_list.column>li .left-block .actions {
+    display: none
+}
+
+.lablistproducts .item .product_image:before {
+    background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    z-index: 9;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
+}
+
+.lablistproducts .item:hover .product_image:before {
+    opacity: 1;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.lablistproducts .left-block img {
+    width: 100%;
+}
+
+ul.product_list .product-image-container img {
+    margin: 0 auto;
 }
 
 
+.lablistproducts .right-block {
+    position: relative;
+    text-align: center
+}
+
+.lablistproducts .right-block .content_price {
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+    -webkit-transition: all 600ms ease;
+    -moz-transition: all 600ms ease;
+    -ms-transition: all 600ms ease;
+    -o-transition: all 600ms ease;
+    transition: all 600ms ease
+}
+
+.lablistproducts .item:hover .right-block .content_price {
+    opacity: 0;
+    -webkit-transform: translateY(-30%);
+    -moz-transform: translateY(-30%);
+    -ms-transform: translateY(-30%);
+    -o-transform: translateY(-30%);
+    transform: translateY(-30%)
+}
+
+.lablistproducts .right-block .hook-reviews {
+    text-align: center;
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+    -webkit-transition: all 600ms ease;
+    -moz-transition: all 600ms ease;
+    -ms-transition: all 600ms ease;
+    -o-transition: all 600ms ease;
+    transition: all 600ms ease
+}
+
+.lablistproducts .item:hover .right-block .hook-reviews {
+    opacity: 0;
+    -webkit-transform: translateY(-30%);
+    -moz-transform: translateY(-30%);
+    -ms-transform: translateY(-30%);
+    -o-transform: translateY(-30%);
+    transform: translateY(-30%)
+}
+
+.lablistproducts .right-block .hook-reviews .star_content {
+    display: inline-block
+}
+
+.lablistproducts .right-block .hook-reviews .nb-comments {
+    display: none
+}
+
+.lablistproducts .right-block h5.product-name {
+    margin: 0 0 5px 0
+}
+
+.lablistproducts.Lab-new-prod .product-name a {
+    font-weight: bold
+}
+.lablistproducts .right-block .lab-cart .button {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #666666;
+    text-transform: uppercase
+}
+
+.lablistproducts .right-block .lab-cart .button i {
+    font-size: 18px;
+    margin: 0 10px 0 0
+}
+
+.lablistproducts .right-block .lab-cart .button span {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    display: inline-block;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    text-decoration: underline;
+    text-shadow: none;
+    color: #F1A212
+}
+@font-face {
+    font-family: 'MaterialDesignIcons';
+    src: url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.eot?v=1.2.64");
+    src: url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.eot?#iefix&v=1.2.64") format("embedded-opentype"), url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.woff2?v=1.2.64") format("woff2"), url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.woff?v=1.2.64") format("woff"), url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.ttf?v=1.2.64") format("truetype"), url("https://www.royaume-smoke.com/themes/sucregraph_royaumesmoke/css/../fonts/materialdesignicons-webfont.svg?v=1.2.64#materialdesigniconsregular") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+.mdi {
+    display: inline-block;
+    font: normal normal normal 24px/1 MaterialDesignIcons;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0,0);
+}
+
+.mdi-heart-outline:before {
+    content: "\f37b"
+}
+.mdi-eye:before {
+    content: "\f2c4";
+}
+
+.mdi-cart:before {
+    content: "\f1e6"
+}
+
+/** details du produit **/
+ul.product_list .product-name, ul.product_list .content_price .price {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.product-name, .content_price .price {
+    color: #4A4A4A;
+    font-size: 14px;
+    line-height: 23px;
+    margin: 0 0 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.content_price .price {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-name a{
+    color: #4A4A4A;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    min-height: 42px;
+    display: block;
+}
+
+.product-name a:hover {
+    color: #F1A212
+}
+
+.btngreen{
+    background: #2fc3a5;
+}
+
+.btn.round {
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+
+.btn{
+    font-size: 15px;
+    color: #fff;
+    /* background: #000; */
+    padding: 10px 40px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    text-shadow: none;
+    transition: all 0.5s ease-in-out 0s;
+} 
+
+.produits{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-body {
+    text-align: center;
+}
+
+a.product_image{
+    display: contents;
+}
+
+.card-body .btn{
+    min-width: 250px;
+}
+
+.card{
+    border: none;
+    width: 320px;
+    margin: 0px 2px;
+    border: 1px solid transparent;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.card:hover{
+    box-shadow: 0 0 35px rgb(0 0 0 / 30%);
+}
+
+.btn-info{
+    color: #000;
+    background-color: #CCC;
+    transition: all 0.5s ease-in-out 0s;
+}
+.btn-primary{
+    color: rgba(255,255,255,.75) ;
+}
+
+.btn-info:hover{
+    color: #fff;
+    background-color: #CCC;
+}
+
+.btn-primary:hover{
+    color: #fff ;
+    background-color: #000;
+}
+
+.content_price .price{
+    display: inline-block;
+}
+
+.card-title>a{
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.btn-success:hover{
+    color: #fff;
+    background: #000;
+}
+
+.card-title {
+    min-height: 50px;
+}
 
 /************** Body ************/
 .marketing{

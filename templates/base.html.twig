@@ -30,19 +30,19 @@
 		<script src="https://kit.fontawesome.com/3b962b3bc8.js" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		
+		<!-- Custom styles for this template -->
+		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+		
+		<!-- Nargui CSS -->
+		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
 		{% endblock %}
 
 		{% block javascript_header %}
 			{# {{ encore_entry_script_tags('app') }} #}
-		{% endblock %}
-
-		<!-- Custom styles for this template -->
-		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
-		<!-- Nargui CSS -->
-		{# <link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet"> #}
-		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+		{% endblock %}		
 	</head>
 
 	<body>
@@ -67,13 +67,15 @@
 			{% include "partials/_footer.html.twig" %}
 		</main>
 
-		{# Select 2 #}
-			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<!-- Bootstrap Js -->
 			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+		{# Select 2 #}
 			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 		{# End Select 2 #}
-
+			
 		<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
 		<script src="{{ asset('assets/js/javascript.js') }}"></script>
 		<script src="{{ asset('assets/js/myjs.js') }}"></script>

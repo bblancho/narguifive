@@ -24,7 +24,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div style="border: 1px solid #f1a212; margin: 20px;">
+
+            <div style="border: 1px solid #000; margin: 20px;">
                 <div id="slider" class="owl-carousel product-slider py-4 px-3 justify-content-center">
                     <div class="item">
                         {% if "https" in produit.image  %}
@@ -64,7 +65,7 @@
         <div class="col-md-6">
             <div class="product-dtl">
                 <div class="product-info">
-                    <div class="product-name"> {{ produit.nom }} </div>
+                    <h2 class="product-name mt-4"> {{ produit.nom }} </h2>
 
                     <div class="reviews-counter d-none">
                         <div class="rate">
@@ -82,32 +83,47 @@
                         <span>3 Reviews</span>
                     </div>
                     <div class="product-price-discount d-flex">
-                        <span> {{produit.price }} €</span>
-                        <span class="">
-                            <div data-toggle="modal" data-target="#exampleModalCenter" class="border-qty define-width mx-3">
-                                <div class="d-flex ">
-                                    <span class="tab__ active_tab  mx-3">alma</span>
-                                    <span id='dog' class="animal  tab__  mx-3">2x</span>
-                                    <span id='cat' class="animal tab__  mx-3">3x</span>
-                                    <span id='sanake' class="animal tab__  mx-3">4x</span>
+                        <div>  {{ (produit.price) | number_format(2, ',', '.') }} € </div>
+                        <div> 
+                            {% if produit.quantite > 0 %}
+                                
+                                    <i class="fa-solid fa-circle-check"></i> En stock
+                               
+                            {% else  %}
+                                
+                                    <i class="fa-solid fa-xmark"></i> Rupture de stock
+                                
+                            {% endif  %}
+                        </div>
+                        <div>
+                            <span>
+                                <div data-toggle="modal" data-target="#exampleModalCenter" class="border-qty define-width mx-3">
+                                    <div class="d-flex ">
+                                        <span class="tab__ active_tab  mx-3">alma</span>
+                                        <span id='dog' class="animal  tab__  mx-3">2x</span>
+                                        <span id='cat' class="animal tab__  mx-3">3x</span>
+                                        <span id='sanake' class="animal tab__  mx-3">4x</span>
+                                    </div>
+                                    <span id='alma' class="sub__ mx-3 alma">
+                                        2 x 400,00 € (sans frais)
+                                    </span>
+                                    <span id='dogcontent' class="sub__ mx-3 animalcontent">
+                                        66,68 € puis 2 x 66,66 € (sans frais)
+                                    </span>
+                                    <span id='catcontent' class="sub__ mx-3 animalcontent">
+                                        66,68 € puis 3 x 66,66 € (sans frais)
+                                    </span>
+                                    <span id='sanakecontent' class="sub__ mx-3 animalcontent">
+                                        66,68 € puis 4 x 66,66 € (sans frais)
+                                    </span>
                                 </div>
-                                <span id='alma' class="sub__ mx-3 alma">
-                                    2 x 400,00 € (sans frais)
-                                </span>
-                                <span id='dogcontent' class="sub__ mx-3 animalcontent">
-                                    66,68 € puis 2 x 66,66 € (sans frais)
-                                </span>
-                                <span id='catcontent' class="sub__ mx-3 animalcontent">
-                                    66,68 € puis 3 x 66,66 € (sans frais)
-                                </span>
-                                <span id='sanakecontent' class="sub__ mx-3 animalcontent">
-                                    66,68 € puis 4 x 66,66 € (sans frais)
-                                </span>
-                            </div>
-                        </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
+
                 <p> {{produit.content}} </p>
+
                 <div style="font-size:14px;padding-bottom:20px; color: black !important;">
                     <a href="#product-info-tabs" style="color:#000;font-weight:bold;">Plus de details
                         <i class="fa fa-arrow-right"></i>
@@ -138,28 +154,62 @@
                         <input type="text" name="quantity" value="1" class="qty">
                         <div class="qtyplus">+</div>
                     </form>
-                    <a href="#" class="round-black-btn">Ajouter au panier</a>
-                    <a href="#" class="btn print-black-btn mx-3">
-                        <i class="fa fa-print"></i>
+                    <a href="#" class="round-black-btn"  onclick="WishlistCart('wishlist_block_list', 'add', '{{produit.id}}', $('#idCombination').val(), 1,'tabproduct'); return false;" data-id-product="{{produit.id}}">
+                        <i class="mdi mdi-cart"></i> Ajouter au panier
                     </a>
+                    {# <a href="#" class="btn print-black-btn mx-3">
+                        <i class="fa fa-print"></i>
+                    </a> #}
                 </div>
 
-                <div class="d-flex mt-4 ">
+                {# <div class="d-flex mt-4 ">
                     <a href="" class="btn share border-qty text-capitalize">
                         <i class="fab fa-twitter text-primary"></i>Tweet
                     </a>
                     <a href="" style="text-transform: none !important;" class="btn border-qty mx-3">
                         <i class="fab fa-facebook text-primary"></i>Partager
                     </a>
-                </div>
+                </div> #}
                 <hr>
                 <div class="d-flex">
+                    <div class="row mt-2">
+                        <div class="col-md-3 info-achat">
+                            <span class="d-flex justify-content-center">
+                               <i class="fa-solid fa-circle-check"></i>
+                            </span>
+                            <p>
+                                Livraison offerte <br/> À partir de 40 €.
+                            </p>
+                        </div>
 
-                    <p>
-                        <i style="font-size: 20px;" class="fa fa-flag mt-3 mx-3"></i>
-                    </p>
-                    <p>En achetant ce produit vous pouvez gagner jusqu'à 40 points de fidélité. Votre panier totalisera 40 points de fidélité pouvant être transformé(s) en un bon de réduction de 8,00 €.</p>
-                    <hr>
+                        <div class="col-md-3 info-achat">
+                            <span class="d-flex justify-content-center">
+                                <i class="fa-solid fa-clock"></i>
+                            </span>
+                            <p>
+                                Livraison rapide <br/> Domicile ou point relais.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3 info-achat">
+                            <span class="d-flex justify-content-center">
+                                <i class="fa-solid fa-rotate"></i>
+                            </span>
+                            <p>
+                                Retours & échanges <br/> 14 jours pour changer d’avis.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3 info-achat">
+                            <span class="d-flex justify-content-center">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <p>
+                                Sérénité & confiance <br/> Paiement en ligne sécurisé.
+                            </p>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -279,104 +329,37 @@
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-3">
-            <span class="mx-3 d-flex justify-content-center">
-                <img src="{{ asset('assets/images/icones/free-delivery.png') }}" alt="free-delivery" srcset="">
-            </span>
-            <br>
-            <div class="text-center">
-                <span class="mx-3">Livraison offerte</span>
-                <br>
-                <span class="mx-3">À partir de 40 €</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <span class="mx-3 d-flex justify-content-center">
-                <img src="{{ asset('assets/images/icones/quick-delivery.png') }}" alt="quick-delivery" srcset="">
-            </span>
-            <br>
-            <div class="text-center">
-                <span class="mx-3">Livraison rapide</span>
-                <br>
-                <span class="mx-3">
-                    Domicile ou point relais
-                </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <span class="mx-3 d-flex justify-content-center">
-                <img src="{{ asset('assets/images/icones/return-and-exchange.png') }}" alt="return-and-exchange.png" srcset="">
-            </span>
-            <br>
-            <div class="text-center">
-                <span class="mx-3">Retours & échanges</span>
-                <br>
-                <span class="mx-3">
-                    14 jours pour changer d’avis
-                </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <span class="mx-3 d-flex justify-content-center">
-                <img src="{{ asset('assets/images/icones/serenity-and-trust.png') }}" alt="serenity-and-trust.png" srcset="">
-            </span>
-            <br>
-            <div class="text-center">
-                <span class="mx-3">Sérénité & confiance</span>
-                <br>
-                <span class="mx-3">
-                    Paiement en ligne sécurisé
-                </span>
-            </div>
-        </div>
-    </div>
-
     <!--- second test -->
-    <div class="modal fade bd-example-modal-lg" style="" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
             <div class="modal-content">
+
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-md-6">
                             <h5 style="color: #003951; font-weight: bold;" class="modal-title" id="exampleModalLongTitle">
                                 Payez en plusieurs fois ou plus tard par carte bancaire avec Alma.
-
                             </h5>
                         </div>
-                        <!--<div class="col-md-6 d-flex justify-content-center nav-pills nav-fill" id="pills-tab" role="tablist">
-                                                <a id="pills-home-tab" data-toggle="pill" href="#pills-1" role="tab" class="btn print-black-btn mx-3">
-                                                    2x
-                                                </a>
-                                                
-                                                <a id="pills-profile-tab" data-toggle="pill" href="#pills-2" role="tab" class="btn print-black-btn mx-3">
-                                                    3x
-                                                </a>
-                                                <a id="pills-contact-tab" data-toggle="pill" href="#pills-4" role="tab" class="btn print-black-btn mx-3">
-                                                    4x
-                                                </a>
-                                                
-                                            </div> -->
                     </div>
 
                     <button type="button" class="close tab-design-btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
-                    <div
-                        id="wrapper">
+                    <div id="wrapper">
                         <!-- Content Wrapper -->
-                        <div
-                            id="content-wrapper" class="container d-flex flex-column">
+                        <div id="content-wrapper" class="container d-flex flex-column">
                             <!-- Main Content -->
-                            <div
-                                id="content">
+                            <div id="content">
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
                                     <div class="tabControl">
-                                        <div class="container mb-2">
 
+                                        <div class="container mb-2">
                                             <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
                                                 <li class="nav-item ">
                                                     <a style='background-color:#f1a212' class="nav-link topic btn print-black-btn print-black-btn-active  active" id="pills-home-tab" data-toggle="pill" href="#pills-1" role="tab">2x</a>
@@ -387,10 +370,11 @@
                                                 <li class="nav-item">
                                                     <a class=" topic nav-link btn print-black-btn " id="pills-contact-tab" data-toggle="pill" href="#pills-3" role="tab">4x</a>
                                                 </li>
-
                                             </ul>
                                         </div>
+
                                         <div style="width: 100%;" class="tab-content" id="pills-tabContent">
+
                                             <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-home-tab">
                                                 <table style="width: 100%;">
                                                     <tbody>
@@ -434,6 +418,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+
                                             <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-profile-tab">
                                                 <table>
                                                     <tbody>
@@ -477,12 +462,13 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+
                                             <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-contact-tab">
                                                 <h1>
                                                     Tab 3 ...
                                                 </h1>
-
                                             </div>
+                                            
                                             <div class="tab-pane fade" id="pills-4" role="tabpanel" aria-labelledby="pills-contact-tab">Thank You</div>
                                         </div>
                                     </div>
@@ -490,13 +476,13 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+
                 <div class="modal-footer d-none">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -506,12 +492,15 @@
 
 {% block script %}
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function() {
+
     var slider = $("#slider");
     var thumb = $("#thumb");
     var slidesPerPage = 4; //globaly define number of elements per page
     var syncedSecondary = true;
+
     slider.owlCarousel({
       items: 1,
       slideSpeed: 2000,
@@ -521,8 +510,8 @@ $(document).ready(function() {
       loop: true,
       responsiveRefreshRate: 200
     }).on('changed.owl.carousel', syncPosition);
-    thumb
-        .on('initialized.owl.carousel', function() {
+
+    thumb.on('initialized.owl.carousel', function() {
             thumb.find(".owl-item").eq(0).addClass("current");
         })
         .owlCarousel({
@@ -536,6 +525,7 @@ $(document).ready(function() {
             navText: ['<svg width="18px" height="18px" viewBox="0 0 11 20"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M9.554,1.001l-8.607,8.607l8.607,8.606"/></svg>', '<svg width="25px" height="25px" viewBox="0 0 11 20" version="1.1"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M1.054,18.214l8.606,-8.606l-8.606,-8.607"/></svg>'],
             responsiveRefreshRate: 100
         }).on('changed.owl.carousel', syncPosition2);
+
     function syncPosition(el) {
         var count = el.item.count - 1;
         var current = Math.round(el.item.index - (el.item.count / 2) - .5);
@@ -560,17 +550,20 @@ $(document).ready(function() {
             thumb.data('owl.carousel').to(current - onscreen, 100, true);
         }
     }
+
     function syncPosition2(el) {
         if (syncedSecondary) {
             var number = el.item.index;
             slider.data('owl.carousel').to(number, 100, true);
         }
     }
+
     thumb.on("click", ".owl-item", function(e) {
         e.preventDefault();
         var number = $(this).index();
         slider.data('owl.carousel').to(number, 300, true);
     });
+
     thumb.on("change", ".owl-item", function(e) {
         e.preventDefault();
         var number = $(this).index();
@@ -584,7 +577,8 @@ $(document).ready(function() {
             { now--;}
             $(".qty").val(now);
         }
-    })            
+    }) ;
+
     $(".qtyplus").on("click",function(){
         var now = $(".qty").val();
         if ($.isNumeric(now)){
@@ -592,7 +586,7 @@ $(document).ready(function() {
         }
     });
     
-    $('span.animalcontent').hide();
+    $('span.animalcontent').hide() ;
     
     $('span.animal').bind('mouseover', function() {
         $('span.alma').hide();
@@ -601,6 +595,7 @@ $(document).ready(function() {
         $('#'+$(this).attr('id')+'content').fadeIn();
         
     });  
+
     $('span.animal').bind('mouseleave', function() {
         $(this).removeClass('active_tab');
         
@@ -626,11 +621,7 @@ $(document).ready(function() {
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="	sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
 

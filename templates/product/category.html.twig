@@ -16,9 +16,9 @@
 
 	<div class="columns-container">
 		<div id="columns" class="container">
-			<div class="row">
-			
-				{# sidebar left #}
+			<div class="container">
+				<div class="row">
+					{# sidebar left #}
 					<div id="left_column" class=" col-xs-12 col-sm-3">
 						
 						{# Liste des sous catégories #}
@@ -30,7 +30,7 @@
 								<ul class="tree dhtml">
 									{% for sousCat in sousCats %}
 										<li>
-											<a href="{{ path('products_by_sous_categorie',{slugCategory:categorie.slug, slug:sousCat.slug}) }}" title="">
+											<a href="{{ path('products_by_sous_categorie',{slugCategory:categorie.slug, slugSousCategory:sousCat.slug}) }}" title="">
 												{{ sousCat.nom}}
 											</a>
 										</li>
@@ -58,15 +58,15 @@
 											</div>
 											<ul id="ul_layered_quantity_0" class="col-lg-12 layered_filter_ul">
 												<li class="nomargin hiddable col-lg-12">
-													<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_1" value="1"/>
-													<label for="layered_quantity_1">
-														<a href="#"> Retrait à la boutique </a>
+													<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_0" value="0"/>
+													<label for="layered_quantity_0">
+														<a href="#"> Retrait en boutique <span id="quantity_0"> ({{nbre_dispo[0]}})</span> </a>
 													</label>
 												</li>
 												<li class="nomargin hiddable col-lg-12">
-													<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_0" value="0"/>
-													<label for="layered_quantity_0">
-														<a href="#"> En cours de réapprovisionnement <span id="quantity_0"> ({{nbre_dispo[0]}})</span> </a>
+													<input type="checkbox" class="checkbox" name="layered_quantity[]" id="layered_quantity_1" value="1"/>
+													<label for="layered_quantity_1">
+														<a href="#"> Bientôt disponible <span id="quantity_0"> ({{nbre_dispo[1]}})</span> </a>
 													</label>
 												</li>
 												<li class="nomargin hiddable col-lg-12">
@@ -132,52 +132,56 @@
 							</div>
 						</div>
 					</div>
-				{# Fin sidebar left #}
+					{# Fin sidebar left #}
 
-				{# center #}
-					<div id="center_column" class="center_column col-xs-12 col-sm-9">
-						<div class="content_scene_cat">
-							<div class="content_scene_cat_bg" style="background-image: url({{ asset('/assets/images/categories/'~ categorie.image) }}); min-height:520px;">
-								<div class="cat_desc">
-									<div class="rte">
-										<h1> {{ categorie.nom|upper}} </h1>
-										<p>  {{ categorie.content|raw }} </p>
+					{# center #}
+						<div id="center_column" class="center_column col-xs-12 col-sm-9">
+							<div class="content_scene_cat">
+								<div class="content_scene_cat_bg" style="background-image: url({{ asset('/assets/images/categories/'~ categorie.image) }}); min-height:520px;">
+									<div class="cat_desc">
+										<div class="rte">
+											<h1> {{ categorie.nom|upper}} </h1>
+											<p>  {{ categorie.content|raw }} </p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="pull-right">
-							<span class="heading-counter" id="total"> Il y a {{ total }} produits.</span>
-						</div>
-
-						{# Filtre  #}
-						<div class="content_sortPagiBar clearfix">
-							<div class="sortPagiBar clearfix">
-								<form id="productsSortForm" action="https://www.royaume-smoke.com/97-chicha" class="productsSortForm pull-right">
-									<div class="select selector1">
-										<label for="selectProductSort">Tri</label>
-										<select id="selectProductSort" class="selectProductSort form-control" onchange="tri(this)">
-											<option value="quantity:desc">--</option>
-											<option value="price:asc">Le moins cher</option>
-											<option value="price:desc">Le plus cher</option>
-											<option value="name:asc">De A &agrave; Z</option>
-											<option value="name:desc">De Z &agrave; A</option>
-											<option value="quantity:desc" selected="selected">En Stock</option>
-											<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
-											<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
-											</option>
-										</select>
-									</div>
-								</form>
+							<div class="pull-right">
+								<span class="heading-counter" id="total"> Il y a {{ total }} produits.</span>
 							</div>
-						</div>
 
-						<!-- Products list -->
-						{% include "product/liste_produits.html.twig" with {'produits':produits} %}
-					</div>
-				{# FIn center #}
-				
+							{# Filtre tri #}
+							<div class="content_sortPagiBar clearfix">
+								<div class="sortPagiBar clearfix">
+									<form id="productsSortForm" action="{{ path("products_by_categorie") }}" class="productsSortForm pull-right">
+										<div class="select selector1">
+											<label for="selectProductSort"> Tri </label>
+
+											<div class="selector" id="uniform-selectProductSort">
+												<select id="selectProductSort" class="selectProductSort form-control" onchange="tri(this)">
+													<option value="quantity:desc">--</option>
+													<option value="price:asc">Le moins cher</option>
+													<option value="price:desc">Le plus cher</option>
+													<option value="name:asc">De A &agrave; Z</option>
+													<option value="name:desc">De Z &agrave; A</option>
+													<option value="quantity:desc" selected="selected">En Stock</option>
+													<option value="reference:asc">R&eacute;f&eacute;rence : croissante</option>
+													<option value="reference:desc">R&eacute;f&eacute;rence : d&eacute;croissante
+													</option>
+												</select>
+											</div>
+											
+										</div>
+									</form>
+								</div>
+							</div>
+							<hr>
+							<!-- Products list -->
+							{% include "product/liste_produits.html.twig" with {'produits':produits} %}
+						</div>
+					{# FIn center #}
+				</div>
 			</div>
 		</div>
 	</div>
