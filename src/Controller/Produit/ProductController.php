@@ -138,8 +138,11 @@ class ProductController extends AbstractController
            $this->redirectToRoute('home') ;
         }
 
+        $categorie = $produit->getCategory();
+
         return $this->render('product/product_page.html.twig', [
             'produit' => $produit,
+            'categorie' => $categorie
         ]);
     }
 

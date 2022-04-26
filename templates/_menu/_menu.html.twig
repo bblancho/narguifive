@@ -24,34 +24,32 @@
 			</div>
 		</div>
 
-		<div class="icone_menu" id="user">
+		<div  class=" dropdown icone_menu" id="user">
 			<div class="icon-top">
-				<div class="dropdown">
-					<a class="nav-link dropdown-toggle" title="Mon compte" id="dropdown000" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-						<i class="bi bi-person"></i>
-						<span class="labelTop">Mon compte</span>
-					</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown000">
-						{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-							<a class="dropdown-item" href="{{ path('app_login') }}">
-								Connexion
-							</a>
-							<a class="dropdown-item" href="{{ path('register') }}">
-								Inscription
-							</a>
-						{% else %}
-							<a class="dropdown-item" href="{{ path('account') }}">
-								Mon compte
-								<small>
-									{{ app.user.nom }}
-								</small>
-							</a>
-							<a class="dropdown-item" href="{{ path('app_logout') }}">
-								Déconnexion
-							</a>
-						{% endif %}
-					</div>
-				</div>
+				<button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-person"></i>
+					<span class="labelTop"> Mon compte </span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+					{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+						<a class="dropdown-item" href="{{ path('app_login') }}">
+							Connexion
+						</a>
+						<a class="dropdown-item" href="{{ path('register') }}">
+							Inscription
+						</a>
+					{% else %}
+						<a class="dropdown-item" href="{{ path('account') }}">
+							Mon compte
+							<small>
+								{{ app.user.nom }}
+							</small>
+						</a>
+						<a class="dropdown-item" href="{{ path('app_logout') }}">
+							Déconnexion
+						</a>
+					{% endif %}
+				</ul>
 			</div>
 		</div>
 
@@ -65,36 +63,43 @@
 		</div>
 	</div>
 
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
 
-			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav mb-2 mb-md-0">
-					{% for category in categories %}
-						{% if category.sousCategory is not empty %}
-							{# chicha #}
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="{{ category.id }}" data-toggle="dropdown" aria-expanded="false">{{ category.nom }}</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
-									{% for cat in category.sousCategory %}
-										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
-											{{ cat.nom }}
-										</a>
-									{% endfor %}
-								</div>
-							</li>
-						{% else %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a>
-							</li>
-						{% endif %}
-					{% endfor %}
-				</ul>
-			</div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+			<ul class="navbar-nav">
+				{% for category in categories %}
+					{% if category.sousCategory is not empty %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="cat-{{ category.id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{{ category.nom }}
+							</a>
+							
+							<ul class="dropdown-menu" aria-labelledby="cat-{{ category.id }}">
+								{% for cat in category.sousCategory %}
+								<li><a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
+									{{ cat.nom }}
+								</a></li>
+								{% endfor %}
+							</ul>
+
+							
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('products_by_categorie', {slug:category.slug} )}}"> {{ category.nom }} </a>
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+
 		</div>
-	</nav>
+	</div>
+</nav>
+
 </header>

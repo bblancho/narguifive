@@ -83,8 +83,17 @@ div.footer{
     color: red;
 }
 
-.dropdown-item:active{
-    background-color: none;
+.dropdown-item:active {
+    background-color: #fff;
+    color: #000;
+}
+
+.carousel-inner, .carousel-item{
+    height: 900px;
+}
+.carousel-item img{
+    background-position: center;
+    height: 100%;
 }
 
 #pagination_site{
@@ -191,6 +200,32 @@ h1,h2{
     font-family: Roboto,serif;
     font-size: 9px;
 }
+#panier{
+    margin-right: 15px;
+}
+.btn-panier{
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-size: 17px;
+    text-transform: uppercase;
+    padding: 0px;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    padding-bottom: 4px;
+    background-color: transparent;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+    /* height: 800px; */
+
+}
 
 .blog-header-logo {
     background: #000;
@@ -271,9 +306,7 @@ nav, .navbar{
 .labelTop{
     display: inline-block;
 }
-#panier{
-    margin-right: 15px;
-}
+
 
 ul.navbar-nav{
     justify-content: space-around;
@@ -1179,6 +1212,7 @@ div.description-block{
     margin: 0;
     font-size: 1.3rem;
     font-style: italic;
+    color: #fff;
 }
 .description-block .subtitle{
     z-index: 10;
@@ -1196,6 +1230,7 @@ div.description-block{
     text-align: center;
     display: block;
     margin: 7px 0px;
+    color: #000;
 }
 p a.btn-info {
     color: #fff;
@@ -1231,15 +1266,18 @@ p a.btn-info:hover{
 }
 
 .block-valeur img{
-    width: 100%;
-    object-fit: cover;
-    height: 198px;
+    width: 90px;
 }
 
 .block-valeur h3{
-    font-size: 1.2rem;
     text-transform: uppercase;
     font-weight: bold;
+    font-size: 17px;
+}
+
+.block-valeur span{
+    font-size: 15px;
+    font-weight: 500;
 }
 
 /** Block nos partenaires **/
@@ -1257,9 +1295,6 @@ p a.btn-info:hover{
 .block-partenaires figure img{
     display: block;
     width: 100%;
-}
-.assurance img{
-    width: 15% !important;
 }
 
 /********** Footer *********/

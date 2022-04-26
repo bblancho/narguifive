@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" >
 
 		<!-- Bootstrap icone + fontawesome icone -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+		{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/> #}
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
@@ -47,20 +47,17 @@
 	</head>
 
 	<body>
-		{# {% include "partials/_nav.html.twig" %} #}
-
 		{{ render( controller('App\\Controller\\MenuController::index' ) ) }}
-		{% include "modal/video.html.twig" %}
 
 		<main role="main">
-			{# {% if block('carousel') is defined %} #}
+			{# {% if block('carousel') is defined %} #} 
 				{% include "partials/_carousel.html.twig" %}
-			{# {% endif %} #}
+			{# {% endif %}  #}
 
 			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
-				
 				{# Breadcrumb #}
 				{{ include("partials/_breadcrumb.html.twig") }}
+				{{ include("modal/panier.html.twig") }}
 
 				{% block body %}{% endblock %}
 			</div>
@@ -87,17 +84,16 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<script>
-            (function () {
+            {# (function () {
                 if (!localStorage.getItem('cookieconsent')) {
                     $('#myModalVideo').modal('show');
-					
                     document.querySelector('#close').onclick = function (e) {
                         e.preventDefault();
                         $('#myModalVideo').modal('hide');
                         localStorage.setItem('cookieconsent', true);
                     };
                 }
-            })();
+            })(); #}
         </script>
 		
 		{% block script %}

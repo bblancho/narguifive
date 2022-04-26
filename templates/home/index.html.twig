@@ -65,9 +65,7 @@
 			<div class="tab-pane show active" id="news" role="tabpanel" aria-labelledby="news-tab">New</div>
 			<div class="tab-pane fade" id="promos" role="tabpanel" aria-labelledby="promos-tab">Promos</div>
 			<div class="tab-pane fade" id="chichas" role="tabpanel" aria-labelledby="chichas-tab">
-				<div> Nombre de produits {{ nb_produits_total }} </div>
 				{% include "product/liste_produits.html.twig" with {'produits':produits, 'total':nb_produits_total, 'limit':12} %}	
-				{# {% include "product/liste_produits.html.twig" with {'produits':produits} %} #}
 			</div>
 			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">Goûts</div>
 			<div class="tab-pane fade" id="accesssoires" role="tabpanel" aria-labelledby="accesssoires-tab">Charbons</div>
@@ -252,20 +250,16 @@
 			<div class="row ">
 				<div class="col-md-3 block-valeur assurance">
 					<figure>
-						<a href="#">
-							<img src="{{ asset('assets/images/icones/truck.png') }}"/>
-						</a>
+						<img src="{{ asset('assets/images/icones/truck.png') }}"/>
 					</figure>
 					<p>
 						<h3> Livraison gratuite </h3>
-						<span> Dès de 75€</span>
+						<span> Dès de 40€</span>
 					</p>
 				</div>
 				<div class="col-md-3 block-valeur assurance">
 					<figure>
-						<a href="#">
-							<img src="{{ asset('assets/images/icones/security-payment.png') }}"/>
-						</a>
+						<img src="{{ asset('assets/images/icones/security-payment.png') }}"/>
 					</figure>
 					<p>
 						<h3> paiement Sécurisé</h3>
@@ -275,9 +269,7 @@
 
 				<div class="col-md-3 block-valeur assurance">
 					<figure>
-						<a href="#">
-							<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>
-						</a>
+						<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>	
 					</figure>
 					<p>
 						<h3> Nos cadeaux </h3>
@@ -286,9 +278,7 @@
 				</div>
 				<div class="col-md-3 block-valeur assurance">
 					<figure>
-						<a href="#">
-							<img src="{{ asset('assets/images/icones/idee.png') }}"/>
-						</a>
+						<img src="{{ asset('assets/images/icones/idee.png') }}"/>
 					</figure>
 					<p>
 						<h3>
