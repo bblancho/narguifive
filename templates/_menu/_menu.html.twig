@@ -81,10 +81,13 @@
 							</a>
 							
 							<ul class="dropdown-menu" aria-labelledby="cat-{{ category.id }}">
+								<li> <a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a> </li>
 								{% for cat in category.sousCategory %}
-								<li><a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
-									{{ cat.nom }}
-								</a></li>
+									<li>
+										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
+											{{ cat.nom }}
+										</a>
+									</li>
 								{% endfor %}
 							</ul>
 

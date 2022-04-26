@@ -216,27 +216,29 @@
     </div>
 
     <div id="product-info-tabs" class="product-info-tabs mt-4 mb-3 mt-4">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li style="background-color: #f1a212 !important; width: 30%;" class="nav-item mx-3">
-                <a class="nav-link tab_plane active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">EN SAVOIR PLUS</a>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
             </li>
-            <li style="width: 30%;" class="nav-item tab_plane mx-3">
-                <a class="nav-link" id="review-tab" data-toggle="tab" href="#livraison" role="tab" aria-controls="review" aria-selected="false">INFORMATIONS LIVRAISON</a>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
             </li>
-            <li style="width: 30%;" class="nav-item tab_plane">
-                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">AVIS CLIENTS</a>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
             </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <p class="tab_title">Envie de faire un cadeau chicha réussi ? La carte cadeau Royaume Smoke répondra à vos attentes</p>
-                <p>A l'occasion d'un Anniversaire, pour la Saint Valentin, Noël, un cadeau commun, ou tout autres occasions, la carte cadeau Royaume Smoke ravira à coup sûr son bénéficiaire.
-                                        Fini les questions sur la taille, la pointure, les goûts, les besoins du, ou de la concerné(e), avec cette carte cadeau vous ne pouvez ni douter, ni vous tromper.
-                                        La Carte Cadeau RS, est le cadeau idéal si la personne à qui vous voulez faire un cadeau souhaite s'équiper en chicha, accessoires, charbons, etc...
-                                        Ou tout simplement compléter sa collection personnelle.
-                                        Cette carte cadeau est valable 1 an à compter de sa date d'achat, et peut être utilisée en une seule fois ou de manière fractionnée au choix, sur le site Internet Royaume Smoke, et en boutique. Vous avez le choix sur différents montants : 50€, 100€, 150€, 200€, 300€, 400€, et 500€.
-                                        La Carte Cadeau RS ne peut être ni reprise, ni échangée, ni revendue, ni remboursée, même partiellement, ni portée au crédit d’une carte ou d’un compte bancaire ou d’une autre carte cadeau.</p>
+                <p>
+                    A l'occasion d'un Anniversaire, pour la Saint Valentin, Noël, un cadeau commun, ou tout autres occasions, la carte cadeau Royaume Smoke ravira à coup sûr son bénéficiaire.
+                    Fini les questions sur la taille, la pointure, les goûts, les besoins du, ou de la concerné(e), avec cette carte cadeau vous ne pouvez ni douter, ni vous tromper.
+                    La Carte Cadeau RS, est le cadeau idéal si la personne à qui vous voulez faire un cadeau souhaite s'équiper en chicha, accessoires, charbons, etc...
+                    Ou tout simplement compléter sa collection personnelle.
+                    Cette carte cadeau est valable 1 an à compter de sa date d'achat, et peut être utilisée en une seule fois ou de manière fractionnée au choix, sur le site Internet Royaume Smoke, et en boutique. Vous avez le choix sur différents montants : 50€, 100€, 150€, 200€, 300€, 400€, et 500€.
+                    La Carte Cadeau RS ne peut être ni reprise, ni échangée, ni revendue, ni remboursée, même partiellement, ni portée au crédit d’une carte ou d’un compte bancaire ou d’une autre carte cadeau.
+                </p>
                 <p class="tab_title">
                     Valable sur notre site Internet, et également en magasin.
                 </p>
@@ -257,7 +259,7 @@
                 </p>
             </div>
 
-            <div class="tab-pane fade" id="livraison" role="tabpanel" aria-labelledby="description-tab">
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <p class="tab_title">
                     LES MODES DE LIVRAISON :
                 </p>
@@ -286,8 +288,9 @@
                 </p>
             </div>
 
-            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <div class="review-heading">Avis</div>
+
                 <p class="mb-20">Pas d'avis pour le moment</p>
                 <form class="review-form">
                     <div class="form-group">
@@ -307,10 +310,12 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Votre message</label>
                         <textarea class="form-control" rows="10"></textarea>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mt-3">
@@ -329,169 +334,171 @@
         </div>
     </div>
 
-    <!--- second test -->
-    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5 style="color: #003951; font-weight: bold;" class="modal-title" id="exampleModalLongTitle">
-                                Payez en plusieurs fois ou plus tard par carte bancaire avec Alma.
-                            </h5>
-                        </div>
+<!--- second test -->
+<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 style="color: #003951; font-weight: bold;" class="modal-title" id="exampleModalLongTitle">
+                            Payez en plusieurs fois ou plus tard par carte bancaire avec Alma.
+                        </h5>
                     </div>
-
-                    <button type="button" class="close tab-design-btn" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
 
-                <div class="modal-body">
-                    <div id="wrapper">
-                        <!-- Content Wrapper -->
-                        <div id="content-wrapper" class="container d-flex flex-column">
-                            <!-- Main Content -->
-                            <div id="content">
-                                <!-- Begin Page Content -->
-                                <div class="container-fluid">
-                                    <div class="tabControl">
+                <button type="button" class="close tab-design-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                                        <div class="container mb-2">
-                                            <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
-                                                <li class="nav-item ">
-                                                    <a style='background-color:#f1a212' class="nav-link topic btn print-black-btn print-black-btn-active  active" id="pills-home-tab" data-toggle="pill" href="#pills-1" role="tab">2x</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class=" topic nav-link btn print-black-btn " id="pills-profile-tab" data-toggle="pill" href="#pills-2" role="tab">3x</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class=" topic nav-link btn print-black-btn " id="pills-contact-tab" data-toggle="pill" href="#pills-3" role="tab">4x</a>
-                                                </li>
-                                            </ul>
+            <div class="modal-body">
+                <div id="wrapper">
+                    <!-- Content Wrapper -->
+                    <div id="content-wrapper" class="container d-flex flex-column">
+                        <!-- Main Content -->
+                        <div id="content">
+                            <!-- Begin Page Content -->
+                            <div class="container-fluid">
+                                <div class="tabControl">
+
+                                    <div class="container mb-2">
+                                        <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+                                            <li class="nav-item ">
+                                                <a style='background-color:#f1a212' class="nav-link topic btn print-black-btn print-black-btn-active  active" id="pills-home-tab" data-toggle="pill" href="#pills-1" role="tab">2x</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class=" topic nav-link btn print-black-btn " id="pills-profile-tab" data-toggle="pill" href="#pills-2" role="tab">3x</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class=" topic nav-link btn print-black-btn " id="pills-contact-tab" data-toggle="pill" href="#pills-3" role="tab">4x</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="width: 100%;" class="tab-content" id="pills-tabContent">
+
+                                        <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-home-tab">
+                                            <table style="width: 100%;">
+                                                <tbody>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>Choisissez Alma au moment du paiement.</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>Total</div>
+                                                            <div>Dont frais</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>800,00 €</div>
+                                                            <div>0.00 €</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>Renseignez les informations demandées.</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>Aujourd'hui400,00 € 5 mai 2022
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div>400,00 €</div>
+                                                            <div>400,00 €</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>La validation de votre paiement instantanée !</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>...</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>...</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
 
-                                        <div style="width: 100%;" class="tab-content" id="pills-tabContent">
-
-                                            <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-home-tab">
-                                                <table style="width: 100%;">
-                                                    <tbody>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>Choisissez Alma au moment du paiement.</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>Total</div>
-                                                                <div>Dont frais</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>800,00 €</div>
-                                                                <div>0.00 €</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>Renseignez les informations demandées.</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>Aujourd'hui400,00 € 5 mai 2022
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div>400,00 €</div>
-                                                                <div>400,00 €</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>La validation de votre paiement instantanée !</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>...</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>...</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                                <table>
-                                                    <tbody>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>Choisissez Alma au moment du paiement.</div>
-                                                            </td>
-                                                            <td>
-                                                                <div style="font-weight: bold !important;" class="text-bold">Total</div>
-                                                                <div style="font-weight: bold !important;" class="text-bold">Dont frais</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>800,00 €</div>
-                                                                <div>0.00 €</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>Renseignez les informations demandées.</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>Aujourd'hui400,00 € 5 mai 2022
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div>400,00 €</div>
-                                                                <div>400,00 €</div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="active">
-                                                            <td>
-                                                                <div>La validation de votre paiement instantanée !</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>...</div>
-                                                            </td>
-                                                            <td>
-                                                                <div>...</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                                <h1>
-                                                    Tab 3 ...
-                                                </h1>
-                                            </div>
-                                            
-                                            <div class="tab-pane fade" id="pills-4" role="tabpanel" aria-labelledby="pills-contact-tab">Thank You</div>
+                                        <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                            <table>
+                                                <tbody>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>Choisissez Alma au moment du paiement.</div>
+                                                        </td>
+                                                        <td>
+                                                            <div style="font-weight: bold !important;" class="text-bold">Total</div>
+                                                            <div style="font-weight: bold !important;" class="text-bold">Dont frais</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>800,00 €</div>
+                                                            <div>0.00 €</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>Renseignez les informations demandées.</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>Aujourd'hui400,00 € 5 mai 2022
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div>400,00 €</div>
+                                                            <div>400,00 €</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="active">
+                                                        <td>
+                                                            <div>La validation de votre paiement instantanée !</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>...</div>
+                                                        </td>
+                                                        <td>
+                                                            <div>...</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
+
+                                        <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                            <h1>
+                                                Tab 3 ...
+                                            </h1>
+                                        </div>
+                                        
+                                        <div class="tab-pane fade" id="pills-4" role="tabpanel" aria-labelledby="pills-contact-tab">Thank You</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="modal-footer d-none">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-
             </div>
+
+            <div class="modal-footer d-none">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+
         </div>
     </div>
+</div>
 
 </div>
 {% endblock %}
 
 {% block script %}
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+{# <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> #}
 
 <script>
     $(document).ready(function() {
