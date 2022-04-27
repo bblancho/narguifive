@@ -127,6 +127,7 @@
 
 #layered_block_left ul li input.checkbox{
   display: inline;
+  cursor: pointer;
 }
 
 .navbar-nav > li > .dropdown-menu {
