@@ -1,38 +1,37 @@
-jQuery(document).ready(function () {
-  // Afficher cacher
-  $("#tab2show").hide();
-  $("#tab3show").hide();
-  $("#tab4show").hide();
+    jQuery(document).ready(function () {
 
-  // Au click sur le lien
-  $(".lien_category").click(function () {
-    //Hide all divs inside div 'tabShows'
-    $(".produits").hide(5000, "linear", function () {
-      alert("Titre bien caché");
+    // Afficher cacher
+    $("#tab2show").hide();
+    $("#tab3show").hide();
+    $("#tab4show").hide();
+
+    // Au click sur le lien
+    $(".lien_category").click(function () {
+        //Hide all divs inside div 'tabShows'
+        $(".produits").hide(5000, "linear", function () {
+            alert("Titre bien caché");
+        });
+
+        console.log("#" + $(this).attr("id") + "show");
+
+        //Show only div that was clicked, e.g. tab1show
+        $("#" + $(this).attr("id") + "show").show(2000);
     });
 
-    console.log("#" + $(this).attr("id") + "show");
+    $("#all").click(function () {
+        $(".produits").show(3000, "linear");
+    });
 
-    //Show only div that was clicked, e.g. tab1show
-    $("#" + $(this).attr("id") + "show").show(2000);
-  });
+    /**************** Onglet page home*******************/ 
+    $(".onglet_categorie button").click(function () {
+        let categorie;
 
-  $("#all").click(function () {
-    $(".produits").show(3000, "linear");
-  });
+        categorie = $(this).attr("id");
 
-  /**************** Onglet page home*******************/ 
+        $(".tab-pane").removeClass("fade");
+        $(".tab-pane").removeClass("show");
 
-  $(".onglet_categorie button").click(function () {
-    let categorie;
-
-    categorie = $(this).attr("id");
-
-    $(".tab-pane").removeClass("fade");
-    $(".tab-pane").removeClass("show");
-
-   console.log(categorie) ;
-  });
-
+        console.log(categorie) ;
+    });
 
 });

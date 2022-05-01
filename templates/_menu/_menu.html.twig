@@ -1,4 +1,5 @@
 <header>
+
 	<div class="row flex-nowrap justify-content-between align-items-center">
 		<div class="blog-header-logo">
 			<div class="etoile">
@@ -13,10 +14,11 @@
 		</div>
 	</div>
 
+	<!-- Modal  -->
 	<div id="info">
 		<div class="icone_menu" id="panier">
 			<div class="icon-top">
-				<a href="#" class="nav-link" title="Panier">
+				<a href="#" role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#panierModal" title="Panier">
 					<i class="bi bi-cart"></i>
 					<span class="panier" id="panier_number"></span>
 				</a>
@@ -33,10 +35,10 @@
 		
 		<div  class="icone_menu" id="user">
 			<div class="icon-top">
-				<a class="nav-link dropdown-toggle" role="button" id="dropdownMenu5" data-bs-toggle="dropdown" aria-expanded="false" title="Mon compte">
+				<a class="nav-link dropdown-toggle" role="button" data-bs-target="#dropdownMenu5" data-bs-toggle="dropdown" aria-expanded="false" title="Mon compte">
 					<i class="bi bi-person"></i>
 				</a>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu5">
+				<ul class="dropdown-menu" id="dropdownMenu5" aria-labelledby="dropdownMenu5">
 					{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 						<a class="dropdown-item" href="{{ path('app_login') }}">
 							Connexion
@@ -61,53 +63,58 @@
 
 		<div class="icone_menu" id="search">
 			<div class="icon-top">
-				<a href="#" class="nav-link"   role="button" aria-pressed="false" title="Rechercher">
+				<a href="#" class="nav-link" role="button" data-bs-toggle="modal" data-bs-target="#search" aria-pressed="false" title="Rechercher">
 					<i class="bi bi-search"></i>
 				</a>
 			</div>
 		</div>
 
-		
-	</div>
-
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
-	<div class="container-fluid">
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-				{% for category in categories %}
-					{% if category.sousCategory is not empty %}
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="cat-{{ category.id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								{{ category.nom }}
-							</a>
-							
-							<ul class="dropdown-menu" aria-labelledby="cat-{{ category.id }}">
-								<li> <a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a> </li>
-								{% for cat in category.sousCategory %}
-									<li>
-										<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
-											{{ cat.nom }}
-										</a>
-									</li>
-								{% endfor %}
-							</ul>
-
-							
-						</li>
-					{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('products_by_categorie', {slug:category.slug} )}}"> {{ category.nom }} </a>
-						</li>
-					{% endif %}
-				{% endfor %}
-			</ul>
+		<div class="icone_menu" id="livraison">
+			<div class="icon-top">
+				<a href="#" class="nav-link" role="button" data-bs-toggle="modal" data-bs-target="#truckModal" aria-pressed="false" title="livraison">
+					<i class="bi bi-truck"></i>
+				</a>
+			</div>
 		</div>
 	</div>
-</nav>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar_toptop">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
+					{% for category in categories %}
+						{% if category.sousCategory is not empty %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="cat-{{ category.id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									{{ category.nom }}
+								</a>
+								
+								<ul class="dropdown-menu" aria-labelledby="cat-{{ category.id }}">
+									<li> <a class="dropdown-item" href="{{ path('products_by_categorie',{slug:category.slug} )}}">{{ category.nom }}</a> </li>
+									{% for cat in category.sousCategory %}
+										<li>
+											<a class="dropdown-item" href="{{ path('products_by_sous_categorie',{ slugCategory:category.slug, slugSousCategory:cat.slug } )}}">
+												{{ cat.nom }}
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+
+								
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('products_by_categorie', {slug:category.slug} )}}"> {{ category.nom }} </a>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 </header>
