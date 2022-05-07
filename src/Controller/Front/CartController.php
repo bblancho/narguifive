@@ -15,7 +15,9 @@ class CartController extends AbstractController
     public function panier( CarteService $cartService ): Response
     {
         $panierData = $cartService->getFullCarte();
-        $total = $cartService->getTotal();
+        $total      = $cartService->getTotal();
+
+        // dd($panierData) ; // On affiche la session courante
 
         return $this->render('cart/panier.html.twig', [
             'panierData' => $panierData,

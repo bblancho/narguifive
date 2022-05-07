@@ -8,12 +8,12 @@ use App\Repository\ProductRepository;
 
 class CarteService
 {
-    protected $session ;
+    protected $requestStack ;
     protected $produitRepo;
 
     public function __construct( RequestStack $requestStack,  ProductRepository $produitRepo)
     {
-        $this->session = $requestStack;
+        $this->requestStack = $requestStack; // objet session
         $this->produitRepo = $produitRepo;
     }
 
@@ -28,10 +28,10 @@ class CarteService
 
     public function add(int $id): void
     {
-        $session = $this->session->getSession(); // recup session current
+        $session = $this->requestStack->getSession(); // recup session current
         $panier  = $session->get('panier', [] ); // the second argument is the value returned when the attribute doesn't exist
 
-        if( !empty( $panier[$id] ) ){ // is ID présent dans le tableau
+        if( !empty( $panier[$id] ) ){ // si ID présent dans le tableau
             $panier[$id]++ ;
         } else {
             $panier[$id] = 1;
@@ -42,7 +42,7 @@ class CarteService
 
     public function decrease(int $id)
     {
-        $session = $this->session->getSession();
+        $session = $this->requestStack->getSession();
         $panier  = $session->get('panier', []) ;
 
         if( $panier[$id] > 1 ){
@@ -56,10 +56,10 @@ class CarteService
 
     public function delete(int $id): void
     {
-        $session = $this->session->getSession(); // recup session current
+        $session = $this->requestStack->getSession(); // recup session current
         $panier  = $session->get('panier', [] ); // the second argument is the value returned when the attribute doesn't exist
 
-        if( !empty( $panier[$id] ) ){ // is ID présent dans le tableau
+        if( !empty( $panier[$id] ) ){ // si ID présent dans le tableau
             unset( $panier[$id] ) ;
         }
 
@@ -68,14 +68,14 @@ class CarteService
 
     public function remove(): void
     {
-        $session = $this->session
+        $session = $this->requestStack
                     ->getSession() // recup session current
                     ->remove('panier', [] ) ; // the second argument is the value returned when the attribute doesn't exist
     }
 
     public function getFullCarte(): array
     {
-        $session = $this->session->getSession(); // recup session current
+        $session = $this->requestStack->getSession(); // recup session current
         $panier  = $session->get('panier', [] ); // the second argument is the value returned when the attribute doesn't exist
 
         $panierData = [];
@@ -102,9 +102,7 @@ class CarteService
     {
         $total = 0;
 
-        $panierData = $this->getFullCarte();
-
-        foreach( $panierData as $produit ){
+        foreach( $$this->getFullCarte() as $produit ){
             $totalProduit = $produit['produit']->getPrice() * $produit['quantity'] ;
             $total += $totalProduit;
         }

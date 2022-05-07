@@ -216,7 +216,6 @@ h1,h2{
 }
 
 /********** Modal *********/
-
 .modal{
     /* display:flex;
     align-items: center;
@@ -244,6 +243,49 @@ h1,h2{
     padding: 20px;
     max-width: calc(100vw - 20px );
     max-height: calc(100vh - 20px );
+}
+#truckModal .modal-dialog{
+    background-color: #f1f1f1;
+}
+#truckModal {
+    opacity: 1;
+    overflow: visible;
+    height: auto;
+    position: absolute;
+    top: 6%;
+    left: 0;
+}
+
+#truckModal .modal-content, #truckModal .modal-footer,  #truckModal .modal-header{
+    border: none;
+}
+
+#truckModal .modal-body{
+    padding: 0px;
+}
+
+#truckModal .modal-body p{
+    background-color: #fff;
+    padding: 15px;
+}
+
+#truckModal .modal-header{
+    display: initial;
+    padding: 15px 0;
+    margin: 0;
+    background-color: #fff;
+}
+
+#truckModal .row{
+    background: #f1f1f1;
+    --bs-gutter-x: 0.5rem ;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#truckModal .row .modal-body {
+    padding: 15px 0;
+    margin: 0;
 }
 
 iframe{
@@ -896,6 +938,31 @@ ul.product_list .product-image-container img {
 
 .mdi-cart:before {
     content: "\f1e6"
+}
+
+.recap-commande p{
+    text-align: right;
+}
+
+.recap-commande td a{
+    color: #000;
+}
+.recap-commande td {
+    line-height: 75px;
+}
+
+.recap-commande a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.recap-commande a:hover{
+    color: #f0ad4e;
+}
+
+.recap-commande b{
+    font-size: 17px;
+    text-transform: uppercase;
 }
 
 /** details du produit **/

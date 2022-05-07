@@ -18,13 +18,13 @@
 		</p>
 	</div>
 
-	<div class="container">
+	<div class="container recap-commande">
 		{% if nbrProduits > 0 %}
 			<table class="table mt-3">
 				<thead>
 					<tr>
-						<th> Produit </th>
-						<th></th>
+						<th> Mes Produit(s) </th>
+						<th> Nom du produit </th>
 						<th> Prix </th>
 						<th> Quantité </th>
 						<th> Total </th>
@@ -36,34 +36,40 @@
 					{% set total = null %}
 					{% for item in panierData %}
 						<tr>
-							<td> 
-								<img src="{{ item.produit.image }}" alt="NARGUI FIVE-{{ item.produit.nom }}" height="75px"><br/>
-							</td>
-							<td> {{ item.produit.nom }} </td>
+							<td> <img src="{{ item.produit.image }}" alt="NARGUI FIVE-{{ item.produit.nom }}" height="75px"> </td>
+							<td>  {{ item.produit.nom }} </td>
 							<td> {{ item.produit.price | number_format(2, ',', ',') }} € </td>
 							<td> 
-								<a href="{{ path("cart_add", { "id": item.produit.id }) }}"> 
-									<img src="{{ asset('assets/images/icones/signe-plus.png') }}" title="Google" class="signe-plus"  alt="item.produit.nom">
-								</a> 
-									X {{ item.quantity }}  
 								<a href="{{ path('cart_decrease', { "id" :item.produit.id }) }}" > 
-									<img class="signe-moins" src="{{ asset('assets/images/icones/signe-moins.png') }}" title="Freepik" alt="item.produit.nom">
+									<img class="signe-moins" src="{{ asset('assets/images/icones/signe-moins.png') }}" title="Réduire" alt="item.produit.nom">
 								</a>
+								 
+								X {{ item.quantity }}  
+
+								<a href="{{ path("cart_add", { "id": item.produit.id }) }}"> 
+									<img src="{{ asset('assets/images/icones/signe-plus.png') }}" title="Ajouter" class="signe-plus"  alt="item.produit.nom">
+								</a>
+								
 							</td>
 							<td> {{  (item.quantity * item.produit.price) | number_format(2, ',', ',') }} € </td>
-							<td> <a href="{{ path('cart_delete', {"id" :item.produit.id }) }}" > <img src="{{ asset('assets/images/icones/corbeille.png') }}" title="Freepik" height="25px" alt="item.produit.nom"> </a></td>
+							<td> 
+								<a href="{{ path('cart_delete', {"id" :item.produit.id }) }}"  title="Supprimer"> 
+									<i class="fas fa-trash"> </i>
+								</a>
+							</td>
 
 							{% set total = total + item.quantity * item.produit.price %}
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<hr/>
 
-			<div class="text-right">
-				<b> Mon panier contient : {{ nbrProduits }} produit(s) </b> <br>
-				<b> Total de mon panier :  {{ total | number_format(2, ',', ',') }} €</b><br>
-				<a href="{{ path('order') }}" class="btn btn-info custom-btn  mt-3"> Valider mon panier </a>
+			<div>
+				<p>
+					<b> Nombre total de produit(s) : {{ nbrProduits }}  </b> <br>
+					<b> Total:  {{ total | number_format(2, ',', ',') }} €</b><br><br>
+					<a href="{{ path('order') }}" class="btn btn-success"> Valider mon panier </a>
+				</p>
 			</div>
 
 		{% else %}

@@ -29,7 +29,10 @@
 						{% endif  %}
 					</div>
 
-					<button class="btn btn-success mb-2" onclick="WishlistCart('wishlist_block_list', 'add', '{{produit.id}}', $('#idCombination').val(), 1,'tabproduct'); return false;" data-id-product="{{produit.id}}" title="Ajouter au panier"> <i class="mdi mdi-cart"></i> <span> Ajouter au panier </span> </button>
+					<button class="btn btn-success mb-2" onclick="WishlistCart('wishlist_block_list', 'add', '{{produit.id}}', $('#idCombination').val(), 1,'tabproduct'); return false;" data-id-product="{{produit.id}}" title="Ajouter au panier"> 
+						<i class="mdi mdi-cart"></i> <span> Ajouter au panier </span> 
+					</button>
+					<a href="{{ path('cart_add', { id: produit.id }) }}"  class="btn btn-primary my-2"  title="{{ produit.nom }}">  Ajouter au panier  </a>
 					<a href="{{ path('product_show', { slug: produit.slug }) }}"  class="btn btn-info"  title="{{ produit.nom }}"> Détails </a>
 				</div>
 			</div>
