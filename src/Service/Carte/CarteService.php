@@ -102,7 +102,7 @@ class CarteService
     {
         $total = 0;
 
-        foreach( $$this->getFullCarte() as $produit ){
+        foreach( $this->getFullCarte() as $produit ){
             $totalProduit = $produit['produit']->getPrice() * $produit['quantity'] ;
             $total += $totalProduit;
         }
