@@ -14,5 +14,4 @@ import './app/tri';
 import './app/myjs';
 import './app/javascript';
 import './app/filter';
-import './app/bootstrap.bundle';
 import './app/jquery.sticky';

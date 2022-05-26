@@ -55,7 +55,7 @@
 			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
 				{# Breadcrumb #}
 				{% include "partials/_breadcrumb.html.twig" %}
-				{% include "modal/modal_panier.html.twig" %}
+				<div class="modal fade" id="panierModal" role="dialog"  tabindex="-1" aria-labelledby="panierModal" aria-hidden="true"></div>
 				{% include "modal/modal_livraison.html.twig" %}
 
 				{% block body %}{% endblock %}

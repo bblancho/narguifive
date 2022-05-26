@@ -1,26 +1,21 @@
-<!-- Modal -->
-<div class="modal fade" id="panierModal" role="dialog"  tabindex="-1" aria-labelledby="panierModal" aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
 
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				Modal body..
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Fermer </button>
-			</div>
-
+		<!-- Modal Header -->
+		<div class="modal-header">
+			<h5 class="modal-title">{{ product.nom }}</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
-	</div>
 
+		<!-- Modal body -->
+		<div class="modal-body">
+			{{ product.content }}
+		</div>
+
+		<!-- Modal footer -->
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Fermer </button>
+		</div>
+
+	</div>
 </div>
