@@ -25,30 +25,30 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" >
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/> #}
-	
+
 		<script src="https://kit.fontawesome.com/3b962b3bc8.js" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		
+
 		<!-- Custom styles for this template -->
 		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
-		
+
 		<!-- Nargui CSS -->
 		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
 		{% block stylesheets %}
-			{# {{ encore_entry_link_tags('app') }} #}
+			 {{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		{% block javascript_header %}
-			{# {{ encore_entry_script_tags('app') }} #}
-		{% endblock %}		
+			 {{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</head>
 
 	<body>
 		{{ render( controller('App\\Controller\\MenuController::index' ) ) }}
 
 		<main role="main">
-			{# {% if block('carousel') is defined %} #} 
+			{# {% if block('carousel') is defined %} #}
 				{% include "partials/_carousel.html.twig" %}
 			{# {% endif %}  #}
 
@@ -65,7 +65,7 @@
 			{% include "partials/_footer.html.twig" %}
 		</main>
 
-		
+
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<!-- Bootstrap Js -->
 			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -73,7 +73,7 @@
 		{# Select 2 #}
 			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 		{# End Select 2 #}
-			
+
 		{# <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script> #}
 		<script src="{{ asset('assets/js/javascript.js') }}"></script>
 		<script src="{{ asset('assets/js/myjs.js') }}"></script>
@@ -94,7 +94,7 @@
                 }
             })(); #}
         </script>
-		
+
 		{% block script %}
 		{% endblock %}
 	</body>
