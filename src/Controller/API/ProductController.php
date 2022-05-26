@@ -2,6 +2,7 @@
 
 namespace App\Controller\API;
 
+use App\Service\Carte\CarteService;
 use App\Service\Search;
 use App\Form\Utils\SearchType;
 use App\Entity\Product\Product;
@@ -28,13 +29,16 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/api/products/{id}/modal", name="app_product_modal", methods={"GET"})
+     * @Route("/api/product/{id}/modal", name="app_product_modal", methods={"GET"})
      */
-    public function index(Product $product): Response
+    public function index(Product $product, CarteService $carteService): Response
     {
+        // Ajout du produit dans le panier
+        $carteService->add($product->getId());
+
+        //Retourne le code html du modal avec les informations du produit
         return $this->json([
-            'modal' => $this->renderView('modal/modal_panier.html.twig', ['product' => $product]),
-            'product' => $product
+            'modal' => $this->renderView('modal/modal_panier.html.twig', ['product' => $product])
         ]);
     }
 

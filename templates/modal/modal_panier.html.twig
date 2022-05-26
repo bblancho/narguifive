@@ -1,21 +1,23 @@
-<div class="modal-dialog">
-	<div class="modal-content">
+<div class="modal-content">
 
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h5 class="modal-title">{{ product.nom }}</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h5 class="modal-title">Le produit "{{ product.nom }}" à bien été ajouté !</h5>
+        <button type="button" class="btn-close close_modal" aria-label="Close"></button>
+    </div>
 
-		<!-- Modal body -->
-		<div class="modal-body">
-			{{ product.content }}
-		</div>
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="description">
+            <p>{{ product.content }}</p>
+            <p>Prix: {{ product.price }} EUR</p>
+        </div>
+        <img src="{{ product.image }}" alt="product-imeage">
+    </div>
 
-		<!-- Modal footer -->
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Fermer </button>
-		</div>
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close_modal"> Fermer</button>
+    </div>
 
-	</div>
 </div>
