@@ -59,8 +59,8 @@ class HomeController extends AbstractController
 
         $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1) , 9);
 
-        $category    = $this->categoryRepository->findBy(['id' => 2]);
-        $chichas = array_filter($category->getProducts(), function(Product $product) {
+        $category = $this->categoryRepository->findOneBy(['id' => 2]);
+        $chichas = array_filter($category->getProducts()->toArray(), function(Product $product) {
             return $product->getPublie();
         });
         $gouts      = $this->categoryRepository->getProductsPublish(2);
