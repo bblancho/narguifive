@@ -30,17 +30,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 {#		<!-- Custom styles for this template -->#}
-{#		<link href="{{ asset('/assets/scss/app/carousel.css') }}" rel="stylesheet">#}
+		<link href="{{ asset('assets/scss/app/carousel.css') }}" rel="stylesheet">
+		<link href="{{ asset('assets/scss/app/modal.css') }}" rel="stylesheet">
 
-{#		<!-- Nargui CSS -->#}
-{#		<link href="{{ asset('/assets/scss/app/style.css') }}" rel="stylesheet">#}
+		{#		<!-- Nargui CSS -->#}
+		<link href="{{ asset('assets/scss/app/style.css') }}" rel="stylesheet">
 
 		{% block stylesheets %}
-			 {{ encore_entry_link_tags('app') }}
+{#			 {{ encore_entry_link_tags('app') }}#}
 		{% endblock %}
 
 		{% block javascript_header %}
-			 {{ encore_entry_script_tags('app') }}
+{#			 {{ encore_entry_script_tags('app') }}#}
 		{% endblock %}
 	</head>
 
@@ -77,7 +78,12 @@
 
 		 <script src="{{ asset('assets/js/app/bootstrap.bundle.js') }}"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+		<script src="{{ asset('assets/js/app/javascript.js') }}"></script>
+		<script src="{{ asset('assets/js/app/myjs.js') }}"></script>
+		<script src="{{ asset('assets/js/app/filter.js') }}"></script>
+		<script src="{{ asset('assets/js/app/tri.js') }}"></script>
+		<script src="{{ asset('assets/js/app/panier.js') }}"></script>
+		<script src="{{ asset('assets/js/app/addToCart.js') }}"></script>
 {#		<script>#}
 {#            #}{# (function () {#}
 {#                if (!localStorage.getItem('cookieconsent')) {#}
