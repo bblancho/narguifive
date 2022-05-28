@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product\Category;
+use App\Entity\Product\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -57,16 +58,16 @@ class CategoryRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->join('c.products', 'p') // liasion entre Catégorie et les produits
             ->andWhere('p.publie = 1')
-            ->orderBy('p.id', 'DESC')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
         ;
 
         return $query->getResult();
     }
 
-    
+
 
     // $qb = $this->createQueryBuilder('c')
-    
-    
+
+
 }

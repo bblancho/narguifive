@@ -1,4 +1,5 @@
 (function ($, window, undefined) {
+
     //On récupère le modal
     const modal = $('#cartModal');
 
@@ -6,15 +7,17 @@
     $('.add_product').on('click', async function () {
         // On vide le contenu du modal
         modal.empty();
-        // Récupération du body html du modal en fonction du produit
+        // On récupère le body html du modal en fonction du produit
         const id = $(this).data('idProduct');
-        const html = await ((await fetch('/api/product/' + id + '/modal')).json());
+
+        //await = On attend d'avoir le résultat de la promesse avant de passer à la suite
+        const response = await ((await fetch('/api/product/' + id + '/modal')).json());
 
         // On incrémente le panier
         $('#panier_number')[0].innerText ++;
 
         // On ajoute le code html au modal et on l'affiche
-        modal.append(html.modal);
+        modal.append(response.modalBodyHtml);
         modal.css('display', 'block');
 
         // Gestion de la fermeture du modal

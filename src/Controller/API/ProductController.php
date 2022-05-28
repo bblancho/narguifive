@@ -31,14 +31,14 @@ class ProductController extends AbstractController
     /**
      * @Route("/api/product/{id}/modal", name="app_product_modal", methods={"GET"})
      */
-    public function index(Product $product, CarteService $carteService): Response
+    public function getProductModal(Product $product, CarteService $carteService): Response
     {
         // Ajout du produit dans le panier
         $carteService->add($product->getId());
 
         //Retourne le code html du modal avec les informations du produit
         return $this->json([
-            'modal' => $this->renderView('modal/modal_panier.html.twig', ['product' => $product])
+            'modalBodyHtml' => $this->renderView('modal/modal_panier.html.twig', ['product' => $product])
         ]);
     }
 
