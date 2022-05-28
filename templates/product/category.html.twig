@@ -8,8 +8,8 @@
 
 {% block stylesheets %}
 	{# <link href="{{ asset('assets/css/style-custome.css') }}" rel="stylesheet"> #}
-	<link href="{{ asset('assets/css/category.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/css/produit-style.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/scss/app/category.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/scss/app/produit-style.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -20,7 +20,7 @@
 				<div class="row">
 					{# sidebar left #}
 					<div id="left_column" class=" col-xs-12 col-sm-3">
-						
+
 						{# Liste des sous catégories #}
 						<div id="categories_block_left" class="block">
 							<div class="title_block active">
@@ -171,7 +171,7 @@
 													</option>
 												</select>
 											</div>
-											
+
 										</div>
 									</form>
 								</div>

@@ -25,37 +25,39 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" >
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/> #}
-	
+
 		<script src="https://kit.fontawesome.com/3b962b3bc8.js" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		
-		<!-- Custom styles for this template -->
-		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
-		
-		<!-- Nargui CSS -->
-		<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+{#		<!-- Custom styles for this template -->#}
+		<link href="{{ asset('assets/scss/app/carousel.css') }}" rel="stylesheet">
+		<link href="{{ asset('assets/scss/app/modal.css') }}" rel="stylesheet">
+
+		{#		<!-- Nargui CSS -->#}
+		<link href="{{ asset('assets/scss/app/style.css') }}" rel="stylesheet">
 
 		{% block stylesheets %}
-			{# {{ encore_entry_link_tags('app') }} #}
+{#			 {{ encore_entry_link_tags('app') }}#}
 		{% endblock %}
 
 		{% block javascript_header %}
-			{# {{ encore_entry_script_tags('app') }} #}
-		{% endblock %}		
+{#			 {{ encore_entry_script_tags('app') }}#}
+		{% endblock %}
 	</head>
 
 	<body>
 		{{ render( controller('App\\Controller\\MenuController::index' ) ) }}
 
 		<main role="main">
-			{# {% if block('carousel') is defined %} #} 
+			{# {% if block('carousel') is defined %} #}
 				{% include "partials/_carousel.html.twig" %}
 			{# {% endif %}  #}
 
 			<div class="marketing  {% if block('carousel') is not defined %} {% endif%}">
 				{# Breadcrumb #}
 				{% include "partials/_breadcrumb.html.twig" %}
-				{% include "modal/modal_panier.html.twig" %}
+				{# Modal produit vide (body généré en ajax) #}
+				<div class="cart_modal" id="cartModal"></div>
 				{% include "modal/modal_livraison.html.twig" %}
 
 				{% block body %}{% endblock %}
@@ -65,36 +67,36 @@
 			{% include "partials/_footer.html.twig" %}
 		</main>
 
-		
+
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<!-- Bootstrap Js -->
+{#		<!-- Bootstrap Js -->#}
 			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-		{# Select 2 #}
+{#		#}{# Select 2 #}
 			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-		{# End Select 2 #}
-			
-		{# <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script> #}
-		<script src="{{ asset('assets/js/javascript.js') }}"></script>
-		<script src="{{ asset('assets/js/myjs.js') }}"></script>
-		<script src="{{ asset('assets/js/filter.js') }}"></script>
-		<script src="{{ asset('assets/js/tri.js') }}"></script>
-		<script src="{{ asset('assets/js/panier.js') }}"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#		#}{# End Select 2 #}
 
-		<script>
-            {# (function () {
-                if (!localStorage.getItem('cookieconsent')) {
-                    $('#myModalVideo').modal('show');
-                    document.querySelector('#close').onclick = function (e) {
-                        e.preventDefault();
-                        $('#myModalVideo').modal('hide');
-                        localStorage.setItem('cookieconsent', true);
-                    };
-                }
-            })(); #}
-        </script>
-		
+		 <script src="{{ asset('assets/js/app/bootstrap.bundle.js') }}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="{{ asset('assets/js/app/javascript.js') }}"></script>
+		<script src="{{ asset('assets/js/app/myjs.js') }}"></script>
+		<script src="{{ asset('assets/js/app/filter.js') }}"></script>
+		<script src="{{ asset('assets/js/app/tri.js') }}"></script>
+		<script src="{{ asset('assets/js/app/panier.js') }}"></script>
+		<script src="{{ asset('assets/js/app/addToCart.js') }}"></script>
+{#		<script>#}
+{#            #}{# (function () {#}
+{#                if (!localStorage.getItem('cookieconsent')) {#}
+{#                    $('#myModalVideo').modal('show');#}
+{#                    document.querySelector('#close').onclick = function (e) {#}
+{#                        e.preventDefault();#}
+{#                        $('#myModalVideo').modal('hide');#}
+{#                        localStorage.setItem('cookieconsent', true);#}
+{#                    };#}
+{#                }#}
+{#            })(); #}
+{#        </script>#}
+
 		{% block script %}
 		{% endblock %}
 	</body>

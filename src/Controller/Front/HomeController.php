@@ -24,7 +24,7 @@ class HomeController extends AbstractController
     private $manager;
     private $productRepository;
     private $categoryRepository;
- 
+
 
     public function __construct(ManagerRegistry $manager,MarqueRepository $marqueRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, SousCategoryRepository $sousCategoryRepository, SluggerInterface $slugger)
     {
@@ -35,7 +35,7 @@ class HomeController extends AbstractController
         $this->marqueRepository = $marqueRepository;
         $this->slugger = $slugger ;
     }
-  
+
     /**
      * @Route("/", name="home")
      */
@@ -45,7 +45,7 @@ class HomeController extends AbstractController
 
         $newProduit = '';
         $promosProduit = '';
-        $chichasProduit = ''; 
+        $chichasProduit = '';
 
         // Recup la valeur du nbr de total de produits en BDD
         $nb_produits_total = $this->productRepository->countTotalProduct();
@@ -59,7 +59,10 @@ class HomeController extends AbstractController
 
         $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1) , 9);
 
-        $chichas    = $this->categoryRepository->getProductsPublish(1);
+        $category = $this->categoryRepository->findOneBy(['id' => 2]);
+        $chichas = array_filter($category->getProducts()->toArray(), function(Product $product) {
+            return $product->getPublie();
+        });
         $gouts      = $this->categoryRepository->getProductsPublish(2);
         $charbons   = $this->categoryRepository->getProductsPublish(3);
         $tuyaux     = $this->categoryRepository->getProductsPublish(4);
@@ -90,7 +93,7 @@ class HomeController extends AbstractController
 
             $this->addFlash('success', "Merci d'avoir contacté l'équipe NarguiFive .") ;
 
-            // Envoi de l'email    
+            // Envoi de l'email
             $mailer->sendEmail( $form->get('email')->getData(), $form->get('sujet')->getData(), $form->get('content')->getData() ) ;
         }
 
