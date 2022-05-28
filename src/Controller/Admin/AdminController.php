@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class AdminController extends AbstractController
 {
-    public function __construct(ManagerRegistry $doctrine, ProductRepository $productRepository, CategoryRepository $categoryRepository, )
+    public function __construct(ManagerRegistry $doctrine, ProductRepository $productRepository, CategoryRepository $categoryRepository )
     {
         $this->doctrine = $doctrine ;
         $this->productRepository = $productRepository ;
