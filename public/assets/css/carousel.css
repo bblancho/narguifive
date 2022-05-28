@@ -14,24 +14,36 @@ body {
 
 /* Carousel base class */
 .carousel {
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
     bottom: 3rem;
     z-index: 10;
 }
-
+.carousel-indicators{
+    background-color: black;
+}
 /* Declare heights because of positioning of img element */
 .carousel-item {
-    height: 32rem;
+    /* height: 32rem; */
+    height: 500px;
+
 }
 .carousel-item > img {
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    left: 0;
-    min-width: 100%;
-    height: 32rem;
+    left: 0; */
+    /* min-width: 100%;
+    height: 32rem; */
+    /* background-repeat: no-repeat;
+    background-size: cover;  on couvre le background avec l'image */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    margin: 0 auto;
+    width: 1200px;
 }
 
 
