@@ -88,13 +88,11 @@ div.footer{
     color: #000;
 }
 
-.carousel-inner, .carousel-item{
-    height: 900px;
-}
-.carousel-item img{
+
+/* .carousel-item img{
     background-position: center;
     height: 100%;
-}
+} */
 
 #pagination_site{
     margin: 10px 0;
