@@ -63,15 +63,22 @@
 
 		<div class="row product-container tab-content" id="myTabContent">
 			<div class="tab-pane show active" id="news" role="tabpanel" aria-labelledby="news-tab">New</div>
+			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.nouveautes, 'total':nb_produits_total, 'limit':12} %}
 			<div class="tab-pane fade" id="promos" role="tabpanel" aria-labelledby="promos-tab">Promos</div>
+{#			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.chichas, 'total':nb_produits_total, 'limit':12} %}#}
 			<div class="tab-pane fade" id="chichas" role="tabpanel" aria-labelledby="chichas-tab">
-				{% include "product/liste_produits.html.twig" with {'produits':produits, 'total':nb_produits_total, 'limit':12} %}	
+				{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.chichas, 'total':nb_produits_total, 'limit':12} %}
 			</div>
-			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">Goûts</div>
+{#			<div class="tab-pane fade" id="gouts" role="tabpanel" aria-labelledby="gouts-tab">Goûts</div>#}
+{#			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.gouts, 'total':nb_produits_total, 'limit':12} %}#}
 			<div class="tab-pane fade" id="accesssoires" role="tabpanel" aria-labelledby="accesssoires-tab">Charbons</div>
+			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.charbons, 'total':nb_produits_total, 'limit':12} %}
 			<div class="tab-pane fade" id="electronique" role="tabpanel" aria-labelledby="electronique-tab">electronique</div>
+{#			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.chichas, 'total':nb_produits_total, 'limit':12} %}#}
 			<div class="tab-pane fade" id="liquide" role="tabpanel" aria-labelledby="liquide-tab">liquide</div>
+			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.eliquide, 'total':nb_produits_total, 'limit':12} %}
 			<div class="tab-pane fade" id="cbd" role="tabpanel" aria-labelledby="cbd-tab">cbd</div>
+{#			{% include "product/liste_produits.html.twig" with {'produits':filteredProducts.chichas, 'total':nb_produits_total, 'limit':12} %}#}
 			<div class="tab-pane fade" id="pack" role="tabpanel" aria-labelledby="pack-tab">pack</div>
 		</div>
 	</div>
@@ -222,17 +229,17 @@
 			<p>
 				Fait d’expertise, de sérieux et d’inventivité, le style Darnashop s’est imposé dans l’univers du narguilé comme un incontournable.
 				Plus qu’un magasin de vente de chicha, Darnashop c’est une sélection unique de modèles, de foyers, de tuyaux, de charbons et d’accessoires pour chicha.
-				Kaloud, Quasar, Dschinni, ODUMAN,Aladin, AMY, Tom Cococha, Devil Smoke, et bien d‘autres… Les plus grandes marques du monde 
-				de la chicha ont choisi Darnashop comme distributeur officiel. De la chicha portable à la chicha design pour décorer votre salon, 
-				de la chicha pas chère à la chicha de luxe, toutes les marques qui comptent dans la famille du narguilé se donnenr rendez-vous chez Darnashop! 
+				Kaloud, Quasar, Dschinni, ODUMAN,Aladin, AMY, Tom Cococha, Devil Smoke, et bien d‘autres… Les plus grandes marques du monde
+				de la chicha ont choisi Darnashop comme distributeur officiel. De la chicha portable à la chicha design pour décorer votre salon,
+				de la chicha pas chère à la chicha de luxe, toutes les marques qui comptent dans la famille du narguilé se donnenr rendez-vous chez Darnashop!
 				Il en résulte un catalogue exceptionnel qui n‘a qu‘une n’a qu’une seule ambition : Trouver le modèle qui vous correspond.
 			</p><br/>
 
 			<h2> LE NUMÉRO 1 DU GOÛT POUR CHICHA EN FRANCE </h2>
 			<p>
-				Pionnier de la culture de la chicha en France, c‘est grâce à Darnashop que de nombreux goût chicha sans tabac sont désormais en vente libre en France, 
-				et que vous pouvez acheter sur notre site de nombreuses pâtes à chichas, pierres aromatisées pour narguilé, 
-				de la crème pour chicha et de nombreux parfums. Achetez votre gout chicha moins cher en optant pour du gout sans nicotine, 
+				Pionnier de la culture de la chicha en France, c‘est grâce à Darnashop que de nombreux goût chicha sans tabac sont désormais en vente libre en France,
+				et que vous pouvez acheter sur notre site de nombreuses pâtes à chichas, pierres aromatisées pour narguilé,
+				de la crème pour chicha et de nombreux parfums. Achetez votre gout chicha moins cher en optant pour du gout sans nicotine,
 				nous avons forcément la saveur qui vous plaira parmi nos centaines de références en stock, et nous vous livrons en 24H!
 			</p>
 		</div>
@@ -267,7 +274,7 @@
 
 				<div class="col-md-3 block-valeur assurance">
 					<figure>
-						<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>	
+						<img src="{{ asset('assets/images/icones/cadeau.png') }}"/>
 					</figure>
 					<p>
 						<h3> Nos cadeaux </h3>

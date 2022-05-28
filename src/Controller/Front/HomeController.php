@@ -59,20 +59,31 @@ class HomeController extends AbstractController
 
         $produits_bis = $this->productRepository->getPaginateProduits( $request->query->getInt("page", 1) , 9);
 
-        $category = $this->categoryRepository->findOneBy(['id' => 2]);
-        $chichas = array_filter($category->getProducts()->toArray(), function(Product $product) {
-            return $product->getPublie();
-        });
-        $gouts      = $this->categoryRepository->getProductsPublish(2);
-        $charbons   = $this->categoryRepository->getProductsPublish(3);
-        $tuyaux     = $this->categoryRepository->getProductsPublish(4);
-        $eliquide   = $this->categoryRepository->getProductsPublish(7);
-        $foyers     = $this->categoryRepository->getProductsPublish(2);
-        $cat = $this->categoryRepository->getProductsPublish(2);
-        $cat = $this->categoryRepository->getProductsPublish(2);
-        $cat = $this->categoryRepository->getProductsPublish(2);
+        $chichaCat = $this->categoryRepository->findOneBy(['nom' => 'Chichas']);
+        $chichas = $this->productRepository->findBy(['category' => $chichaCat, 'publie' => true], ['createdAt' => 'desc'], 15);
+
+        $charbons   = $this->productRepository->findBy(['category' => 3, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $gouts      = $this->productRepository->findBy(['category' => 2, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $tuyaux     = $this->productRepository->findBy(['category' => 4, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $accessoires   = $this->productRepository->findBy(['category' => 6, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $foyers     = $this->productRepository->findBy(['category' => 5, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $eliquide     = $this->productRepository->findBy(['category' => 7, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $pack     = $this->productRepository->findBy(['category' => 10, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $cbd     = $this->productRepository->findBy(['category' => 8, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $nouveautes    = $this->productRepository->findBy(['category' => 11, 'publie' => true], ['createdAt' => 'desc'], 15);
+        $filteredProducts['chichas'] = $chichas;
+        $filteredProducts['charbons'] = $charbons;
+        $filteredProducts['gouts'] = $gouts;
+        $filteredProducts['tuyaux'] = $tuyaux;
+        $filteredProducts['eliquide'] = $eliquide;
+        $filteredProducts['accessoires'] = $accessoires;
+        $filteredProducts['foyers'] = $foyers;
+        $filteredProducts['pack'] = $pack;
+        $filteredProducts['cbd'] = $cbd;
+        $filteredProducts['nouveautes'] = $nouveautes;
 
         return $this->render('home/index.html.twig', [
+            'filteredProducts' => $filteredProducts,
             'produits' => $produits,
             'produits_bis' => $produits_bis,
             'nb_produits_total'  => $nb_produits_total,
